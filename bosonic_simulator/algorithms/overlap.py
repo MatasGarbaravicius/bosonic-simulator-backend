@@ -35,42 +35,42 @@ def overlap(
 
 from bosonic_simulator.coherent_state import CoherentState
 
-a1 = np.array([1 + 0j, 1 + 0j])
-a2 = np.array([-1 + 1j, 1 - 1j])
-print(CoherentState.overlap(a1, a2))
-print(
-    overlap(
-        GaussianStateDescription.coherent_state(a1),
-        GaussianStateDescription.coherent_state(a2),
-    )
-)
+# a1 = np.array([1 + 0j, 1 + 0j])
+# a2 = np.array([-1 + 1j, 1 - 1j])
+# print(CoherentState.overlap(a1, a2))
+# print(
+#     overlap(
+#         GaussianStateDescription.coherent_state(a1),
+#         GaussianStateDescription.coherent_state(a2),
+#     )
+# )
 
-a3 = np.random.rand(6) + 1j * np.random.rand(6)
-a4 = np.random.rand(6) + 1j * np.random.rand(6)
-print(CoherentState.overlap(a3, a4))
-print(
-    overlap(
-        GaussianStateDescription.coherent_state(a3),
-        GaussianStateDescription.coherent_state(a4),
-    )
-)
+# a3 = np.random.rand(6) + 1j * np.random.rand(6)
+# a4 = np.random.rand(6) + 1j * np.random.rand(6)
+# print(CoherentState.overlap(a3, a4))
+# print(
+#     overlap(
+#         GaussianStateDescription.coherent_state(a3),
+#         GaussianStateDescription.coherent_state(a4),
+#     )
+# )
 
-a5 = np.random.randn(6) + 1j * np.random.randn(6)
-a6 = np.random.randn(6) + 1j * np.random.randn(6)
-print(CoherentState.overlap(a5, a6))
-print(
-    overlap(
-        GaussianStateDescription.coherent_state(a5),
-        GaussianStateDescription.coherent_state(a6),
-    )
-)
+# a5 = np.random.randn(6) + 1j * np.random.randn(6)
+# a6 = np.random.randn(6) + 1j * np.random.randn(6)
+# print(CoherentState.overlap(a5, a6))
+# print(
+#     overlap(
+#         GaussianStateDescription.coherent_state(a5),
+#         GaussianStateDescription.coherent_state(a6),
+#     )
+# )
 
-a7 = np.random.rand(6) + 1j * np.random.rand(6)
-a8 = np.random.rand(6) + 1j * np.random.rand(6)
-print(CoherentState.overlap(a7, a8))
-print(
-    overlap(
-        GaussianStateDescription.coherent_state(a7),
-        GaussianStateDescription.coherent_state(a8),
-    )
-)
+# a7 = np.random.rand(6) + 1j * np.random.rand(6)
+# a8 = np.random.rand(6) + 1j * np.random.rand(6)
+# print(CoherentState.overlap(a7, a8))
+# print(
+#     overlap(
+#         GaussianStateDescription.coherent_state(a7),
+#         GaussianStateDescription.coherent_state(a8),
+#     )
+# )
