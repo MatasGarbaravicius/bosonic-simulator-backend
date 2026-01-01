@@ -8,7 +8,11 @@ from qiskit.circuit import Gate
 from qiskit.visualization import circuit_drawer
 
 from bosonic_simulator.gaussian_state_description import GaussianStateDescription
-import bosonic_simulator.gaussian_unitary_description as gud
+from bosonic_simulator.gaussian_unitary_description import (
+    PhaseShiftDescription,
+    SqueezingDescription,
+    DisplacementDescription,
+)
 from bosonic_simulator.algorithms.simulateexactly import simulateexactly
 
 app = Flask(__name__)
@@ -18,30 +22,31 @@ os.makedirs("static", exist_ok=True)
 # ---------- Helpers ----------
 
 
+def cplx(x):
+    return np.complex128(x[0] + 1j * x[1])
+
+
 def build_unitary(g):
     if g["type"] == "F":
-        return gud.PhaseShiftDescription(
-            angle=np.float64(g["phi"]), mode_index=g["mode"]
-        )
+        return PhaseShiftDescription(angle=np.float64(g["phi"]), mode_index=g["mode"])
     if g["type"] == "S":
-        return gud.SqueezingDescription(
-            parameter=np.float64(g["z"]), mode_index=g["mode"]
-        )
-
-    if g["type"] == "B":
-        return gud.BeamSplitterDescription(np.float64(0.1), 0, 1)
-
+        return SqueezingDescription(parameter=np.float64(g["z"]), mode_index=g["mode"])
     if g["type"] == "D":
-        return gud.DisplacementDescription(np.zeros(1, dtype=complex))
-
-    return gud.DisplacementDescription(np.zeros(1, dtype=complex))
+        return DisplacementDescription(
+            amplitude=np.array([cplx(a) for a in g["alpha"]])
+        )
 
 
 def build_qiskit_circuit(data):
     qc = QuantumCircuit(data["num_wires"])
-    for g in data["gates"]:
-        gate = Gate(g["type"], 1, [])
-        qc.append(gate, [g["mode"]])
+    for term in data["superposition"]:
+        for g in term["gates"]:
+            if g["type"] == "D":
+                gate = Gate("D", data["num_wires"], [])
+                qc.append(gate, list(range(data["num_wires"])))
+            else:
+                gate = Gate(g["type"], 1, [])
+                qc.append(gate, [g["mode"]])
     return qc
 
 
@@ -60,6 +65,7 @@ def render():
             "displaycolor": {
                 "F": ("#1f77b4", "#fff"),
                 "S": ("#6a0dad", "#fff"),
+                "D": ("#2ca02c", "#fff"),
             }
         },
     )
@@ -70,14 +76,19 @@ def render():
 def simulate():
     data = request.json
 
-    state = GaussianStateDescription.vacuum_state(data["num_wires"])
-    superposition = [(np.complex128(1 + 0j), state)]
+    superposition = []
+    for term in data["superposition"]:
+        state = GaussianStateDescription.vacuum_state(data["num_wires"])
+        coeff = cplx(term["coefficient"])
+        superposition.append((coeff, state))
 
-    unitaries = [build_unitary(g) for g in data["gates"]]
+    unitaries = []
+    for term in data["superposition"]:
+        for g in term["gates"]:
+            unitaries.append(build_unitary(g))
 
     amplitude = np.array(
-        [complex(a[0], a[1]) for a in data["measurement"]["amplitude"]],
-        dtype=np.complex128,
+        [cplx(a) for a in data["measurement"]["amplitude"]], dtype=np.complex128
     )
 
     prob = simulateexactly(
