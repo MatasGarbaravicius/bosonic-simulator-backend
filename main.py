@@ -13,14 +13,14 @@ from bosonic_simulator.gaussian_unitary_description import (
     SqueezingDescription,
     DisplacementDescription,
 )
+from bosonic_simulator.algorithms.applyunitaries import applyunitaries
 from bosonic_simulator.algorithms.simulateexactly import simulateexactly
 
 app = Flask(__name__)
 CORS(app)
 os.makedirs("static", exist_ok=True)
 
-
-# ---------- Helpers ----------
+# ---------- helpers ----------
 
 
 def cplx(z):
@@ -39,9 +39,9 @@ def unitary_from_gate(g):
     raise ValueError("Unknown gate")
 
 
-def build_qiskit_circuit(num_wires, term):
+def build_qiskit_circuit(num_wires, gates):
     qc = QuantumCircuit(num_wires)
-    for g in term["gates"]:
+    for g in gates:
         if g["type"] == "D":
             gate = Gate("D", num_wires, [])
             qc.append(gate, list(range(num_wires)))
@@ -51,16 +51,16 @@ def build_qiskit_circuit(num_wires, term):
     return qc
 
 
-# ---------- Routes ----------
+# ---------- rendering ----------
 
 
 @app.route("/render_term", methods=["POST"])
 def render_term():
     data = request.json
-    term_index = data["index"]
-    qc = build_qiskit_circuit(data["num_wires"], data["term"])
+    idx = data["index"]
+    qc = build_qiskit_circuit(data["num_wires"], data["gates"])
 
-    path = f"static/circuit_{term_index}.png"
+    path = f"static/circuit_term_{idx}.png"
     circuit_drawer(
         qc,
         output="mpl",
@@ -76,30 +76,53 @@ def render_term():
     return send_file(path, mimetype="image/png")
 
 
+@app.route("/render_global", methods=["POST"])
+def render_global():
+    data = request.json
+    qc = build_qiskit_circuit(data["num_wires"], data["gates"])
+
+    path = "static/circuit_global.png"
+    circuit_drawer(
+        qc,
+        output="mpl",
+        filename=path,
+        style={
+            "displaycolor": {
+                "F": ("#ff7f0e", "#ffffff"),
+                "S": ("#9467bd", "#ffffff"),
+                "D": ("#2ca02c", "#ffffff"),
+            }
+        },
+    )
+    return send_file(path, mimetype="image/png")
+
+
+# ---------- simulation ----------
+
+
 @app.route("/simulate", methods=["POST"])
 def simulate():
     data = request.json
+    n = data["num_wires"]
 
+    # 1) prepare superposition terms
     superposition_terms = []
     for term in data["superposition"]:
+        vacuum = GaussianStateDescription.vacuum_state(n)
+        prepared = applyunitaries(vacuum, [unitary_from_gate(g) for g in term["gates"]])
         coeff = cplx(term["coefficient"])
-        state = GaussianStateDescription.vacuum_state(data["num_wires"])
-        superposition_terms.append((coeff, state))
+        superposition_terms.append((coeff, prepared))
 
-    unitary_descriptions = []
-    for term in data["superposition"]:
-        for g in term["gates"]:
-            unitary_descriptions.append(unitary_from_gate(g))
+    # 2) global unitaries
+    global_unitaries = [unitary_from_gate(g) for g in data["global_gates"]]
 
+    # 3) measurement
     amplitude = np.array(
         [cplx(a) for a in data["measurement"]["amplitude"]], dtype=np.complex128
     )
 
     prob = simulateexactly(
-        superposition_terms,
-        unitary_descriptions,
-        amplitude,
-        data["measurement"]["wires"],
+        superposition_terms, global_unitaries, amplitude, data["measurement"]["wires"]
     )
 
     return jsonify({"probability": float(prob)})
