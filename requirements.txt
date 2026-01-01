@@ -1,0 +1,7 @@
+flask
+pillow
+flask-cors
+numpy
+qiskit
+qiskit-aer
+pylatexenc

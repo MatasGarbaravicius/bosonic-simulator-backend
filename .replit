@@ -1,0 +1,30 @@
+run =  ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+entrypoint = "main.py"
+modules = ["python-3.11"]
+
+hidden = [".pythonlibs"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["cairo", "catch2", "ffmpeg-full", "fmt", "freetype", "ghostscript", "gobject-introspection", "gtk3", "lcms2", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "muparserx", "nlohmann_json", "openjpeg", "pkg-config", "qhull", "spdlog", "tcl", "tk", "zlib"]
+
+[deployment]
+run =  ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[agent]
+expertMode = true
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Installer"
+mode = "sequential"
+author = 3557764
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
