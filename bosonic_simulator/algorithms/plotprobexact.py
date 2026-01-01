@@ -48,22 +48,36 @@ def plotprobexact(
     return re, im, prob
 
 
-# alpha = (-1 + 1j) * np.exp(1j * np.pi / 8)
+# alpha = 1 + 1j
 # mode = 0
 
 
 # from bosonic_simulator.gaussian_state_description import GaussianStateDescription
+# from bosonic_simulator.algorithms.applyunitary import applyunitary
+# from bosonic_simulator.gaussian_unitary_description import DisplacementDescription
 
 # # example cat state |α> + |−α>
 # superposition_terms = [
-#     (1 / np.sqrt(2), GaussianStateDescription.coherent_state(np.array([alpha]))),
-#     (1 / np.sqrt(2), GaussianStateDescription.coherent_state(np.array([-alpha]))),
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([alpha])),
+#         ),
+#     ),
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([-alpha])),
+#         ),
+#     ),
 # ]
 
 # plotprobexact(
 #     superposition_terms=superposition_terms,
 #     mode_index=0,
-#     resolution=25,
+#     resolution=75,
 # )
 
 # alpha = (-1 + 1j) * np.exp(1j * np.pi / 8)
