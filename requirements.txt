@@ -5,3 +5,4 @@ numpy
 qiskit
 qiskit-aer
 pylatexenc
+matplotlib

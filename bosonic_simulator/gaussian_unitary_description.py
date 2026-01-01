@@ -30,7 +30,10 @@ class BeamSplitterDescription:
 
 
 GaussianUnitaryDescription = Union[
-    DisplacementDescription, PhaseShiftDescription, BeamSplitterDescription
+    SqueezingDescription,
+    DisplacementDescription,
+    PhaseShiftDescription,
+    BeamSplitterDescription,
 ]
 
 # b = PhaseShiftDescription(1.0,5)
