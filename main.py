@@ -209,7 +209,7 @@ def plot():
 @app.route("/normalize", methods=["POST"])
 def normalize():
     data = request.json
-    superposition_terms = data["superposition"]
+    superposition_terms = prepare_superposition(data)
 
     # Calculate the norm using the exactnorm function
     norm = exactnorm(superposition_terms)
