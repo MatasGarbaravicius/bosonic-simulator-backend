@@ -53,7 +53,9 @@ def build_qiskit_circuit(num_wires, gates):
 
     for g in gates:
         if g["type"] == "D":
-            gate = Gate("D", num_wires, [])
+            gate = Gate(
+                "D", num_wires, np.array([cplx(a) for a in g["alpha"]]).tolist()
+            )
             qc.append(gate, list(range(num_wires)))
 
         elif g["type"] == "F":
