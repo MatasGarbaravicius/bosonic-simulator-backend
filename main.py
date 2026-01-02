@@ -37,7 +37,7 @@ def unitary_from_gate(g):
 
     if g["type"] == "D":
         return DisplacementDescription(
-            amplitude=np.array([cplx(a) for a in g["alpha"]])
+            amplitude=[complex(cplx(a)) for a in g["alpha"]
         )
 
     if g["type"] == "B":
