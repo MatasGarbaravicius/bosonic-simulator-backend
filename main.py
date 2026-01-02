@@ -56,7 +56,8 @@ def build_qiskit_circuit(num_wires, gates):
             gate = Gate(
                 "D",
                 num_wires,
-                [complex(cplx(a)) for a in g["alpha"]],
+                [],
+                "D([\n" + "\n".join(f"  {cplx(a)}," for a in g["alpha"]) + "\n])",
             )
 
             qc.append(gate, list(range(num_wires)))
@@ -89,6 +90,21 @@ STYLE = {
         "B": ("#d62728", "#ffffff"),
     }
 }
+
+
+def D(x):
+    return x
+
+
+my_list = D(
+    [
+        1.23324123412342314124214124312341234213,
+        1.23324123412342314124214124312341234213,
+        1.23324123412342314124214124312341234213,
+        1.23324123412342314124214124312341234213,
+        1.23324123412342314124214124312341234213,
+    ]
+)
 
 
 @app.route("/render_term", methods=["POST"])
