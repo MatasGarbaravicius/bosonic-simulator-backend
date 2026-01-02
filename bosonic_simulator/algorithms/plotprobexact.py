@@ -360,3 +360,51 @@ def plotprobexact(
 #     mode_index=2,
 #     resolution=20,
 # )
+#
+# 0.569+0i
+
+# alpha = 1 + 1j
+# mode = 0
+
+
+# from bosonic_simulator.gaussian_state_description import GaussianStateDescription
+# from bosonic_simulator.algorithms.applyunitary import applyunitary
+# from bosonic_simulator.gaussian_unitary_description import (
+#     DisplacementDescription,
+#     SqueezingDescription,
+#     PhaseShiftDescription,
+# )
+
+# # example cat state |α> + |−α>
+# superposition_terms = [
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([alpha])),
+#         ),
+#     ),
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([-alpha])),
+#         ),
+#     ),
+# ]
+
+# # superposition_terms = [
+# #     (c, applyunitary(psi, PhaseShiftDescription(np.float64(-np.pi / 4), 0)))
+# #     for (c, psi) in superposition_terms
+# # ]
+
+# superposition_terms = [
+#     (c, applyunitary(psi, SqueezingDescription(np.log(2), 0)))
+#     for (c, psi) in superposition_terms
+# ]
+
+# plotprobexact(
+#     superposition_terms=superposition_terms,
+#     mode_index=0,
+#     resolution=25,
+# )
