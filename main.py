@@ -45,6 +45,12 @@ def build_qiskit_circuit(num_wires, gates):
         if g["type"] == "D":
             gate = Gate("D", num_wires, [])
             qc.append(gate, list(range(num_wires)))
+        if g["type"] == "F":
+            gate = Gate("F", 1, [g["phi"]])
+            qc.append(gate, [g["mode"]])
+        elif g["type"] == "S":
+            gate = Gate("S", 1, [g["z"]])
+            qc.append(gate, [g["mode"]])
         else:
             gate = Gate(g["type"], 1, [])
             qc.append(gate, [g["mode"]])

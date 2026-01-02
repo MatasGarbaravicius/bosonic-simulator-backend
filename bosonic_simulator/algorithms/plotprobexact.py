@@ -54,7 +54,11 @@ def plotprobexact(
 
 # from bosonic_simulator.gaussian_state_description import GaussianStateDescription
 # from bosonic_simulator.algorithms.applyunitary import applyunitary
-# from bosonic_simulator.gaussian_unitary_description import DisplacementDescription
+# from bosonic_simulator.gaussian_unitary_description import (
+#     DisplacementDescription,
+#     SqueezingDescription,
+#     PhaseShiftDescription,
+# )
 
 # # example cat state |α> + |−α>
 # superposition_terms = [
@@ -74,10 +78,20 @@ def plotprobexact(
 #     ),
 # ]
 
+# # superposition_terms = [
+# #     (c, applyunitary(psi, PhaseShiftDescription(np.float64(-np.pi / 4), 0)))
+# #     for (c, psi) in superposition_terms
+# # ]
+
+# superposition_terms = [
+#     (c, applyunitary(psi, DisplacementDescription(np.array([1 + 1j]))))
+#     for (c, psi) in superposition_terms
+# ]
+
 # plotprobexact(
 #     superposition_terms=superposition_terms,
 #     mode_index=0,
-#     resolution=75,
+#     resolution=25,
 # )
 
 # alpha = (-1 + 1j) * np.exp(1j * np.pi / 8)
@@ -225,7 +239,7 @@ def plotprobexact(
 # import bosonic_simulator.gaussian_unitary_description as gud
 
 # alpha = np.concatenate(
-#     [np.repeat([1.35 * np.exp(1j * np.pi * (1 / 3))], 2), np.array([1])]
+#     [np.repeat([1.35 * np.exp(1j * np.pi * (2 / 3))], 2), np.array([1 - 0.5j])]
 # )
 
 # coh_state = GaussianStateDescription.coherent_state(np.array(alpha))
@@ -241,14 +255,16 @@ def plotprobexact(
 #     (
 #         1,
 #         applyunitary(
-#             applyunitary(coh_state, gud.SqueezingDescription(2, 1)),
+#             applyunitary(coh_state, gud.SqueezingDescription(0.2, 1)),
 #             gud.DisplacementDescription(np.repeat([-2], 3)),
 #         ),
 #     ),
-#     (1, applyunitary(coh_state, gud.DisplacementDescription(np.repeat([-2], 3)))),
+#     (1, applyunitary(coh_state, gud.DisplacementDescription(np.repeat([-1], 3)))),
 # ]
 
 # superpos_norm = exactnorm(superposition_terms)
+
+# print(superpos_norm)
 
 # superposition_terms = [(c / superpos_norm, psi) for (c, psi) in superposition_terms]
 
@@ -257,17 +273,90 @@ def plotprobexact(
 # plotprobexact(
 #     superposition_terms=superposition_terms,
 #     mode_index=0,
-#     resolution=10,
+#     resolution=20,
 # )
 
 # plotprobexact(
 #     superposition_terms=superposition_terms,
 #     mode_index=1,
-#     resolution=10,
+#     resolution=20,
 # )
 
 # plotprobexact(
 #     superposition_terms=superposition_terms,
 #     mode_index=2,
-#     resolution=10,
+#     resolution=20,
+# )
+
+# from bosonic_simulator.gaussian_state_description import GaussianStateDescription
+# from bosonic_simulator.algorithms.exactnorm import exactnorm
+# from bosonic_simulator.algorithms.applyunitary import applyunitary
+# import bosonic_simulator.gaussian_unitary_description as gud
+
+# alpha = np.concatenate(
+#     [np.repeat([1.35 * np.exp(1j * np.pi * (2 / 3))], 2), np.array([1 - 0.5j])]
+# )
+
+# coh_state = GaussianStateDescription.coherent_state(np.array(alpha))
+
+# superposition_terms = [
+#     (
+#         1,
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(3),
+#             gud.DisplacementDescription(
+#                 np.array([-0.674 + 1.169j, -0.674 + 1.169j, -0.674 + 1.169j])
+#             ),
+#         ),
+#     ),
+#     (
+#         1,
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(3),
+#             gud.DisplacementDescription(np.array([1 + 0j, 1 + 0j, 1 + 0j])),
+#         ),
+#     ),
+#     (
+#         1,
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(3),
+#             gud.DisplacementDescription(np.array([0 + 1j, 0 + 1.5j, 1.5 + -1j])),
+#         ),
+#     ),
+# ]
+
+# superposition_terms = [
+#     (
+#         1.0,
+#         applyunitary(
+#             psi, gud.DisplacementDescription(np.array([-1 + 0j, -1 + 0j, -1 + 0j]))
+#         ),
+#     )
+#     for (_, psi) in superposition_terms
+# ]
+
+# superpos_norm = exactnorm(superposition_terms)
+
+# print(superpos_norm)
+
+# superposition_terms = [(c / superpos_norm, psi) for (c, psi) in superposition_terms]
+
+# print(exactnorm(superposition_terms))
+
+# plotprobexact(
+#     superposition_terms=superposition_terms,
+#     mode_index=0,
+#     resolution=20,
+# )
+
+# plotprobexact(
+#     superposition_terms=superposition_terms,
+#     mode_index=1,
+#     resolution=20,
+# )
+
+# plotprobexact(
+#     superposition_terms=superposition_terms,
+#     mode_index=2,
+#     resolution=20,
 # )
