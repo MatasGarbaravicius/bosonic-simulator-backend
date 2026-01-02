@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import numpy as np
 import os
+import io
+import base64
+import matplotlib.pyplot as plt
 
 from qiskit import QuantumCircuit
 from qiskit.circuit import Gate
@@ -16,6 +19,7 @@ from bosonic_simulator.gaussian_unitary_description import (
 )
 from bosonic_simulator.algorithms.applyunitaries import applyunitaries
 from bosonic_simulator.algorithms.simulateexactly import simulateexactly
+from bosonic_simulator.algorithms.plotprobexact import plotprobexact
 
 app = Flask(__name__)
 CORS(app)
@@ -80,6 +84,22 @@ def build_qiskit_circuit(num_wires, gates):
             raise ValueError(f"Unknown gate type {g['type']}")
 
     return qc
+
+
+def prepare_superposition(data):
+    n = data["num_wires"]
+    terms = []
+
+    for term in data["superposition"]:
+        vacuum = GaussianStateDescription.vacuum_state(n)
+        prepared = applyunitaries(
+            vacuum,
+            [unitary_from_gate(g) for g in term["gates"]],
+        )
+        coeff = cplx(term["coefficient"])
+        terms.append((coeff, prepared))
+
+    return terms
 
 
 # ---------- rendering ----------
@@ -163,6 +183,37 @@ def simulate():
     )
 
     return jsonify({"probability": float(prob)})
+
+
+@app.route("/plot", methods=["POST"])
+def plot():
+    data = request.json
+
+    superposition_terms = prepare_superposition(data)
+    wires = data["plot"]["wires"]
+    resolution = int(data["plot"]["resolution"])
+
+    images = []
+
+    for mode in wires:
+        # generate plot
+        plotprobexact(
+            superposition_terms,
+            mode_index=mode,
+            re_lim=None,
+            im_lim=None,
+            resolution=resolution,
+        )
+
+        # save current matplotlib figure to PNG
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png")
+        plt.close()
+        buf.seek(0)
+
+        images.append(base64.b64encode(buf.read()).decode("ascii"))
+
+    return jsonify({"images": images})
 
 
 if __name__ == "__main__":

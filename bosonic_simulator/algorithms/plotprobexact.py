@@ -7,11 +7,39 @@ from bosonic_simulator.gaussian_state_description import GaussianStateDescriptio
 def plotprobexact(
     superposition_terms: list[tuple[np.complex128, GaussianStateDescription]],
     mode_index: int,
-    re_lim: tuple[int, int] = (-3, 3),  # Plot limits in phase space
-    im_lim: tuple[int, int] = (-3, 3),
-    resolution: int = 200,  # Number of grid points per axis
+    re_lim: tuple[int, int] | None = None,  # Plot limits in phase space
+    im_lim: tuple[int, int] | None = None,
+    resolution: int = 15,  # Number of grid points per axis
     cmap: str = "Blues",  # Matplotlib colormap
 ):
+
+    if re_lim is None:
+        variances = [
+            psi.covariance_matrix[2 * mode_index, 2 * mode_index]
+            for (_, psi) in superposition_terms
+        ]
+        max_std_dev = max(np.sqrt(v) for v in variances)
+
+        q_centers = [psi.amplitude[mode_index].real for (_, psi) in superposition_terms]
+
+        re_lim = (
+            min(q_centers) - 2.0 * max_std_dev,
+            max(q_centers) + 2.0 * max_std_dev,
+        )
+
+    if im_lim is None:
+        variances = [
+            psi.covariance_matrix[2 * mode_index + 1, 2 * mode_index + 1]
+            for (_, psi) in superposition_terms
+        ]
+        max_std_dev = max(np.sqrt(v) for v in variances)
+
+        p_centers = [psi.amplitude[mode_index].imag for (_, psi) in superposition_terms]
+
+        im_lim = (
+            min(p_centers) - 2.0 * max_std_dev,
+            max(p_centers) + 2.0 * max_std_dev,
+        )
 
     # phase-space grid
     re = np.linspace(re_lim[0], re_lim[1], resolution)
@@ -88,10 +116,15 @@ def plotprobexact(
 #     for (c, psi) in superposition_terms
 # ]
 
+# superposition_terms = [
+#     (c, applyunitary(psi, SqueezingDescription(np.log(2), 0)))
+#     for (c, psi) in superposition_terms
+# ]
+
 # plotprobexact(
 #     superposition_terms=superposition_terms,
 #     mode_index=0,
-#     resolution=25,
+#     resolution=15,
 # )
 
 # alpha = (-1 + 1j) * np.exp(1j * np.pi / 8)
@@ -360,7 +393,7 @@ def plotprobexact(
 #     mode_index=2,
 #     resolution=20,
 # )
-#
+
 # 0.569+0i
 
 # alpha = 1 + 1j
