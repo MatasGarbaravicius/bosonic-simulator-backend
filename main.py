@@ -193,6 +193,10 @@ def plot():
     wires = data["plot"]["wires"]
     resolution = int(data["plot"]["resolution"])
 
+    global_unitaries = [unitary_from_gate(g) for g in data["global_gates"]]
+    for i, (coeff, state) in enumerate(superposition_terms):
+        superposition_terms[i] = (coeff, applyunitaries(state, global_unitaries))
+
     images = []
 
     for mode in wires:
