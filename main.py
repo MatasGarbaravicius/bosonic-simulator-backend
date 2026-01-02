@@ -37,7 +37,7 @@ def unitary_from_gate(g):
 
     if g["type"] == "D":
         return DisplacementDescription(
-            amplitude=[complex(cplx(a)) for a in g["alpha"]
+            amplitude=np.array([cplx(a) for a in g["alpha"]])
         )
 
     if g["type"] == "B":
@@ -54,8 +54,11 @@ def build_qiskit_circuit(num_wires, gates):
     for g in gates:
         if g["type"] == "D":
             gate = Gate(
-                "D", num_wires, np.array([cplx(a) for a in g["alpha"]]).tolist()
+                "D",
+                num_wires,
+                [complex(cplx(a)) for a in g["alpha"]],
             )
+
             qc.append(gate, list(range(num_wires)))
 
         elif g["type"] == "F":
