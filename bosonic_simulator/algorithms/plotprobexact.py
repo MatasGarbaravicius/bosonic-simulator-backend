@@ -69,7 +69,7 @@ def plotprobexact(
     plt.colorbar(label=r"$p_{\Psi}(\beta)$")
     plt.xlabel(r"$\mathrm{Re}(\beta)$")
     plt.ylabel(r"$\mathrm{Im}(\beta)$")
-    plt.title("Probability density")
+    plt.title(f"Probability density (mode_index = {mode_index})")
     plt.tight_layout()
     plt.show()
 

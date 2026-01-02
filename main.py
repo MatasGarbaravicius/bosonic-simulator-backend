@@ -20,6 +20,7 @@ from bosonic_simulator.gaussian_unitary_description import (
 from bosonic_simulator.algorithms.applyunitaries import applyunitaries
 from bosonic_simulator.algorithms.simulateexactly import simulateexactly
 from bosonic_simulator.algorithms.plotprobexact import plotprobexact
+from bosonic_simulator.algorithms.exactnorm import exactnorm
 
 app = Flask(__name__)
 CORS(app)
@@ -114,21 +115,6 @@ STYLE = {
 }
 
 
-def D(x):
-    return x
-
-
-my_list = D(
-    [
-        1.23324123412342314124214124312341234213,
-        1.23324123412342314124214124312341234213,
-        1.23324123412342314124214124312341234213,
-        1.23324123412342314124214124312341234213,
-        1.23324123412342314124214124312341234213,
-    ]
-)
-
-
 @app.route("/render_term", methods=["POST"])
 def render_term():
     data = request.json
@@ -218,6 +204,23 @@ def plot():
         images.append(base64.b64encode(buf.read()).decode("ascii"))
 
     return jsonify({"images": images})
+
+
+@app.route("/normalize", methods=["POST"])
+def normalize():
+    data = request.json
+    superposition_terms = data["superposition"]
+
+    # Calculate the norm using the exactnorm function
+    norm = exactnorm(superposition_terms)
+
+    # Normalize the coefficients by dividing them by the norm
+    normalized_superposition = []
+    for coeff, state in superposition_terms:
+        normalized_coeff = np.array(coeff) / norm
+        normalized_superposition.append((normalized_coeff, state))
+
+    return jsonify({"normalized_superposition": normalized_superposition})
 
 
 if __name__ == "__main__":
