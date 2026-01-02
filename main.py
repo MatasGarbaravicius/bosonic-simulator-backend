@@ -57,7 +57,9 @@ def build_qiskit_circuit(num_wires, gates):
                 "D",
                 num_wires,
                 [],
-                "D([\n" + "\n".join(f"  {cplx(a)}," for a in g["alpha"]) + "\n])",
+                "D([{}])".format(
+                    ",\n   ".join(map(str, (cplx(a) for a in g["alpha"])))
+                ),
             )
 
             qc.append(gate, list(range(num_wires)))
