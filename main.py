@@ -220,7 +220,7 @@ def normalize():
     return jsonify(
         {
             "normalized_superposition": [
-                {"coefficient": coeff, "state": state}
+                {"coefficient": [coeff.real, coeff.imag], "state": state}
                 for coeff, state in superposition_terms
             ]
         }
