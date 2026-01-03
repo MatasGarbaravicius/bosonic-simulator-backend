@@ -215,12 +215,16 @@ def normalize():
     norm = exactnorm(superposition_terms)
 
     # Normalize the coefficients by dividing them by the norm
-    normalized_superposition = []
-    for coeff, state in superposition_terms:
-        normalized_coeff = np.array(coeff) / norm
-        normalized_superposition.append((normalized_coeff, state))
+    superposition_terms = [(c / norm, psi) for (c, psi) in superposition_terms]
 
-    return jsonify({"normalized_superposition": normalized_superposition})
+    return jsonify(
+        {
+            "normalized_superposition": [
+                {"coefficient": coeff, "state": state}
+                for coeff, state in superposition_terms
+            ]
+        }
+    )
 
 
 if __name__ == "__main__":
