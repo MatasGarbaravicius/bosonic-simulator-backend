@@ -218,8 +218,8 @@ def normalize():
             "normalized_superposition": [
                 {
                     "coefficient": [
-                        superposition_terms[index][0] / norm,
-                        superposition_terms[index][0] / norm,
+                        superposition_terms[index][0].real / norm,
+                        superposition_terms[index][0].imag / norm,
                     ],
                     "gates": term["gates"],
                 }
