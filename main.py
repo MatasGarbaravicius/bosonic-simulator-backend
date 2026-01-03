@@ -211,17 +211,19 @@ def normalize():
     data = request.json
     superposition_terms = prepare_superposition(data)
 
-    # Calculate the norm using the exactnorm function
     norm = exactnorm(superposition_terms)
-
-    # Normalize the coefficients by dividing them by the norm
-    superposition_terms = [(c / norm, psi) for (c, psi) in superposition_terms]
 
     return jsonify(
         {
             "normalized_superposition": [
-                {"coefficient": [coeff.real, coeff.imag], "state": state}
-                for coeff, state in superposition_terms
+                {
+                    "coefficient": [
+                        superposition_terms[index][0] / norm,
+                        superposition_terms[index][0] / norm,
+                    ],
+                    "gates": term["gates"],
+                }
+                for index, term in enumerate(data["superposition"])
             ]
         }
     )
