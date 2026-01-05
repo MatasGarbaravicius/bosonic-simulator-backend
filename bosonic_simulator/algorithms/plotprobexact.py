@@ -58,6 +58,48 @@ def plotprobexact(
 
             prob[i, j] = np.real(p)
 
+            # from bosonic_simulator.algorithms.measureprobapproximate import (
+            #     measureprobapproximate,
+            # )
+
+            # p_approx = measureprobapproximate(
+            #     superposition_terms,
+            #     np.array([Re[i, j] + 1j * Im[i, j]]),
+            #     wires=[mode_index],
+            #     multiplicative_error=0.75,
+            #     max_failure_probability=5,
+            #     energy_upper_bound=10,
+            # )
+
+            # prob[i, j] = np.real((p_approx - p) / p)
+
+            # print(prob[i, j])
+
+            # from bosonic_simulator.algorithms.postmeasure import postmeasure
+            # import bosonic_simulator.algorithms.prob as prr
+
+            # amplitude = np.array([Re[i, j] + 1j * Im[i, j]])
+            # pi_alpha_psi = []
+            # for c_j, psi_j in superposition_terms:
+
+            #     pi_alpha_psi_j_norm_squared = (np.pi**1) * prr.prob(
+            #         psi_j, amplitude, [mode_index]
+            #     )
+            #     c_prime_j = c_j * np.sqrt(pi_alpha_psi_j_norm_squared)
+
+            #     psi_prime_j = postmeasure(psi_j, amplitude, [mode_index])
+
+            #     pi_alpha_psi.append((c_prime_j, psi_prime_j))
+
+            # prob[i, j] = np.log10(
+            #     np.square(
+            #         np.sum(
+            #             [np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in pi_alpha_psi]
+            #         )
+            #     )
+            #     / (exactnorm(pi_alpha_psi) ** 2)
+            # )
+
     # plot
     plt.figure(figsize=(6, 5))
     plt.imshow(
@@ -104,15 +146,25 @@ def plotprobexact(
 #             DisplacementDescription(np.array([-alpha])),
 #         ),
 #     ),
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([1 - 1j])),
+#         ),
+#     ),
 # ]
 
 # from bosonic_simulator.algorithms.exactnorm import exactnorm
 # from bosonic_simulator.algorithms.fastnorm import fastnorm
 
-# # energy_upper_bound = np.square(
-# #     np.sum([np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in superposition_terms])
-# # )  # bound energy of superposition state with Cauchy-Schwarz
-# # print(f"energy bound: {energy_upper_bound}")
+# exnorm11 = exactnorm(superposition_terms)
+# superposition_terms = [(c / exnorm11, psi) for (c, psi) in superposition_terms]
+
+# energy_upper_bound = np.square(
+#     np.sum([np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in superposition_terms])
+# )  # bound energy of superposition state with Cauchy-Schwarz
+# print(f"energy bound: {energy_upper_bound}")
 # # negative_count = 0
 # # inacurrate_count = 0
 # # n_iterations = 100
@@ -151,7 +203,12 @@ def plotprobexact(
 # # ]
 
 # plotprobexact(
-#     superposition_terms=superposition_terms, mode_index=0, resolution=8, cmap="Blues"
+#     superposition_terms=superposition_terms,
+#     mode_index=0,
+#     resolution=15,
+#     cmap="Blues",
+#     re_lim=(-2, 2),
+#     im_lim=(-2, 2),
 # )
 
 # alpha = (-1 + 1j) * np.exp(1j * np.pi / 8)

@@ -175,8 +175,9 @@ def simulate():
             global_unitaries,
             amplitude,
             data["measurement"]["wires"],
-            np.float64(0.7),
-            np.float64(0.7),
+            np.float64(0.75),
+            np.float64(0.25),
+            data["measurement"]["energy_upper_bound"],
         )
         return jsonify(
             {
