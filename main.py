@@ -175,8 +175,8 @@ def simulate():
             global_unitaries,
             amplitude,
             data["measurement"]["wires"],
-            np.float64(0.95),
-            np.float64(0.5),
+            np.float64(0.7),
+            np.float64(0.7),
         )
         return jsonify(
             {
