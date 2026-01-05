@@ -15,7 +15,9 @@ def measureprobapproximate(
 ):
     if energy_upper_bound is None:
         energy_upper_bound = np.square(
-            np.sum([np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in pi_alpha_psi])
+            np.sum(
+                [np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in superposition_terms]
+            )
         )  # bound energy of pre-measurement superposition with Cauchy-Schwarz
 
     # precompute values and introduce shorter notation
