@@ -11,8 +11,13 @@ def measureprobapproximate(
     wires: list[int],
     multiplicative_error: np.float64,
     max_failure_probability: np.float64,
-    energy_upper_bound: np.float64,
+    energy_upper_bound: np.float64 | None = None,
 ):
+    if energy_upper_bound is None:
+        energy_upper_bound = np.square(
+            np.sum([np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in pi_alpha_psi])
+        )  # bound energy of pre-measurement superposition with Cauchy-Schwarz
+
     # precompute values and introduce shorter notation
 
     alpha = amplitude
@@ -20,7 +25,7 @@ def measureprobapproximate(
 
     # execute the algorithm
 
-    fastnorm_input = []
+    pi_alpha_psi = []
     for c_j, psi_j in superposition_terms:
 
         pi_alpha_psi_j_norm_squared = (np.pi**k) * prob(psi_j, alpha, wires)
@@ -28,10 +33,10 @@ def measureprobapproximate(
 
         psi_prime_j = postmeasure(psi_j, alpha, wires)
 
-        fastnorm_input.append((c_prime_j, psi_prime_j))
+        pi_alpha_psi.append((c_prime_j, psi_prime_j))
 
     norm_pi_alpha_psi = fastnorm(
-        fastnorm_input,
+        pi_alpha_psi,
         multiplicative_error,
         max_failure_probability,
         energy_upper_bound,

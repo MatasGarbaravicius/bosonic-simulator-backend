@@ -21,6 +21,7 @@ from bosonic_simulator.algorithms.applyunitaries import applyunitaries
 from bosonic_simulator.algorithms.simulateexactly import simulateexactly
 from bosonic_simulator.algorithms.plotprobexact import plotprobexact
 from bosonic_simulator.algorithms.exactnorm import exactnorm
+from bosonic_simulator.algorithms.simulateapproximately import simulateapproximately
 
 app = Flask(__name__)
 CORS(app)
@@ -168,7 +169,25 @@ def simulate():
         data["measurement"]["wires"],
     )
 
-    return jsonify({"probability": float(prob)})
+    if data["measurement"]["use_randomized"]:
+        prob_approx = simulateapproximately(
+            superposition_terms,
+            global_unitaries,
+            amplitude,
+            data["measurement"]["wires"],
+            np.float64(0.95),
+            np.float64(0.5),
+        )
+        return jsonify(
+            {
+                "probability": float(prob),
+                "approximate_probability": float(prob_approx),
+                "signed_multiplicative_error": float((prob_approx - prob) / prob),
+            }
+        )
+
+    else:
+        return jsonify({"probability": float(prob)})
 
 
 @app.route("/plot", methods=["POST"])

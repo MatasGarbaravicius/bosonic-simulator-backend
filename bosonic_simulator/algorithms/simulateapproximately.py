@@ -13,7 +13,7 @@ def simulateapproximately(
     wires: list[int],
     multiplicative_error: np.float64,
     max_failure_probability: np.float64,
-    energy_upper_bound: np.float64,
+    energy_upper_bound: np.float64 | None = None,
 ):
     superposition_terms = copy.deepcopy(superposition_terms)
     for unitary_description in unitary_descriptions:

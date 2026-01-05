@@ -19,9 +19,8 @@ def fastnorm(
     # execute the algorithm
 
     capital_r = np.sqrt(capital_e / eps)
-    capital_l = np.ceil(capital_e / (4 * np.pi * p_f * (eps**3))).astype(int)
+    capital_l = np.ceil(4 * np.pi * capital_e / (p_f * (eps**3))).astype(int)
     sample_sum = np.float64(0)
-
     for _ in range(capital_l):
         # 1. sample alpha according to the Lebesgue measure on B_R(0)
 
@@ -43,4 +42,4 @@ def fastnorm(
         sum_cjoj = np.sum([c * overlap(delta, psi) for (c, psi) in superposition_terms])
         sample_sum += (capital_r**2) * (np.abs(sum_cjoj) ** 2)
 
-    return sample_sum / capital_l
+    return np.sqrt(sample_sum / capital_l)
