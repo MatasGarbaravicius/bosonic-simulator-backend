@@ -3,6 +3,7 @@ from dataclasses import (
 )
 from typing import Union
 import numpy as np
+from numpy.typing import NDArray
 
 
 @dataclass  # automatically adds generated methods such as __init__()
@@ -13,7 +14,7 @@ class SqueezingDescription:
 
 @dataclass
 class DisplacementDescription:
-    amplitude: np.ndarray
+    amplitude: NDArray[np.complex128]
 
 
 @dataclass

@@ -1,25 +1,26 @@
 import numpy as np
+import bosonic_simulator.coherent_state_tools as coherent_state_tools
 from bosonic_simulator.gaussian_state_description import GaussianStateDescription
-from bosonic_simulator.coherent_state import CoherentState
 from bosonic_simulator.algorithms.prob import prob
 from bosonic_simulator.algorithms.overlaptriple import overlaptriple
 from scipy.linalg import solve  # type: ignore (comment for the IDE since it raises a warning although it shouldn't)
+from numpy.typing import NDArray
 
 
 def postmeasure(
     gaussian_state_description: GaussianStateDescription,
-    amplitude: np.ndarray,
+    amplitude: NDArray[np.complex128],
     wires: list[int],
-):
+) -> GaussianStateDescription:
     # precompute quantities and introduce shorter notation
 
     gamma = gaussian_state_description.covariance_matrix
     alpha = gaussian_state_description.amplitude
-    s = CoherentState.displacement_vector(alpha)
+    s = coherent_state_tools.displacement_vector(alpha)
     r = gaussian_state_description.overlap
     n = gaussian_state_description.number_of_modes
     beta = amplitude
-    dhat_beta = CoherentState.displacement_vector(beta)
+    dhat_beta = coherent_state_tools.displacement_vector(beta)
     k = beta.size
 
     # prepare masks for the subsystems
@@ -52,7 +53,7 @@ def postmeasure(
     s_prime_A = dhat_beta
     s_prime_B = s_B + gamma_AB.T @ solve(gamma_A_plus_I, dhat_beta - s_A)
     s_prime = np.concatenate([s_prime_A, s_prime_B])
-    alpha_prime = CoherentState.displacement_vec_to_amplitude(s_prime)
+    alpha_prime = coherent_state_tools.displacement_vec_to_amplitude(s_prime)
 
     # compute r_prime
 

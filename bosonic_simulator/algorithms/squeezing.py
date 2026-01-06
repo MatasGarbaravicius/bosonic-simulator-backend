@@ -1,15 +1,15 @@
 import numpy as np
 import copy
+import bosonic_simulator.coherent_state_tools as coherent_state_tools
 from bosonic_simulator.gaussian_state_description import GaussianStateDescription
 from bosonic_simulator.algorithms.overlaptriple import overlaptriple
-from bosonic_simulator.coherent_state import CoherentState
 
 
 def squeezing(
     gaussian_state_description: GaussianStateDescription,
     squeezing_parameter: np.float64,
     mode_index: int,
-):
+) -> GaussianStateDescription:
     # precompute quantities and introduce shorter notation
 
     gamma = gaussian_state_description.covariance_matrix
@@ -42,11 +42,11 @@ def squeezing(
 
     # compute r_prime
 
-    dhat_alpha_prime = CoherentState.displacement_vector(alpha_prime)
+    dhat_alpha_prime = coherent_state_tools.displacement_vector(alpha_prime)
     d1 = d2 = d3 = dhat_alpha_prime
     gamma1, gamma2, gamma3 = gamma_prime_prime, identity_n, gamma_prime
     u = np.conj(r)
-    v = 1 / np.cosh(z)
+    v = 1 / np.sqrt(np.cosh(z))
     zero_vector = np.zeros(n, dtype=complex)
     r_prime = overlaptriple(gamma1, gamma2, gamma3, d1, d2, d3, u, v, zero_vector)
 

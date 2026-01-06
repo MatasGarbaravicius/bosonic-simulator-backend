@@ -3,13 +3,14 @@ from bosonic_simulator.gaussian_state_description import GaussianStateDescriptio
 from bosonic_simulator.algorithms.exactnorm import exactnorm
 from bosonic_simulator.algorithms.prob import prob
 from bosonic_simulator.algorithms.postmeasure import postmeasure
+from numpy.typing import NDArray
 
 
 def measureprobexact(
     superposition_terms: list[tuple[np.complex128, GaussianStateDescription]],
-    amplitude: np.ndarray,
+    amplitude: NDArray[np.complex128],
     wires: list[int],
-):
+) -> np.float64:
     # precompute values and introduce shorter notation
 
     alpha = amplitude

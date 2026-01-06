@@ -3,20 +3,26 @@ from bosonic_simulator.gaussian_state_description import GaussianStateDescriptio
 from bosonic_simulator.algorithms.fastnorm import fastnorm
 from bosonic_simulator.algorithms.prob import prob
 from bosonic_simulator.algorithms.postmeasure import postmeasure
+from numpy.typing import NDArray
 
 
 def measureprobapproximate(
     superposition_terms: list[tuple[np.complex128, GaussianStateDescription]],
-    amplitude: np.ndarray,
+    amplitude: NDArray[np.complex128],
     wires: list[int],
     multiplicative_error: np.float64,
     max_failure_probability: np.float64,
     energy_upper_bound: np.float64 | None = None,
-):
+) -> np.float64:
     if energy_upper_bound is None:
-        energy_upper_bound = np.square(
-            np.sum(
-                [np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in superposition_terms]
+        energy_upper_bound = np.float64(
+            np.square(
+                np.sum(
+                    [
+                        np.abs(c) * np.sqrt(psi.energy())
+                        for (c, psi) in superposition_terms
+                    ]
+                )
             )
         )  # bound energy of pre-measurement superposition with Cauchy-Schwarz
 

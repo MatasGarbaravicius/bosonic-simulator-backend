@@ -8,7 +8,7 @@ def fastnorm(
     multiplicative_error: np.float64,
     max_failure_probability: np.float64,
     energy_upper_bound: np.float64,
-):
+) -> np.float64:
     # introduce shorter notation
 
     n = superposition_terms[0][1].number_of_modes

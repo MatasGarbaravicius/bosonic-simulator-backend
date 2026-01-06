@@ -1,20 +1,21 @@
 import numpy as np  # package for scientific computing with Python
-from bosonic_simulator.block_diagonal_symplectic_form import BlockDiagonalSymplecticForm
-from bosonic_simulator.coherent_state import CoherentState
+import bosonic_simulator.block_diagonal_symplectic_form_tools as omega
+import bosonic_simulator.coherent_state_tools as coherent_state_tools
 from scipy.linalg import solve  # type: ignore # Suppress incorrect VS Code warning
+from numpy.typing import NDArray
 
 
 def overlaptriple(
-    gamma1: np.ndarray,
-    gamma2: np.ndarray,
-    gamma3: np.ndarray,
-    d1: np.ndarray,
-    d2: np.ndarray,
-    d3: np.ndarray,
+    gamma1: NDArray[np.float64],
+    gamma2: NDArray[np.float64],
+    gamma3: NDArray[np.float64],
+    d1: NDArray[np.float64],
+    d2: NDArray[np.float64],
+    d3: NDArray[np.float64],
     u: np.complex128,
     v: np.complex128,
-    lambda_: np.ndarray,
-):
+    lambda_: NDArray[np.complex128],
+) -> np.complex128:
     # For numerical stability:
     # - Solve linear systems instead of computing explicit inverses
     # - Prefer Ax = b with vector RHS over matrix RHS
@@ -40,18 +41,18 @@ def overlaptriple(
     g3 = gamma3
 
     # Naming convention: gX_p_iomega / gX_m_iomega means gammaX ± i * omega.
-    g1_p_iomega = BlockDiagonalSymplecticForm.add_multiple_inplace_to(g1.copy(), 1j)
-    g1_m_iomega = BlockDiagonalSymplecticForm.add_multiple_inplace_to(g1.copy(), -1j)
+    g1_p_iomega = omega.add_multiple_inplace_to(g1.copy(), np.complex128(1j))
+    g1_m_iomega = omega.add_multiple_inplace_to(g1.copy(), np.complex128(-1j))
 
-    g3_p_iomega = BlockDiagonalSymplecticForm.add_multiple_inplace_to(g3.copy(), 1j)
-    g3_m_iomega = BlockDiagonalSymplecticForm.add_multiple_inplace_to(g3.copy(), -1j)
+    g3_p_iomega = omega.add_multiple_inplace_to(g3.copy(), np.complex128(1j))
+    g3_m_iomega = omega.add_multiple_inplace_to(g3.copy(), np.complex128(-1j))
 
     g2_p_g3 = g2 + g3
     g4 = g3 - g3_p_iomega @ (Inv(g2_p_g3) @ g3_m_iomega)
     g1_p_g4 = g1 + g4
 
-    omega_dhat = BlockDiagonalSymplecticForm.multiply_vector(
-        CoherentState.displacement_vector(lambda_)
+    omega_dhat = omega.multiply_vector(
+        coherent_state_tools.displacement_vector(lambda_)
     )  # omega * dhat(lambda)
 
     d1_prime = d1 - d3

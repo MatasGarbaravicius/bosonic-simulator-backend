@@ -11,7 +11,7 @@ def plotprobexact(
     im_lim: tuple[int, int] | None = None,
     resolution: int = 15,  # Number of grid points per axis
     cmap: str = "Blues",  # Matplotlib colormap
-):
+) -> None:
 
     if re_lim is None:
         variances = [
@@ -58,53 +58,11 @@ def plotprobexact(
 
             prob[i, j] = np.real(p)
 
-            # from bosonic_simulator.algorithms.measureprobapproximate import (
-            #     measureprobapproximate,
-            # )
-
-            # p_approx = measureprobapproximate(
-            #     superposition_terms,
-            #     np.array([Re[i, j] + 1j * Im[i, j]]),
-            #     wires=[mode_index],
-            #     multiplicative_error=0.75,
-            #     max_failure_probability=0.25,
-            #     energy_upper_bound=10,
-            # )
-
-            # prob[i, j] = np.real((p_approx - p) / p)
-
-            # print(prob[i, j])
-
-            # from bosonic_simulator.algorithms.postmeasure import postmeasure
-            # import bosonic_simulator.algorithms.prob as prr
-
-            # amplitude = np.array([Re[i, j] + 1j * Im[i, j]])
-            # pi_alpha_psi = []
-            # for c_j, psi_j in superposition_terms:
-
-            #     pi_alpha_psi_j_norm_squared = (np.pi**1) * prr.prob(
-            #         psi_j, amplitude, [mode_index]
-            #     )
-            #     c_prime_j = c_j * np.sqrt(pi_alpha_psi_j_norm_squared)
-
-            #     psi_prime_j = postmeasure(psi_j, amplitude, [mode_index])
-
-            #     pi_alpha_psi.append((c_prime_j, psi_prime_j))
-
-            # prob[i, j] = np.log10(
-            #     np.square(
-            #         np.sum(
-            #             [np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in pi_alpha_psi]
-            #         )
-            #     )
-            #     / (exactnorm(pi_alpha_psi) ** 2)
-            # )
-
     # plot
     plt.figure(figsize=(6, 5))
     plt.imshow(
         prob,
-        extent=[re.min(), re.max(), im.min(), im.max()],
+        extent=(re.min(), re.max(), im.min(), im.max()),
         origin="lower",
         cmap=cmap,
     )
@@ -114,8 +72,6 @@ def plotprobexact(
     plt.title(f"Probability density (mode_index = {mode_index})")
     plt.tight_layout()
     plt.show()
-
-    return re, im, prob
 
 
 # alpha = 1 + 1j

@@ -1,34 +1,37 @@
 import numpy as np  # package for scientific computing with Python
+from numpy.typing import NDArray
 
 
 class GaussianStateDescription:  # see subsection "Extended description of a Gaussian state"
 
     def __init__(
         self,
-        covariance_matrix: np.ndarray,
-        amplitude: np.ndarray,
+        covariance_matrix: NDArray[np.float64],
+        amplitude: NDArray[np.complex128],
         overlap: np.complex128,
     ):
         self.covariance_matrix = covariance_matrix
         self.amplitude = amplitude
         self.overlap = overlap
 
-    def energy(self):
+    def energy(self) -> np.float64:
         tr_gamma = np.trace(self.covariance_matrix)
         d_norm_squared = 2 * (np.linalg.norm(self.amplitude))
         n = self.number_of_modes
         return np.real(0.5 * tr_gamma + d_norm_squared + n)
 
     @classmethod
-    def coherent_state(cls, amplitude: np.ndarray):
+    def coherent_state(
+        cls, amplitude: NDArray[np.complex128]
+    ) -> "GaussianStateDescription":
         alpha = amplitude
         identity = np.eye(
-            2 * alpha.shape[0], dtype=alpha.dtype
+            2 * alpha.shape[0], dtype=np.float64
         )  # I matrix of needed shape & type
-        return cls(identity, alpha, 1)
+        return cls(identity, alpha, np.complex128(1))
 
     @classmethod
-    def vacuum_state(cls, complex_dimension: int):
+    def vacuum_state(cls, complex_dimension: int) -> "GaussianStateDescription":
         return cls.coherent_state(np.zeros(complex_dimension, dtype=complex))
 
     @property

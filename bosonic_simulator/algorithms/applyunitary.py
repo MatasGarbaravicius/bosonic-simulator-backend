@@ -8,7 +8,7 @@ from bosonic_simulator.algorithms.squeezing import squeezing
 def applyunitary_inplace(
     gaussian_state_description: GaussianStateDescription,
     gaussian_unitary_description: gu_description.GaussianUnitaryDescription,
-):
+) -> None:
     gsd = gaussian_state_description  # alias for convenience
     match gaussian_unitary_description:
         case gu_description.SqueezingDescription(z, j):
@@ -66,7 +66,7 @@ def applyunitary_inplace(
 def applyunitary(
     gaussian_state_description: GaussianStateDescription,
     gaussian_unitary_description: gu_description.GaussianUnitaryDescription,
-):
+) -> GaussianStateDescription:
     gsd_copy = copy.deepcopy(gaussian_state_description)
     applyunitary_inplace(gsd_copy, gaussian_unitary_description)
     return gsd_copy

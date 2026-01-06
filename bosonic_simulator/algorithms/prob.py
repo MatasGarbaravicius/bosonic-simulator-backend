@@ -1,21 +1,24 @@
 import numpy as np
+import bosonic_simulator.coherent_state_tools as coherent_state_tools
 from bosonic_simulator.gaussian_state_description import GaussianStateDescription
-from bosonic_simulator.coherent_state import CoherentState
 from scipy.linalg import solve  # type: ignore (comment for the IDE since it raises a warning although it shouldn't)
+from numpy.typing import NDArray
 
 
 def prob(
     gaussian_state_description: GaussianStateDescription,
-    amplitude: np.ndarray,
+    amplitude: NDArray[np.complex128],
     wires: list[int],
-):
+) -> np.float64:
     # precompute quantities and introduce shorter notation
 
     gamma = gaussian_state_description.covariance_matrix
     alpha = amplitude
     k = amplitude.size
-    dhat_alpha = CoherentState.displacement_vector(alpha)
-    s_A = CoherentState.displacement_vector(gaussian_state_description.amplitude[wires])
+    dhat_alpha = coherent_state_tools.displacement_vector(alpha)
+    s_A = coherent_state_tools.displacement_vector(
+        gaussian_state_description.amplitude[wires]
+    )
 
     # prepare a mask for subsystem A (described by wires)
 

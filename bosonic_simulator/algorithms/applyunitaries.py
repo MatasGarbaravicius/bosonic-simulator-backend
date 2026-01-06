@@ -7,7 +7,7 @@ from bosonic_simulator.algorithms.applyunitary import applyunitary
 def applyunitaries(
     gaussian_state_description: GaussianStateDescription,
     gaussian_unitary_descriptions: list[GaussianUnitaryDescription],
-):
+) -> GaussianStateDescription:
     gsd = copy.deepcopy(gaussian_state_description)
     for unitary_description in gaussian_unitary_descriptions:
         gsd = applyunitary(gsd, unitary_description)
