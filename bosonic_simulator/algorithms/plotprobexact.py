@@ -58,22 +58,22 @@ def plotprobexact(
 
             prob[i, j] = np.real(p)
 
-            from bosonic_simulator.algorithms.measureprobapproximate import (
-                measureprobapproximate,
-            )
+            # from bosonic_simulator.algorithms.measureprobapproximate import (
+            #     measureprobapproximate,
+            # )
 
-            p_approx = measureprobapproximate(
-                superposition_terms,
-                np.array([Re[i, j] + 1j * Im[i, j]]),
-                wires=[mode_index],
-                multiplicative_error=0.75,
-                max_failure_probability=0.25,
-                energy_upper_bound=10,
-            )
+            # p_approx = measureprobapproximate(
+            #     superposition_terms,
+            #     np.array([Re[i, j] + 1j * Im[i, j]]),
+            #     wires=[mode_index],
+            #     multiplicative_error=0.75,
+            #     max_failure_probability=0.25,
+            #     energy_upper_bound=10,
+            # )
 
-            prob[i, j] = np.real((p_approx - p) / p)
+            # prob[i, j] = np.real((p_approx - p) / p)
 
-            print(prob[i, j])
+            # print(prob[i, j])
 
             # from bosonic_simulator.algorithms.postmeasure import postmeasure
             # import bosonic_simulator.algorithms.prob as prr
@@ -118,98 +118,98 @@ def plotprobexact(
     return re, im, prob
 
 
-alpha = 1 + 1j
-mode = 0
+# alpha = 1 + 1j
+# mode = 0
 
 
-from bosonic_simulator.gaussian_state_description import GaussianStateDescription
-from bosonic_simulator.algorithms.applyunitary import applyunitary
-from bosonic_simulator.gaussian_unitary_description import (
-    DisplacementDescription,
-    SqueezingDescription,
-    PhaseShiftDescription,
-)
+# from bosonic_simulator.gaussian_state_description import GaussianStateDescription
+# from bosonic_simulator.algorithms.applyunitary import applyunitary
+# from bosonic_simulator.gaussian_unitary_description import (
+#     DisplacementDescription,
+#     SqueezingDescription,
+#     PhaseShiftDescription,
+# )
 
-# example cat state |α> + |−α>
-superposition_terms = [
-    (
-        1 / np.sqrt(2),
-        applyunitary(
-            GaussianStateDescription.vacuum_state(1),
-            DisplacementDescription(np.array([alpha])),
-        ),
-    ),
-    (
-        1 / np.sqrt(2),
-        applyunitary(
-            GaussianStateDescription.vacuum_state(1),
-            DisplacementDescription(np.array([-alpha])),
-        ),
-    ),
-    (
-        1 / np.sqrt(2),
-        applyunitary(
-            GaussianStateDescription.vacuum_state(1),
-            DisplacementDescription(np.array([1 - 1j])),
-        ),
-    ),
-]
-
-from bosonic_simulator.algorithms.exactnorm import exactnorm
-from bosonic_simulator.algorithms.fastnorm import fastnorm
-
-exnorm11 = exactnorm(superposition_terms)
-superposition_terms = [(c / exnorm11, psi) for (c, psi) in superposition_terms]
-
-energy_upper_bound = np.square(
-    np.sum([np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in superposition_terms])
-)  # bound energy of superposition state with Cauchy-Schwarz
-print(f"energy bound: {energy_upper_bound}")
-# negative_count = 0
-# inacurrate_count = 0
-# n_iterations = 100
-# rel_error = 0.4
-# rel_error_sum = 0
-# for _ in range(n_iterations):
-#     exnorm = exactnorm(superposition_terms=superposition_terms)
-#     fnorm = fastnorm(superposition_terms, rel_error, 0.1, 10)
-
-#     # print(exnorm)
-#     # print(fnorm)
-#     print(f"rel = {(fnorm-exnorm) / exnorm}")
-#     rel_error_sum += (fnorm - exnorm) / exnorm
-#     if fnorm < exnorm:
-#         negative_count += 1
-#     if np.abs(fnorm - exnorm) / exnorm > rel_error:
-#         inacurrate_count += 1
-
-# print(f"negative number proportion: {negative_count/n_iterations}")
-# print(f"inacurrate number proportion: {inacurrate_count/n_iterations}")
-# print(f"avg. rel. error: {rel_error_sum/n_iterations}")
-
+# # example cat state |α> + |−α>
 # superposition_terms = [
-#     (c, applyunitary(psi, PhaseShiftDescription(np.float64(-np.pi / 4), 0)))
-#     for (c, psi) in superposition_terms
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([alpha])),
+#         ),
+#     ),
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([-alpha])),
+#         ),
+#     ),
+#     (
+#         1 / np.sqrt(2),
+#         applyunitary(
+#             GaussianStateDescription.vacuum_state(1),
+#             DisplacementDescription(np.array([1 - 1j])),
+#         ),
+#     ),
 # ]
 
-# superposition_terms = [
-#     (c, applyunitary(psi, DisplacementDescription(np.array([1 + 1j]))))
-#     for (c, psi) in superposition_terms
-# ]
+# from bosonic_simulator.algorithms.exactnorm import exactnorm
+# from bosonic_simulator.algorithms.fastnorm import fastnorm
 
-# superposition_terms = [
-#     (c, applyunitary(psi, SqueezingDescription(np.log(2), 0)))
-#     for (c, psi) in superposition_terms
-# ]
+# exnorm11 = exactnorm(superposition_terms)
+# superposition_terms = [(c / exnorm11, psi) for (c, psi) in superposition_terms]
 
-plotprobexact(
-    superposition_terms=superposition_terms,
-    mode_index=0,
-    resolution=8,
-    cmap="Blues",
-    re_lim=(-2, 2),
-    im_lim=(-2, 2),
-)
+# energy_upper_bound = np.square(
+#     np.sum([np.abs(c) * np.sqrt(psi.energy()) for (c, psi) in superposition_terms])
+# )  # bound energy of superposition state with Cauchy-Schwarz
+# print(f"energy bound: {energy_upper_bound}")
+# # negative_count = 0
+# # inacurrate_count = 0
+# # n_iterations = 100
+# # rel_error = 0.4
+# # rel_error_sum = 0
+# # for _ in range(n_iterations):
+# #     exnorm = exactnorm(superposition_terms=superposition_terms)
+# #     fnorm = fastnorm(superposition_terms, rel_error, 0.1, 10)
+
+# #     # print(exnorm)
+# #     # print(fnorm)
+# #     print(f"rel = {(fnorm-exnorm) / exnorm}")
+# #     rel_error_sum += (fnorm - exnorm) / exnorm
+# #     if fnorm < exnorm:
+# #         negative_count += 1
+# #     if np.abs(fnorm - exnorm) / exnorm > rel_error:
+# #         inacurrate_count += 1
+
+# # print(f"negative number proportion: {negative_count/n_iterations}")
+# # print(f"inacurrate number proportion: {inacurrate_count/n_iterations}")
+# # print(f"avg. rel. error: {rel_error_sum/n_iterations}")
+
+# # superposition_terms = [
+# #     (c, applyunitary(psi, PhaseShiftDescription(np.float64(-np.pi / 4), 0)))
+# #     for (c, psi) in superposition_terms
+# # ]
+
+# # superposition_terms = [
+# #     (c, applyunitary(psi, DisplacementDescription(np.array([1 + 1j]))))
+# #     for (c, psi) in superposition_terms
+# # ]
+
+# # superposition_terms = [
+# #     (c, applyunitary(psi, SqueezingDescription(np.log(2), 0)))
+# #     for (c, psi) in superposition_terms
+# # ]
+
+# plotprobexact(
+#     superposition_terms=superposition_terms,
+#     mode_index=0,
+#     resolution=8,
+#     cmap="Blues",
+#     re_lim=(-2, 2),
+#     im_lim=(-2, 2),
+# )
 
 # alpha = (-1 + 1j) * np.exp(1j * np.pi / 8)
 # mode = 0
