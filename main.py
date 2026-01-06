@@ -169,7 +169,7 @@ def simulate():
         data["measurement"]["wires"],
     )
 
-    if data["measurement"]["use_randomized"]:
+    if data["measurement"]["use_randomized"] and data["num_wires"] == 1:
         prob_approx = simulateapproximately(
             superposition_terms,
             global_unitaries,
