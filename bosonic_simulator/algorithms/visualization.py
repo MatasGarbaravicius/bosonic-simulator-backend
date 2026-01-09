@@ -1,7 +1,8 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from bosonic_simulator.algorithms.measureprobexact import measureprobexact
-from bosonic_simulator.gaussian_state_description import GaussianStateDescription
+import numpy as np
+
+from bosonic_simulator.algorithms.measurement import measureprobexact
+from bosonic_simulator.types.gaussian_state_description import GaussianStateDescription
 
 
 def plotprobexact(

@@ -1,27 +1,29 @@
-from flask import Flask, request, jsonify, send_file
-from flask_cors import CORS
-import numpy as np
-import os
-import io
 import base64
-import matplotlib.pyplot as plt
+import io
+import os
 
+import matplotlib.pyplot as plt
+import numpy as np
+from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 from qiskit import QuantumCircuit
 from qiskit.circuit import Gate
 from qiskit.visualization import circuit_drawer
 
-from bosonic_simulator.gaussian_state_description import GaussianStateDescription
-from bosonic_simulator.gaussian_unitary_description import (
+from bosonic_simulator.algorithms.evolution import applyunitaries
+from bosonic_simulator.algorithms.norm import exactnorm
+from bosonic_simulator.algorithms.simulation import (
+    simulateapproximately,
+    simulateexactly,
+)
+from bosonic_simulator.algorithms.visualization import plotprobexact
+from bosonic_simulator.types.gaussian_state_description import GaussianStateDescription
+from bosonic_simulator.types.gaussian_unitary_description import (
+    BeamSplitterDescription,
+    DisplacementDescription,
     PhaseShiftDescription,
     SqueezingDescription,
-    DisplacementDescription,
-    BeamSplitterDescription,
 )
-from bosonic_simulator.algorithms.applyunitaries import applyunitaries
-from bosonic_simulator.algorithms.simulateexactly import simulateexactly
-from bosonic_simulator.algorithms.plotprobexact import plotprobexact
-from bosonic_simulator.algorithms.exactnorm import exactnorm
-from bosonic_simulator.algorithms.simulateapproximately import simulateapproximately
 
 app = Flask(__name__)
 CORS(app)
