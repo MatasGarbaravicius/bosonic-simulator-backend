@@ -16,6 +16,9 @@ def multiply_vector(
     \Omega = \bigoplus_{j=1}^{n} \begin{pmatrix} 0 & 1 \\\ -1 & 0 \end{pmatrix}
     $$
 
+    **Runtime:**
+    $O(n)$.
+
     Parameters
     ----------
     vector : NDArray[np.complex128] | NDArray[np.float64]
@@ -43,6 +46,9 @@ def add_multiple_inplace_to(
     This performs the update $M \leftarrow M + s \Omega$, where $M$ is the
     input matrix and $s$ is the scalar. The symplectic form $\Omega$
     is described in Section 2 of the reference paper.
+
+    **Runtime:**
+    $O(n)$.
 
     Parameters
     ----------

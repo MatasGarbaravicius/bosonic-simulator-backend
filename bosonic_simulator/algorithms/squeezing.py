@@ -11,7 +11,7 @@ def squeezing(
     mode_index: int,
 ) -> GaussianStateDescription:
     r"""
-    Updates the description of a Gaussian state after applying a single-mode squeezing operation.
+    Returns a new description of a Gaussian state after applying a single-mode squeezing operation.
 
     This implements the `squeezing` algorithm described in Section 3.3 of the
     reference paper. Given descriptions of a state $\Delta$ and a squeezing operation
@@ -76,7 +76,7 @@ def squeezing(
     gamma1, gamma2, gamma3 = gamma_prime_prime, identity_n, gamma_prime
     u = np.conj(r)
     v = 1 / np.sqrt(np.cosh(z))
-    zero_vector = np.zeros(n, dtype=complex)
+    zero_vector = np.zeros(n, dtype=np.complex128)
     r_prime = overlaptriple(gamma1, gamma2, gamma3, d1, d2, d3, u, v, zero_vector)
 
     return GaussianStateDescription(gamma_prime, alpha_prime, r_prime)

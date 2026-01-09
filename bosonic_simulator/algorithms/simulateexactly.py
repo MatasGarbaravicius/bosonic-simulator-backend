@@ -14,7 +14,7 @@ def simulateexactly(
     wires: list[int],
 ) -> np.float64:
     r"""
-    Simulates the evolution and measurement of a superposition of Gaussian states.
+    Simulates the evolution and measurement of a normalized superposition of Gaussian states.
 
     This implements the exact strong simulation routine summarized in Theorem 1.1 of the
     reference paper. It applies a sequence of Gaussian unitaries to a superposition state

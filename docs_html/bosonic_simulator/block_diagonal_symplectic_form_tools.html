@@ -97,65 +97,71 @@
 </span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    \Omega = \bigoplus_{j=1}^{n} \begin{pmatrix} 0 &amp; 1 \\\ -1 &amp; 0 \end{pmatrix}</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    $$</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">    Parameters</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">    ----------</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">    vector : NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">        The input vector $v$ of size $2n$.</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">    Returns</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">    -------</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="sd">        The resulting vector $\Omega v$.</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="c1"># start::step means start at index &#39;start&#39; and pick elements every &#39;step&#39; positions</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">return</span> <span class="n">result</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="k">def</span><span class="w"> </span><span class="nf">add_multiple_inplace_to</span><span class="p">(</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="n">matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="n">scalar</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">    Adds a scalar multiple of the symplectic form $\Omega$ to a matrix in-place.</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">    This performs the update $M \leftarrow M + s \Omega$, where $M$ is the</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">    input matrix and $s$ is the scalar. The symplectic form $\Omega$</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">    is described in Section 2 of the reference paper.</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a><span class="sd">    Parameters</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="sd">    ----------</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a><span class="sd">    matrix : NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="sd">        The matrix $M$ to be updated. It must be of shape $(2n, 2n)$.</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="sd">    scalar : np.complex128 | np.float64</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="sd">        The scalar multiplier $s$.</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">    Returns</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="sd">    -------</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="sd">        The updated matrix $M$.</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># matrix.shape[0] gives the number of rows</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="n">even_indices</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># array([ 0,  2,  4,  6, ..., 2 * (n - 1)])</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>    <span class="c1"># update only the block diagonal entries</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span><span class="p">,</span> <span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">scalar</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">even_indices</span><span class="p">]</span> <span class="o">-=</span> <span class="n">scalar</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>    <span class="k">return</span> <span class="n">matrix</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>
-</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="c1"># np.random.seed(42)</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="c1"># v1 = np.random.randint(6, size=6)</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="c1"># print(v1)</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.multiply_vector(v1))</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="c1"># v2 = np.ones(8)</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a><span class="c1"># print(v2)</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.multiply_vector(v2))</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.add_multiple_inplace_to(np.identity(6, dtype=int), 5))</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a><span class="c1"># rand_mat = np.random.randint(11, size=(4, 4))</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a><span class="c1"># print(rand_mat)</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.add_multiple_inplace_to(rand_mat, -11))</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">    $O(n)$.</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">    Parameters</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    ----------</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">    vector : NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">        The input vector $v$ of size $2n$.</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="sd">    Returns</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="sd">    -------</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a><span class="sd">        The resulting vector $\Omega v$.</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="c1"># start::step means start at index &#39;start&#39; and pick elements every &#39;step&#39; positions</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">return</span> <span class="n">result</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="k">def</span><span class="w"> </span><span class="nf">add_multiple_inplace_to</span><span class="p">(</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="n">matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="n">scalar</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">    Adds a scalar multiple of the symplectic form $\Omega$ to a matrix in-place.</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">    This performs the update $M \leftarrow M + s \Omega$, where $M$ is the</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a><span class="sd">    input matrix and $s$ is the scalar. The symplectic form $\Omega$</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="sd">    is described in Section 2 of the reference paper.</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="sd">    $O(n)$.</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="sd">    Parameters</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">    ----------</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="sd">    matrix : NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="sd">        The matrix $M$ to be updated. It must be of shape $(2n, 2n)$.</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="sd">    scalar : np.complex128 | np.float64</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="sd">        The scalar multiplier $s$.</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a><span class="sd">    Returns</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="sd">    -------</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a><span class="sd">        The updated matrix $M$.</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># matrix.shape[0] gives the number of rows</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="n">even_indices</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># array([ 0,  2,  4,  6, ..., 2 * (n - 1)])</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>    <span class="c1"># update only the block diagonal entries</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span><span class="p">,</span> <span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">scalar</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">even_indices</span><span class="p">]</span> <span class="o">-=</span> <span class="n">scalar</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>    <span class="k">return</span> <span class="n">matrix</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a><span class="c1"># np.random.seed(42)</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a><span class="c1"># v1 = np.random.randint(6, size=6)</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a><span class="c1"># print(v1)</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.multiply_vector(v1))</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="c1"># v2 = np.ones(8)</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a><span class="c1"># print(v2)</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.multiply_vector(v2))</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.add_multiple_inplace_to(np.identity(6, dtype=int), 5))</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="c1"># rand_mat = np.random.randint(11, size=(4, 4))</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a><span class="c1"># print(rand_mat)</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="c1"># print(BlockDiagonalSymplecticForm.add_multiple_inplace_to(rand_mat, -11))</span>
 </span></pre></div>
 
 
@@ -185,21 +191,24 @@
 </span><span id="multiply_vector-17"><a href="#multiply_vector-17"><span class="linenos">17</span></a><span class="sd">    \Omega = \bigoplus_{j=1}^{n} \begin{pmatrix} 0 &amp; 1 \\\ -1 &amp; 0 \end{pmatrix}</span>
 </span><span id="multiply_vector-18"><a href="#multiply_vector-18"><span class="linenos">18</span></a><span class="sd">    $$</span>
 </span><span id="multiply_vector-19"><a href="#multiply_vector-19"><span class="linenos">19</span></a>
-</span><span id="multiply_vector-20"><a href="#multiply_vector-20"><span class="linenos">20</span></a><span class="sd">    Parameters</span>
-</span><span id="multiply_vector-21"><a href="#multiply_vector-21"><span class="linenos">21</span></a><span class="sd">    ----------</span>
-</span><span id="multiply_vector-22"><a href="#multiply_vector-22"><span class="linenos">22</span></a><span class="sd">    vector : NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="multiply_vector-23"><a href="#multiply_vector-23"><span class="linenos">23</span></a><span class="sd">        The input vector $v$ of size $2n$.</span>
-</span><span id="multiply_vector-24"><a href="#multiply_vector-24"><span class="linenos">24</span></a>
-</span><span id="multiply_vector-25"><a href="#multiply_vector-25"><span class="linenos">25</span></a><span class="sd">    Returns</span>
-</span><span id="multiply_vector-26"><a href="#multiply_vector-26"><span class="linenos">26</span></a><span class="sd">    -------</span>
-</span><span id="multiply_vector-27"><a href="#multiply_vector-27"><span class="linenos">27</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="multiply_vector-28"><a href="#multiply_vector-28"><span class="linenos">28</span></a><span class="sd">        The resulting vector $\Omega v$.</span>
-</span><span id="multiply_vector-29"><a href="#multiply_vector-29"><span class="linenos">29</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="multiply_vector-30"><a href="#multiply_vector-30"><span class="linenos">30</span></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
-</span><span id="multiply_vector-31"><a href="#multiply_vector-31"><span class="linenos">31</span></a>    <span class="c1"># start::step means start at index &#39;start&#39; and pick elements every &#39;step&#39; positions</span>
-</span><span id="multiply_vector-32"><a href="#multiply_vector-32"><span class="linenos">32</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-</span><span id="multiply_vector-33"><a href="#multiply_vector-33"><span class="linenos">33</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
-</span><span id="multiply_vector-34"><a href="#multiply_vector-34"><span class="linenos">34</span></a>    <span class="k">return</span> <span class="n">result</span>
+</span><span id="multiply_vector-20"><a href="#multiply_vector-20"><span class="linenos">20</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="multiply_vector-21"><a href="#multiply_vector-21"><span class="linenos">21</span></a><span class="sd">    $O(n)$.</span>
+</span><span id="multiply_vector-22"><a href="#multiply_vector-22"><span class="linenos">22</span></a>
+</span><span id="multiply_vector-23"><a href="#multiply_vector-23"><span class="linenos">23</span></a><span class="sd">    Parameters</span>
+</span><span id="multiply_vector-24"><a href="#multiply_vector-24"><span class="linenos">24</span></a><span class="sd">    ----------</span>
+</span><span id="multiply_vector-25"><a href="#multiply_vector-25"><span class="linenos">25</span></a><span class="sd">    vector : NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="multiply_vector-26"><a href="#multiply_vector-26"><span class="linenos">26</span></a><span class="sd">        The input vector $v$ of size $2n$.</span>
+</span><span id="multiply_vector-27"><a href="#multiply_vector-27"><span class="linenos">27</span></a>
+</span><span id="multiply_vector-28"><a href="#multiply_vector-28"><span class="linenos">28</span></a><span class="sd">    Returns</span>
+</span><span id="multiply_vector-29"><a href="#multiply_vector-29"><span class="linenos">29</span></a><span class="sd">    -------</span>
+</span><span id="multiply_vector-30"><a href="#multiply_vector-30"><span class="linenos">30</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="multiply_vector-31"><a href="#multiply_vector-31"><span class="linenos">31</span></a><span class="sd">        The resulting vector $\Omega v$.</span>
+</span><span id="multiply_vector-32"><a href="#multiply_vector-32"><span class="linenos">32</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="multiply_vector-33"><a href="#multiply_vector-33"><span class="linenos">33</span></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+</span><span id="multiply_vector-34"><a href="#multiply_vector-34"><span class="linenos">34</span></a>    <span class="c1"># start::step means start at index &#39;start&#39; and pick elements every &#39;step&#39; positions</span>
+</span><span id="multiply_vector-35"><a href="#multiply_vector-35"><span class="linenos">35</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+</span><span id="multiply_vector-36"><a href="#multiply_vector-36"><span class="linenos">36</span></a>    <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+</span><span id="multiply_vector-37"><a href="#multiply_vector-37"><span class="linenos">37</span></a>    <span class="k">return</span> <span class="n">result</span>
 </span></pre></div>
 
 
@@ -212,6 +221,9 @@ and is given by:</p>
 <p>$$
 \Omega = \bigoplus_{j=1}^{n} \begin{pmatrix} 0 &amp; 1 \\ -1 &amp; 0 \end{pmatrix}
 $$</p>
+
+<p><strong>Runtime:</strong>
+$O(n)$.</p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -240,35 +252,38 @@ The input vector $v$ of size $2n$.</li>
 
     </div>
     <a class="headerlink" href="#add_multiple_inplace_to"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="add_multiple_inplace_to-37"><a href="#add_multiple_inplace_to-37"><span class="linenos">37</span></a><span class="k">def</span><span class="w"> </span><span class="nf">add_multiple_inplace_to</span><span class="p">(</span>
-</span><span id="add_multiple_inplace_to-38"><a href="#add_multiple_inplace_to-38"><span class="linenos">38</span></a>    <span class="n">matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-</span><span id="add_multiple_inplace_to-39"><a href="#add_multiple_inplace_to-39"><span class="linenos">39</span></a>    <span class="n">scalar</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
-</span><span id="add_multiple_inplace_to-40"><a href="#add_multiple_inplace_to-40"><span class="linenos">40</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
-</span><span id="add_multiple_inplace_to-41"><a href="#add_multiple_inplace_to-41"><span class="linenos">41</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="add_multiple_inplace_to-42"><a href="#add_multiple_inplace_to-42"><span class="linenos">42</span></a><span class="sd">    Adds a scalar multiple of the symplectic form $\Omega$ to a matrix in-place.</span>
-</span><span id="add_multiple_inplace_to-43"><a href="#add_multiple_inplace_to-43"><span class="linenos">43</span></a>
-</span><span id="add_multiple_inplace_to-44"><a href="#add_multiple_inplace_to-44"><span class="linenos">44</span></a><span class="sd">    This performs the update $M \leftarrow M + s \Omega$, where $M$ is the</span>
-</span><span id="add_multiple_inplace_to-45"><a href="#add_multiple_inplace_to-45"><span class="linenos">45</span></a><span class="sd">    input matrix and $s$ is the scalar. The symplectic form $\Omega$</span>
-</span><span id="add_multiple_inplace_to-46"><a href="#add_multiple_inplace_to-46"><span class="linenos">46</span></a><span class="sd">    is described in Section 2 of the reference paper.</span>
-</span><span id="add_multiple_inplace_to-47"><a href="#add_multiple_inplace_to-47"><span class="linenos">47</span></a>
-</span><span id="add_multiple_inplace_to-48"><a href="#add_multiple_inplace_to-48"><span class="linenos">48</span></a><span class="sd">    Parameters</span>
-</span><span id="add_multiple_inplace_to-49"><a href="#add_multiple_inplace_to-49"><span class="linenos">49</span></a><span class="sd">    ----------</span>
-</span><span id="add_multiple_inplace_to-50"><a href="#add_multiple_inplace_to-50"><span class="linenos">50</span></a><span class="sd">    matrix : NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="add_multiple_inplace_to-51"><a href="#add_multiple_inplace_to-51"><span class="linenos">51</span></a><span class="sd">        The matrix $M$ to be updated. It must be of shape $(2n, 2n)$.</span>
-</span><span id="add_multiple_inplace_to-52"><a href="#add_multiple_inplace_to-52"><span class="linenos">52</span></a><span class="sd">    scalar : np.complex128 | np.float64</span>
-</span><span id="add_multiple_inplace_to-53"><a href="#add_multiple_inplace_to-53"><span class="linenos">53</span></a><span class="sd">        The scalar multiplier $s$.</span>
-</span><span id="add_multiple_inplace_to-54"><a href="#add_multiple_inplace_to-54"><span class="linenos">54</span></a>
-</span><span id="add_multiple_inplace_to-55"><a href="#add_multiple_inplace_to-55"><span class="linenos">55</span></a><span class="sd">    Returns</span>
-</span><span id="add_multiple_inplace_to-56"><a href="#add_multiple_inplace_to-56"><span class="linenos">56</span></a><span class="sd">    -------</span>
-</span><span id="add_multiple_inplace_to-57"><a href="#add_multiple_inplace_to-57"><span class="linenos">57</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
-</span><span id="add_multiple_inplace_to-58"><a href="#add_multiple_inplace_to-58"><span class="linenos">58</span></a><span class="sd">        The updated matrix $M$.</span>
-</span><span id="add_multiple_inplace_to-59"><a href="#add_multiple_inplace_to-59"><span class="linenos">59</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="add_multiple_inplace_to-60"><a href="#add_multiple_inplace_to-60"><span class="linenos">60</span></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># matrix.shape[0] gives the number of rows</span>
-</span><span id="add_multiple_inplace_to-61"><a href="#add_multiple_inplace_to-61"><span class="linenos">61</span></a>    <span class="n">even_indices</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># array([ 0,  2,  4,  6, ..., 2 * (n - 1)])</span>
-</span><span id="add_multiple_inplace_to-62"><a href="#add_multiple_inplace_to-62"><span class="linenos">62</span></a>    <span class="c1"># update only the block diagonal entries</span>
-</span><span id="add_multiple_inplace_to-63"><a href="#add_multiple_inplace_to-63"><span class="linenos">63</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span><span class="p">,</span> <span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">scalar</span>
-</span><span id="add_multiple_inplace_to-64"><a href="#add_multiple_inplace_to-64"><span class="linenos">64</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">even_indices</span><span class="p">]</span> <span class="o">-=</span> <span class="n">scalar</span>
-</span><span id="add_multiple_inplace_to-65"><a href="#add_multiple_inplace_to-65"><span class="linenos">65</span></a>    <span class="k">return</span> <span class="n">matrix</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="add_multiple_inplace_to-40"><a href="#add_multiple_inplace_to-40"><span class="linenos">40</span></a><span class="k">def</span><span class="w"> </span><span class="nf">add_multiple_inplace_to</span><span class="p">(</span>
+</span><span id="add_multiple_inplace_to-41"><a href="#add_multiple_inplace_to-41"><span class="linenos">41</span></a>    <span class="n">matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+</span><span id="add_multiple_inplace_to-42"><a href="#add_multiple_inplace_to-42"><span class="linenos">42</span></a>    <span class="n">scalar</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+</span><span id="add_multiple_inplace_to-43"><a href="#add_multiple_inplace_to-43"><span class="linenos">43</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+</span><span id="add_multiple_inplace_to-44"><a href="#add_multiple_inplace_to-44"><span class="linenos">44</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="add_multiple_inplace_to-45"><a href="#add_multiple_inplace_to-45"><span class="linenos">45</span></a><span class="sd">    Adds a scalar multiple of the symplectic form $\Omega$ to a matrix in-place.</span>
+</span><span id="add_multiple_inplace_to-46"><a href="#add_multiple_inplace_to-46"><span class="linenos">46</span></a>
+</span><span id="add_multiple_inplace_to-47"><a href="#add_multiple_inplace_to-47"><span class="linenos">47</span></a><span class="sd">    This performs the update $M \leftarrow M + s \Omega$, where $M$ is the</span>
+</span><span id="add_multiple_inplace_to-48"><a href="#add_multiple_inplace_to-48"><span class="linenos">48</span></a><span class="sd">    input matrix and $s$ is the scalar. The symplectic form $\Omega$</span>
+</span><span id="add_multiple_inplace_to-49"><a href="#add_multiple_inplace_to-49"><span class="linenos">49</span></a><span class="sd">    is described in Section 2 of the reference paper.</span>
+</span><span id="add_multiple_inplace_to-50"><a href="#add_multiple_inplace_to-50"><span class="linenos">50</span></a>
+</span><span id="add_multiple_inplace_to-51"><a href="#add_multiple_inplace_to-51"><span class="linenos">51</span></a><span class="sd">    **Runtime:**</span>
+</span><span id="add_multiple_inplace_to-52"><a href="#add_multiple_inplace_to-52"><span class="linenos">52</span></a><span class="sd">    $O(n)$.</span>
+</span><span id="add_multiple_inplace_to-53"><a href="#add_multiple_inplace_to-53"><span class="linenos">53</span></a>
+</span><span id="add_multiple_inplace_to-54"><a href="#add_multiple_inplace_to-54"><span class="linenos">54</span></a><span class="sd">    Parameters</span>
+</span><span id="add_multiple_inplace_to-55"><a href="#add_multiple_inplace_to-55"><span class="linenos">55</span></a><span class="sd">    ----------</span>
+</span><span id="add_multiple_inplace_to-56"><a href="#add_multiple_inplace_to-56"><span class="linenos">56</span></a><span class="sd">    matrix : NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="add_multiple_inplace_to-57"><a href="#add_multiple_inplace_to-57"><span class="linenos">57</span></a><span class="sd">        The matrix $M$ to be updated. It must be of shape $(2n, 2n)$.</span>
+</span><span id="add_multiple_inplace_to-58"><a href="#add_multiple_inplace_to-58"><span class="linenos">58</span></a><span class="sd">    scalar : np.complex128 | np.float64</span>
+</span><span id="add_multiple_inplace_to-59"><a href="#add_multiple_inplace_to-59"><span class="linenos">59</span></a><span class="sd">        The scalar multiplier $s$.</span>
+</span><span id="add_multiple_inplace_to-60"><a href="#add_multiple_inplace_to-60"><span class="linenos">60</span></a>
+</span><span id="add_multiple_inplace_to-61"><a href="#add_multiple_inplace_to-61"><span class="linenos">61</span></a><span class="sd">    Returns</span>
+</span><span id="add_multiple_inplace_to-62"><a href="#add_multiple_inplace_to-62"><span class="linenos">62</span></a><span class="sd">    -------</span>
+</span><span id="add_multiple_inplace_to-63"><a href="#add_multiple_inplace_to-63"><span class="linenos">63</span></a><span class="sd">    NDArray[np.complex128] | NDArray[np.float64]</span>
+</span><span id="add_multiple_inplace_to-64"><a href="#add_multiple_inplace_to-64"><span class="linenos">64</span></a><span class="sd">        The updated matrix $M$.</span>
+</span><span id="add_multiple_inplace_to-65"><a href="#add_multiple_inplace_to-65"><span class="linenos">65</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="add_multiple_inplace_to-66"><a href="#add_multiple_inplace_to-66"><span class="linenos">66</span></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># matrix.shape[0] gives the number of rows</span>
+</span><span id="add_multiple_inplace_to-67"><a href="#add_multiple_inplace_to-67"><span class="linenos">67</span></a>    <span class="n">even_indices</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># array([ 0,  2,  4,  6, ..., 2 * (n - 1)])</span>
+</span><span id="add_multiple_inplace_to-68"><a href="#add_multiple_inplace_to-68"><span class="linenos">68</span></a>    <span class="c1"># update only the block diagonal entries</span>
+</span><span id="add_multiple_inplace_to-69"><a href="#add_multiple_inplace_to-69"><span class="linenos">69</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span><span class="p">,</span> <span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">scalar</span>
+</span><span id="add_multiple_inplace_to-70"><a href="#add_multiple_inplace_to-70"><span class="linenos">70</span></a>    <span class="n">matrix</span><span class="p">[</span><span class="n">even_indices</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">even_indices</span><span class="p">]</span> <span class="o">-=</span> <span class="n">scalar</span>
+</span><span id="add_multiple_inplace_to-71"><a href="#add_multiple_inplace_to-71"><span class="linenos">71</span></a>    <span class="k">return</span> <span class="n">matrix</span>
 </span></pre></div>
 
 
@@ -277,6 +292,9 @@ The input vector $v$ of size $2n$.</li>
 <p>This performs the update $M \leftarrow M + s \Omega$, where $M$ is the
 input matrix and $s$ is the scalar. The symplectic form $\Omega$
 is described in Section 2 of the reference paper.</p>
+
+<p><strong>Runtime:</strong>
+$O(n)$.</p>
 
 <h6 id="parameters">Parameters</h6>
 

@@ -15,6 +15,9 @@ def displacement_vector(amplitude: NDArray[np.complex128]) -> NDArray[np.float64
     \hat{d}(\alpha) = \sqrt{2} (\text{Re}(\alpha_1), \text{Im}(\alpha_1), \dots, \text{Re}(\alpha_n), \text{Im}(\alpha_n))^T
     $$
 
+    **Runtime:**
+    $O(n)$.
+
     Parameters
     ----------
     amplitude : NDArray[np.complex128]
@@ -44,6 +47,9 @@ def overlap(
     $$
     \langle \alpha_1 | \alpha_2 \rangle = \exp\left( -\frac{1}{2}|\alpha_1|^2 - \frac{1}{2}|\alpha_2|^2 + \overline{\alpha_1}^T \alpha_2 \right)
     $$
+
+    **Runtime:**
+    $O(n)$, where $n$ is the length of `amplitude1`.
 
     Parameters
     ----------
@@ -80,10 +86,14 @@ def displacement_vec_to_amplitude(
     \hat{d}(\alpha) = \sqrt{2} (\text{Re}(\alpha_1), \text{Im}(\alpha_1), \dots, \text{Re}(\alpha_n), \text{Im}(\alpha_n))^T
     $$
 
+    **Runtime:**
+    $O(n)$.
+
     Parameters
     ----------
     displacement_vector : NDArray[np.float64]
         The real displacement vector $d$.
+
 
     Returns
     -------

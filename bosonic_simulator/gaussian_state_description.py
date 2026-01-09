@@ -4,11 +4,13 @@ from numpy.typing import NDArray
 
 class GaussianStateDescription:
     r"""
-    A classical description of a pure Gaussian state including its global phase information.
+    A description of a pure Gaussian state including its global phase information.
 
     This class implements the "Extended description of a Gaussian state" as defined in
-    Definition 3.1 of the reference paper. It characterizes a state $|\psi\rangle$
-    using a triple $\Delta = (\Gamma, \alpha, r)$, where:
+    Definition 3.1 of the reference paper. It characterizes a pure Gaussian state $|\psi\rangle$
+    using a triple
+    $$\Delta = (\Gamma, \alpha, r) \in \mathsf{Mat}_{2n\times 2n}(\mathbb{R}) \times \mathbb{C}^{n} \times \mathbb{C}, $$
+    where:
 
     * $\Gamma$ is the covariance matrix.
     * $\alpha$ is the complex amplitude of a reference coherent state $|\alpha\rangle$
@@ -25,8 +27,6 @@ class GaussianStateDescription:
         The $2n \times 2n$ real symmetric covariance matrix $\Gamma$.
     amplitude : NDArray[np.complex128]
         The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.
-        Note that the real displacement vector $d$ is determined by $\alpha$
-        via the mapping $d = \hat{d}(\alpha)$ defined in Section 2.1.
     overlap : np.complex128
         The scalar overlap $r = \langle \alpha, \psi \rangle$.
 
@@ -35,6 +35,20 @@ class GaussianStateDescription:
     **Indexing Convention:**
     While the reference paper uses 1-based indexing for modes (e.g., $j \in \{1, \dots, n\}$),
     this implementation uses standard Python 0-based indexing (e.g., indices `0` to `n-1`).
+
+    **Real Displacement Vector:**
+    The corresponding real displacement vector $d$ in phase space is determined by the mapping
+    $d = \hat{d}(\alpha)$ described in Section 2.1. Explicitly:
+
+    $$
+    \hat{d}(\alpha) = \sqrt{2} (\text{Re}(\alpha_1), \text{Im}(\alpha_1), \dots, \text{Re}(\alpha_n), \text{Im}(\alpha_n))^T
+    $$
+
+    **Bijective Mapping:**
+    The set of these descriptions, denoted $\text{Desc}_n$, maps bijectively to the set
+    of $n$-mode pure Gaussian states $\text{Gauss}_n$. This means every description uniquely
+    fixes a Gaussian state $|\psi(\Delta)\rangle$, and conversely, every pure Gaussian state
+    admits a unique description.
     """
 
     def __init__(
@@ -46,31 +60,6 @@ class GaussianStateDescription:
         self.covariance_matrix = covariance_matrix
         self.amplitude = amplitude
         self.overlap = overlap
-
-    def energy(self) -> np.float64:
-        r"""
-        Computes the energy (mean photon number) of the Gaussian state.
-
-        This implements the energy formula given in Section 2.1 of the reference paper.
-        The energy is given by:
-
-        $$
-        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n
-        $$
-
-        where $d$ is the real displacement vector. In this implementation,
-        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping
-        $\hat{d}(\alpha)$ described in Section 2.3.
-
-        Returns
-        -------
-        np.float64
-            The energy of the state.
-        """
-        tr_gamma = np.trace(self.covariance_matrix)
-        d_norm_squared = 2 * (np.linalg.norm(self.amplitude) ** 2)
-        n = self.number_of_modes
-        return np.real(0.5 * tr_gamma + d_norm_squared + n)
 
     @classmethod
     def coherent_state(
@@ -121,6 +110,31 @@ class GaussianStateDescription:
             The description of the n-mode vacuum.
         """
         return cls.coherent_state(np.zeros(complex_dimension, dtype=complex))
+
+    def energy(self) -> np.float64:
+        r"""
+        Computes the energy (mean photon number) of the Gaussian state.
+
+        This implements the energy formula given in Section 2.1 of the reference paper.
+        The energy is given by:
+
+        $$
+        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n
+        $$
+
+        where $d$ is the real displacement vector. In this implementation,
+        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping
+        $\hat{d}(\alpha)$ described in Section 2.3.
+
+        Returns
+        -------
+        np.float64
+            The energy of the state.
+        """
+        tr_gamma = np.trace(self.covariance_matrix)
+        d_norm_squared = 2 * (np.linalg.norm(self.amplitude) ** 2)
+        n = self.number_of_modes
+        return np.real(0.5 * tr_gamma + d_norm_squared + n)
 
     @property
     def number_of_modes(self) -> int:

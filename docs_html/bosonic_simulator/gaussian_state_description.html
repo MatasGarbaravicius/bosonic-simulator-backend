@@ -68,13 +68,13 @@
                                 <a class="variable" href="#GaussianStateDescription.overlap">overlap</a>
                         </li>
                         <li>
-                                <a class="function" href="#GaussianStateDescription.energy">energy</a>
-                        </li>
-                        <li>
                                 <a class="function" href="#GaussianStateDescription.coherent_state">coherent_state</a>
                         </li>
                         <li>
                                 <a class="function" href="#GaussianStateDescription.vacuum_state">vacuum_state</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#GaussianStateDescription.energy">energy</a>
                         </li>
                         <li>
                                 <a class="variable" href="#GaussianStateDescription.number_of_modes">number_of_modes</a>
@@ -109,29 +109,29 @@
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GaussianStateDescription</span><span class="p">:</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">    A classical description of a pure Gaussian state including its global phase information.</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">    A description of a pure Gaussian state including its global phase information.</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="sd">    This class implements the &quot;Extended description of a Gaussian state&quot; as defined in</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">    Definition 3.1 of the reference paper. It characterizes a state $|\psi\rangle$</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="sd">    using a triple $\Delta = (\Gamma, \alpha, r)$, where:</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">    * $\Gamma$ is the covariance matrix.</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="sd">    * $\alpha$ is the complex amplitude of a reference coherent state $|\alpha\rangle$</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">      that has the same displacement as $|\psi\rangle$.</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">    * $r = \langle \alpha, \psi \rangle$ is the overlap between the state and the</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="sd">      reference coherent state.</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">    This description allows for tracking relative phases in superpositions of Gaussian states,</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="sd">    which is not possible using the standard covariance matrix formalism alone.</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">    Parameters</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="sd">    ----------</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="sd">    covariance_matrix : NDArray[np.float64]</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="sd">        The $2n \times 2n$ real symmetric covariance matrix $\Gamma$.</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="sd">    amplitude : NDArray[np.complex128]</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a><span class="sd">        The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="sd">        Note that the real displacement vector $d$ is determined by $\alpha$</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a><span class="sd">        via the mapping $d = \hat{d}(\alpha)$ defined in Section 2.1.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">    Definition 3.1 of the reference paper. It characterizes a pure Gaussian state $|\psi\rangle$</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="sd">    using a triple</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="sd">    $$\Delta = (\Gamma, \alpha, r) \in \mathsf{Mat}_{2n\times 2n}(\mathbb{R}) \times \mathbb{C}^{n} \times \mathbb{C}, $$</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">    where:</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">    * $\Gamma$ is the covariance matrix.</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">    * $\alpha$ is the complex amplitude of a reference coherent state $|\alpha\rangle$</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="sd">      that has the same displacement as $|\psi\rangle$.</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">    * $r = \langle \alpha, \psi \rangle$ is the overlap between the state and the</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">      reference coherent state.</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">    This description allows for tracking relative phases in superpositions of Gaussian states,</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">    which is not possible using the standard covariance matrix formalism alone.</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>
+</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="sd">    Parameters</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="sd">    ----------</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="sd">    covariance_matrix : NDArray[np.float64]</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a><span class="sd">        The $2n \times 2n$ real symmetric covariance matrix $\Gamma$.</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="sd">    amplitude : NDArray[np.complex128]</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a><span class="sd">        The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.</span>
 </span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a><span class="sd">    overlap : np.complex128</span>
 </span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a><span class="sd">        The scalar overlap $r = \langle \alpha, \psi \rangle$.</span>
 </span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a>
@@ -140,164 +140,178 @@
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="sd">    **Indexing Convention:**</span>
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="sd">    While the reference paper uses 1-based indexing for modes (e.g., $j \in \{1, \dots, n\}$),</span>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="sd">    this implementation uses standard Python 0-based indexing (e.g., indices `0` to `n-1`).</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>        <span class="bp">self</span><span class="p">,</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>        <span class="n">covariance_matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>        <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">],</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>        <span class="n">overlap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="p">):</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">covariance_matrix</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="n">overlap</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">        Computes the energy (mean photon number) of the Gaussian state.</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>
+</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="sd">    **Real Displacement Vector:**</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="sd">    The corresponding real displacement vector $d$ in phase space is determined by the mapping</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">    $d = \hat{d}(\alpha)$ described in Section 2.1. Explicitly:</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="sd">    $$</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="sd">    \hat{d}(\alpha) = \sqrt{2} (\text{Re}(\alpha_1), \text{Im}(\alpha_1), \dots, \text{Re}(\alpha_n), \text{Im}(\alpha_n))^T</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">    $$</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">    **Bijective Mapping:**</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="sd">    The set of these descriptions, denoted $\text{Desc}_n$, maps bijectively to the set</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="sd">    of $n$-mode pure Gaussian states $\text{Gauss}_n$. This means every description uniquely</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">    fixes a Gaussian state $|\psi(\Delta)\rangle$, and conversely, every pure Gaussian state</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">    admits a unique description.</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="sd">        This implements the energy formula given in Section 2.1 of the reference paper.</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="sd">        The energy is given by:</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="sd">        $$</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="sd">        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="sd">        $$</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">        where $d$ is the real displacement vector. In this implementation,</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="sd">        $\hat{d}(\alpha)$ described in Section 2.3.</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="sd">        Returns</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="sd">        -------</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="sd">        np.float64</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">            The energy of the state.</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="n">tr_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">)</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>        <span class="n">d_norm_squared</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_modes</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">tr_gamma</span> <span class="o">+</span> <span class="n">d_norm_squared</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">coherent_state</span><span class="p">(</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="sd">        Creates a description for a coherent state $|\alpha\rangle$.</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">        According to Section 2.3, a coherent state is described by:</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>        <span class="n">covariance_matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>        <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">],</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>        <span class="n">overlap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>    <span class="p">):</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">covariance_matrix</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="n">overlap</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="nd">@classmethod</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">coherent_state</span><span class="p">(</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">        Creates a description for a coherent state $|\alpha\rangle$.</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">        According to Section 2.3, a coherent state is described by:</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="sd">        * Covariance matrix $\Gamma = I$.</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">        * Displacement described by $\alpha$.</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="sd">        For the extended description, the reference state is chosen to be the state itself,</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="sd">        so the overlap is $r = \langle \alpha | \alpha \rangle = 1$.</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="sd">        Parameters</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="sd">        ----------</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="sd">        amplitude : NDArray[np.complex128]</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">            The complex amplitude vector $\alpha$.</span>
 </span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        * Covariance matrix $\Gamma = I$.</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">        * Displacement described by $\alpha$.</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">        For the extended description, the reference state is chosen to be the state itself,</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">        so the overlap is $r = \langle \alpha | \alpha \rangle = 1$.</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">        Parameters</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">        ----------</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">        amplitude : NDArray[np.complex128]</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="sd">            The complex amplitude vector $\alpha$.</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        Returns</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">        -------</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">        GaussianStateDescription</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">            The description $(I, \alpha, 1)$.</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>        <span class="n">alpha</span> <span class="o">=</span> <span class="n">amplitude</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>        <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>            <span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>        <span class="p">)</span>  <span class="c1"># I matrix of needed shape &amp; type</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 </span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">        Returns</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="sd">        -------</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">        GaussianStateDescription</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">            The description $(I, \alpha, 1)$.</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>        <span class="n">alpha</span> <span class="o">=</span> <span class="n">amplitude</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>            <span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>        <span class="p">)</span>  <span class="c1"># I matrix of needed shape &amp; type</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vacuum_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">complex_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">        Creates a description for the vacuum state $|0\rangle$.</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">        The vacuum state is a coherent state with $\alpha = 0$.</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">        Parameters</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">        ----------</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">        complex_dimension : int</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">            The number of modes $n$.</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>    <span class="nd">@classmethod</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vacuum_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">complex_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">        Creates a description for the vacuum state $|0\rangle$.</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">        The vacuum state is a coherent state with $\alpha = 0$.</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="sd">        Parameters</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="sd">        ----------</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="sd">        complex_dimension : int</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">            The number of modes $n$.</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="sd">        Returns</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="sd">        -------</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">        GaussianStateDescription</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">            The description of the n-mode vacuum.</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coherent_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">complex_dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        Computes the energy (mean photon number) of the Gaussian state.</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        Returns</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        -------</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">        GaussianStateDescription</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">            The description of the n-mode vacuum.</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coherent_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">complex_dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        This implements the energy formula given in Section 2.1 of the reference paper.</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        The energy is given by:</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        $$</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        $$</span>
 </span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>    <span class="nd">@property</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">        Returns the number of modes $n$ of the system.</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">        Returns</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">        -------</span>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">        int</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">            The number of modes.</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">size</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a><span class="c1"># a = GaussianStateDescription(np.tile(np.eye(2), (3, 3)), np.ones(6, dtype=complex), 5)</span>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a><span class="c1"># print(a.covariance_matrix)</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="c1"># a.apply_unitary(gu_description.PhaseShiftDescription(np.radians(30), 2))</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="c1"># np.set_printoptions(precision=3, suppress=True)</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="c1"># print(a.covariance_matrix)</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="c1"># a.apply_unitary(gu_description.PhaseShiftDescription(np.radians(-30), 2))</span>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="c1"># print(a.covariance_matrix)</span>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a><span class="c1"># # b = GaussianStateDescription(np.tile(np.eye(4), (2, 2)), np.ones(6, dtype=complex), 5)</span>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="c1"># b = GaussianStateDescription(np.tile(np.eye(8), (1, 1)), np.ones(6, dtype=complex), 5)</span>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="c1"># print(b.covariance_matrix)</span>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="c1"># b.apply_unitary(gu_description.BeamSplitterDescription(np.radians(30), 2, 4))</span>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="c1"># print(b.covariance_matrix)</span>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="c1"># print(</span>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="c1">#     b.covariance_matrix[[2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1], :][</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="c1">#         :, [2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1]</span>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="c1">#     ]</span>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="c1"># )</span>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="c1"># c = GaussianStateDescription(np.tile(np.eye(8), (1, 1)), np.ones(6, dtype=complex), 5)</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="c1"># print(c.covariance_matrix)</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a><span class="c1"># c.apply_unitary(gu_description.BeamSplitterDescription(np.radians(30), 4, 2))</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="c1"># print(c.covariance_matrix)</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="c1"># print(</span>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="c1">#     c.covariance_matrix[[2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1], :][</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="c1">#         :, [2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1]</span>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="c1">#     ]</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="c1"># )</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="c1"># d = GaussianStateDescription(np.tile(np.eye(8), (1, 1)), np.ones(6, dtype=complex), 5)</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="c1"># print(d.covariance_matrix)</span>
-</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="c1"># d.apply_unitary(gu_description.BeamSplitterDescription(np.radians(30), 3, 3))</span>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a><span class="c1"># print(d.covariance_matrix)</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="c1"># print(</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="c1">#     d.covariance_matrix[[2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1], :][</span>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="c1">#         :, [2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1]</span>
-</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="c1">#     ]</span>
-</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="c1"># )</span>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="c1"># def modify_gaussian(gs_desc: GaussianStateDescription):</span>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="c1">#     gs_desc.covariance_matrix = np.ones(3)</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">        where $d$ is the real displacement vector. In this implementation,</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">        $\hat{d}(\alpha)$ described in Section 2.3.</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">        Returns</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">        -------</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">        np.float64</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">            The energy of the state.</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>        <span class="n">tr_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">)</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="n">d_norm_squared</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_modes</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">tr_gamma</span> <span class="o">+</span> <span class="n">d_norm_squared</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="nd">@property</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="sd">        Returns the number of modes $n$ of the system.</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="sd">        Returns</span>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="sd">        -------</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a><span class="sd">        int</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="sd">            The number of modes.</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">size</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="c1"># a = GaussianStateDescription(np.tile(np.eye(2), (3, 3)), np.ones(6, dtype=complex), 5)</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="c1"># print(a.covariance_matrix)</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="c1"># a.apply_unitary(gu_description.PhaseShiftDescription(np.radians(30), 2))</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="c1"># np.set_printoptions(precision=3, suppress=True)</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="c1"># print(a.covariance_matrix)</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="c1"># a.apply_unitary(gu_description.PhaseShiftDescription(np.radians(-30), 2))</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="c1"># print(a.covariance_matrix)</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="c1"># # b = GaussianStateDescription(np.tile(np.eye(4), (2, 2)), np.ones(6, dtype=complex), 5)</span>
+</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="c1"># b = GaussianStateDescription(np.tile(np.eye(8), (1, 1)), np.ones(6, dtype=complex), 5)</span>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="c1"># print(b.covariance_matrix)</span>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="c1"># b.apply_unitary(gu_description.BeamSplitterDescription(np.radians(30), 2, 4))</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="c1"># print(b.covariance_matrix)</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="c1"># print(</span>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a><span class="c1">#     b.covariance_matrix[[2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1], :][</span>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="c1">#         :, [2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1]</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="c1">#     ]</span>
+</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="c1"># )</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="c1"># c = GaussianStateDescription(np.tile(np.eye(8), (1, 1)), np.ones(6, dtype=complex), 5)</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="c1"># print(c.covariance_matrix)</span>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="c1"># c.apply_unitary(gu_description.BeamSplitterDescription(np.radians(30), 4, 2))</span>
+</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="c1"># print(c.covariance_matrix)</span>
+</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="c1"># print(</span>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="c1">#     c.covariance_matrix[[2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1], :][</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="c1">#         :, [2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1]</span>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="c1">#     ]</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="c1"># )</span>
 </span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="c1"># modify_gaussian(a)</span>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="c1"># print(a.covariance_matrix)</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="c1"># print(a.number_of_modes)</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="c1"># amp1 = np.repeat([(1 + 1j) / np.sqrt(10)], 5)</span>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="c1"># gsd1 = GaussianStateDescription.coherent_state(amp1)</span>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a><span class="c1"># print(f&quot;norm = {np.linalg.norm(amp1)}&quot;)</span>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="c1"># print(gsd1.prob(amp1, np.arange(1, 6)))</span>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="c1"># print(gsd1.covariance_matrix, gsd1.amplitude, gsd1.overlap)</span>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="c1"># gsd1.post_measure(amp1, np.arange(1, 6))</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="c1"># print(&quot;hello2&quot;)</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="c1"># print(gsd1.covariance_matrix, gsd1.amplitude, gsd1.overlap)</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="c1"># d = GaussianStateDescription(np.tile(np.eye(8), (1, 1)), np.ones(6, dtype=complex), 5)</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="c1"># print(d.covariance_matrix)</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="c1"># d.apply_unitary(gu_description.BeamSplitterDescription(np.radians(30), 3, 3))</span>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="c1"># print(d.covariance_matrix)</span>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="c1"># print(</span>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="c1">#     d.covariance_matrix[[2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1], :][</span>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="c1">#         :, [2 * 1, 2 * 1 + 1, 2 * 3, 2 * 3 + 1]</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="c1">#     ]</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="c1"># )</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="c1"># def modify_gaussian(gs_desc: GaussianStateDescription):</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="c1">#     gs_desc.covariance_matrix = np.ones(3)</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a><span class="c1"># modify_gaussian(a)</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="c1"># print(a.covariance_matrix)</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a><span class="c1"># print(a.number_of_modes)</span>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a><span class="c1"># amp1 = np.repeat([(1 + 1j) / np.sqrt(10)], 5)</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="c1"># gsd1 = GaussianStateDescription.coherent_state(amp1)</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a><span class="c1"># print(f&quot;norm = {np.linalg.norm(amp1)}&quot;)</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a><span class="c1"># print(gsd1.prob(amp1, np.arange(1, 6)))</span>
+</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a><span class="c1"># print(gsd1.covariance_matrix, gsd1.amplitude, gsd1.overlap)</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a><span class="c1"># gsd1.post_measure(amp1, np.arange(1, 6))</span>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a><span class="c1"># print(&quot;hello2&quot;)</span>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a><span class="c1"># print(gsd1.covariance_matrix, gsd1.amplitude, gsd1.overlap)</span>
 </span></pre></div>
 
 
@@ -315,29 +329,29 @@
     <a class="headerlink" href="#GaussianStateDescription"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription-6"><a href="#GaussianStateDescription-6"><span class="linenos">  6</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GaussianStateDescription</span><span class="p">:</span>
 </span><span id="GaussianStateDescription-7"><a href="#GaussianStateDescription-7"><span class="linenos">  7</span></a><span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-8"><a href="#GaussianStateDescription-8"><span class="linenos">  8</span></a><span class="sd">    A classical description of a pure Gaussian state including its global phase information.</span>
+</span><span id="GaussianStateDescription-8"><a href="#GaussianStateDescription-8"><span class="linenos">  8</span></a><span class="sd">    A description of a pure Gaussian state including its global phase information.</span>
 </span><span id="GaussianStateDescription-9"><a href="#GaussianStateDescription-9"><span class="linenos">  9</span></a>
 </span><span id="GaussianStateDescription-10"><a href="#GaussianStateDescription-10"><span class="linenos"> 10</span></a><span class="sd">    This class implements the &quot;Extended description of a Gaussian state&quot; as defined in</span>
-</span><span id="GaussianStateDescription-11"><a href="#GaussianStateDescription-11"><span class="linenos"> 11</span></a><span class="sd">    Definition 3.1 of the reference paper. It characterizes a state $|\psi\rangle$</span>
-</span><span id="GaussianStateDescription-12"><a href="#GaussianStateDescription-12"><span class="linenos"> 12</span></a><span class="sd">    using a triple $\Delta = (\Gamma, \alpha, r)$, where:</span>
-</span><span id="GaussianStateDescription-13"><a href="#GaussianStateDescription-13"><span class="linenos"> 13</span></a>
-</span><span id="GaussianStateDescription-14"><a href="#GaussianStateDescription-14"><span class="linenos"> 14</span></a><span class="sd">    * $\Gamma$ is the covariance matrix.</span>
-</span><span id="GaussianStateDescription-15"><a href="#GaussianStateDescription-15"><span class="linenos"> 15</span></a><span class="sd">    * $\alpha$ is the complex amplitude of a reference coherent state $|\alpha\rangle$</span>
-</span><span id="GaussianStateDescription-16"><a href="#GaussianStateDescription-16"><span class="linenos"> 16</span></a><span class="sd">      that has the same displacement as $|\psi\rangle$.</span>
-</span><span id="GaussianStateDescription-17"><a href="#GaussianStateDescription-17"><span class="linenos"> 17</span></a><span class="sd">    * $r = \langle \alpha, \psi \rangle$ is the overlap between the state and the</span>
-</span><span id="GaussianStateDescription-18"><a href="#GaussianStateDescription-18"><span class="linenos"> 18</span></a><span class="sd">      reference coherent state.</span>
-</span><span id="GaussianStateDescription-19"><a href="#GaussianStateDescription-19"><span class="linenos"> 19</span></a>
-</span><span id="GaussianStateDescription-20"><a href="#GaussianStateDescription-20"><span class="linenos"> 20</span></a><span class="sd">    This description allows for tracking relative phases in superpositions of Gaussian states,</span>
-</span><span id="GaussianStateDescription-21"><a href="#GaussianStateDescription-21"><span class="linenos"> 21</span></a><span class="sd">    which is not possible using the standard covariance matrix formalism alone.</span>
-</span><span id="GaussianStateDescription-22"><a href="#GaussianStateDescription-22"><span class="linenos"> 22</span></a>
-</span><span id="GaussianStateDescription-23"><a href="#GaussianStateDescription-23"><span class="linenos"> 23</span></a><span class="sd">    Parameters</span>
-</span><span id="GaussianStateDescription-24"><a href="#GaussianStateDescription-24"><span class="linenos"> 24</span></a><span class="sd">    ----------</span>
-</span><span id="GaussianStateDescription-25"><a href="#GaussianStateDescription-25"><span class="linenos"> 25</span></a><span class="sd">    covariance_matrix : NDArray[np.float64]</span>
-</span><span id="GaussianStateDescription-26"><a href="#GaussianStateDescription-26"><span class="linenos"> 26</span></a><span class="sd">        The $2n \times 2n$ real symmetric covariance matrix $\Gamma$.</span>
-</span><span id="GaussianStateDescription-27"><a href="#GaussianStateDescription-27"><span class="linenos"> 27</span></a><span class="sd">    amplitude : NDArray[np.complex128]</span>
-</span><span id="GaussianStateDescription-28"><a href="#GaussianStateDescription-28"><span class="linenos"> 28</span></a><span class="sd">        The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.</span>
-</span><span id="GaussianStateDescription-29"><a href="#GaussianStateDescription-29"><span class="linenos"> 29</span></a><span class="sd">        Note that the real displacement vector $d$ is determined by $\alpha$</span>
-</span><span id="GaussianStateDescription-30"><a href="#GaussianStateDescription-30"><span class="linenos"> 30</span></a><span class="sd">        via the mapping $d = \hat{d}(\alpha)$ defined in Section 2.1.</span>
+</span><span id="GaussianStateDescription-11"><a href="#GaussianStateDescription-11"><span class="linenos"> 11</span></a><span class="sd">    Definition 3.1 of the reference paper. It characterizes a pure Gaussian state $|\psi\rangle$</span>
+</span><span id="GaussianStateDescription-12"><a href="#GaussianStateDescription-12"><span class="linenos"> 12</span></a><span class="sd">    using a triple</span>
+</span><span id="GaussianStateDescription-13"><a href="#GaussianStateDescription-13"><span class="linenos"> 13</span></a><span class="sd">    $$\Delta = (\Gamma, \alpha, r) \in \mathsf{Mat}_{2n\times 2n}(\mathbb{R}) \times \mathbb{C}^{n} \times \mathbb{C}, $$</span>
+</span><span id="GaussianStateDescription-14"><a href="#GaussianStateDescription-14"><span class="linenos"> 14</span></a><span class="sd">    where:</span>
+</span><span id="GaussianStateDescription-15"><a href="#GaussianStateDescription-15"><span class="linenos"> 15</span></a>
+</span><span id="GaussianStateDescription-16"><a href="#GaussianStateDescription-16"><span class="linenos"> 16</span></a><span class="sd">    * $\Gamma$ is the covariance matrix.</span>
+</span><span id="GaussianStateDescription-17"><a href="#GaussianStateDescription-17"><span class="linenos"> 17</span></a><span class="sd">    * $\alpha$ is the complex amplitude of a reference coherent state $|\alpha\rangle$</span>
+</span><span id="GaussianStateDescription-18"><a href="#GaussianStateDescription-18"><span class="linenos"> 18</span></a><span class="sd">      that has the same displacement as $|\psi\rangle$.</span>
+</span><span id="GaussianStateDescription-19"><a href="#GaussianStateDescription-19"><span class="linenos"> 19</span></a><span class="sd">    * $r = \langle \alpha, \psi \rangle$ is the overlap between the state and the</span>
+</span><span id="GaussianStateDescription-20"><a href="#GaussianStateDescription-20"><span class="linenos"> 20</span></a><span class="sd">      reference coherent state.</span>
+</span><span id="GaussianStateDescription-21"><a href="#GaussianStateDescription-21"><span class="linenos"> 21</span></a>
+</span><span id="GaussianStateDescription-22"><a href="#GaussianStateDescription-22"><span class="linenos"> 22</span></a><span class="sd">    This description allows for tracking relative phases in superpositions of Gaussian states,</span>
+</span><span id="GaussianStateDescription-23"><a href="#GaussianStateDescription-23"><span class="linenos"> 23</span></a><span class="sd">    which is not possible using the standard covariance matrix formalism alone.</span>
+</span><span id="GaussianStateDescription-24"><a href="#GaussianStateDescription-24"><span class="linenos"> 24</span></a>
+</span><span id="GaussianStateDescription-25"><a href="#GaussianStateDescription-25"><span class="linenos"> 25</span></a><span class="sd">    Parameters</span>
+</span><span id="GaussianStateDescription-26"><a href="#GaussianStateDescription-26"><span class="linenos"> 26</span></a><span class="sd">    ----------</span>
+</span><span id="GaussianStateDescription-27"><a href="#GaussianStateDescription-27"><span class="linenos"> 27</span></a><span class="sd">    covariance_matrix : NDArray[np.float64]</span>
+</span><span id="GaussianStateDescription-28"><a href="#GaussianStateDescription-28"><span class="linenos"> 28</span></a><span class="sd">        The $2n \times 2n$ real symmetric covariance matrix $\Gamma$.</span>
+</span><span id="GaussianStateDescription-29"><a href="#GaussianStateDescription-29"><span class="linenos"> 29</span></a><span class="sd">    amplitude : NDArray[np.complex128]</span>
+</span><span id="GaussianStateDescription-30"><a href="#GaussianStateDescription-30"><span class="linenos"> 30</span></a><span class="sd">        The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.</span>
 </span><span id="GaussianStateDescription-31"><a href="#GaussianStateDescription-31"><span class="linenos"> 31</span></a><span class="sd">    overlap : np.complex128</span>
 </span><span id="GaussianStateDescription-32"><a href="#GaussianStateDescription-32"><span class="linenos"> 32</span></a><span class="sd">        The scalar overlap $r = \langle \alpha, \psi \rangle$.</span>
 </span><span id="GaussianStateDescription-33"><a href="#GaussianStateDescription-33"><span class="linenos"> 33</span></a>
@@ -346,112 +360,128 @@
 </span><span id="GaussianStateDescription-36"><a href="#GaussianStateDescription-36"><span class="linenos"> 36</span></a><span class="sd">    **Indexing Convention:**</span>
 </span><span id="GaussianStateDescription-37"><a href="#GaussianStateDescription-37"><span class="linenos"> 37</span></a><span class="sd">    While the reference paper uses 1-based indexing for modes (e.g., $j \in \{1, \dots, n\}$),</span>
 </span><span id="GaussianStateDescription-38"><a href="#GaussianStateDescription-38"><span class="linenos"> 38</span></a><span class="sd">    this implementation uses standard Python 0-based indexing (e.g., indices `0` to `n-1`).</span>
-</span><span id="GaussianStateDescription-39"><a href="#GaussianStateDescription-39"><span class="linenos"> 39</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-40"><a href="#GaussianStateDescription-40"><span class="linenos"> 40</span></a>
-</span><span id="GaussianStateDescription-41"><a href="#GaussianStateDescription-41"><span class="linenos"> 41</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="GaussianStateDescription-42"><a href="#GaussianStateDescription-42"><span class="linenos"> 42</span></a>        <span class="bp">self</span><span class="p">,</span>
-</span><span id="GaussianStateDescription-43"><a href="#GaussianStateDescription-43"><span class="linenos"> 43</span></a>        <span class="n">covariance_matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-</span><span id="GaussianStateDescription-44"><a href="#GaussianStateDescription-44"><span class="linenos"> 44</span></a>        <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">],</span>
-</span><span id="GaussianStateDescription-45"><a href="#GaussianStateDescription-45"><span class="linenos"> 45</span></a>        <span class="n">overlap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span>
-</span><span id="GaussianStateDescription-46"><a href="#GaussianStateDescription-46"><span class="linenos"> 46</span></a>    <span class="p">):</span>
-</span><span id="GaussianStateDescription-47"><a href="#GaussianStateDescription-47"><span class="linenos"> 47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">covariance_matrix</span>
-</span><span id="GaussianStateDescription-48"><a href="#GaussianStateDescription-48"><span class="linenos"> 48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
-</span><span id="GaussianStateDescription-49"><a href="#GaussianStateDescription-49"><span class="linenos"> 49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="n">overlap</span>
-</span><span id="GaussianStateDescription-50"><a href="#GaussianStateDescription-50"><span class="linenos"> 50</span></a>
-</span><span id="GaussianStateDescription-51"><a href="#GaussianStateDescription-51"><span class="linenos"> 51</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
-</span><span id="GaussianStateDescription-52"><a href="#GaussianStateDescription-52"><span class="linenos"> 52</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-53"><a href="#GaussianStateDescription-53"><span class="linenos"> 53</span></a><span class="sd">        Computes the energy (mean photon number) of the Gaussian state.</span>
+</span><span id="GaussianStateDescription-39"><a href="#GaussianStateDescription-39"><span class="linenos"> 39</span></a>
+</span><span id="GaussianStateDescription-40"><a href="#GaussianStateDescription-40"><span class="linenos"> 40</span></a><span class="sd">    **Real Displacement Vector:**</span>
+</span><span id="GaussianStateDescription-41"><a href="#GaussianStateDescription-41"><span class="linenos"> 41</span></a><span class="sd">    The corresponding real displacement vector $d$ in phase space is determined by the mapping</span>
+</span><span id="GaussianStateDescription-42"><a href="#GaussianStateDescription-42"><span class="linenos"> 42</span></a><span class="sd">    $d = \hat{d}(\alpha)$ described in Section 2.1. Explicitly:</span>
+</span><span id="GaussianStateDescription-43"><a href="#GaussianStateDescription-43"><span class="linenos"> 43</span></a>
+</span><span id="GaussianStateDescription-44"><a href="#GaussianStateDescription-44"><span class="linenos"> 44</span></a><span class="sd">    $$</span>
+</span><span id="GaussianStateDescription-45"><a href="#GaussianStateDescription-45"><span class="linenos"> 45</span></a><span class="sd">    \hat{d}(\alpha) = \sqrt{2} (\text{Re}(\alpha_1), \text{Im}(\alpha_1), \dots, \text{Re}(\alpha_n), \text{Im}(\alpha_n))^T</span>
+</span><span id="GaussianStateDescription-46"><a href="#GaussianStateDescription-46"><span class="linenos"> 46</span></a><span class="sd">    $$</span>
+</span><span id="GaussianStateDescription-47"><a href="#GaussianStateDescription-47"><span class="linenos"> 47</span></a>
+</span><span id="GaussianStateDescription-48"><a href="#GaussianStateDescription-48"><span class="linenos"> 48</span></a><span class="sd">    **Bijective Mapping:**</span>
+</span><span id="GaussianStateDescription-49"><a href="#GaussianStateDescription-49"><span class="linenos"> 49</span></a><span class="sd">    The set of these descriptions, denoted $\text{Desc}_n$, maps bijectively to the set</span>
+</span><span id="GaussianStateDescription-50"><a href="#GaussianStateDescription-50"><span class="linenos"> 50</span></a><span class="sd">    of $n$-mode pure Gaussian states $\text{Gauss}_n$. This means every description uniquely</span>
+</span><span id="GaussianStateDescription-51"><a href="#GaussianStateDescription-51"><span class="linenos"> 51</span></a><span class="sd">    fixes a Gaussian state $|\psi(\Delta)\rangle$, and conversely, every pure Gaussian state</span>
+</span><span id="GaussianStateDescription-52"><a href="#GaussianStateDescription-52"><span class="linenos"> 52</span></a><span class="sd">    admits a unique description.</span>
+</span><span id="GaussianStateDescription-53"><a href="#GaussianStateDescription-53"><span class="linenos"> 53</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="GaussianStateDescription-54"><a href="#GaussianStateDescription-54"><span class="linenos"> 54</span></a>
-</span><span id="GaussianStateDescription-55"><a href="#GaussianStateDescription-55"><span class="linenos"> 55</span></a><span class="sd">        This implements the energy formula given in Section 2.1 of the reference paper.</span>
-</span><span id="GaussianStateDescription-56"><a href="#GaussianStateDescription-56"><span class="linenos"> 56</span></a><span class="sd">        The energy is given by:</span>
-</span><span id="GaussianStateDescription-57"><a href="#GaussianStateDescription-57"><span class="linenos"> 57</span></a>
-</span><span id="GaussianStateDescription-58"><a href="#GaussianStateDescription-58"><span class="linenos"> 58</span></a><span class="sd">        $$</span>
-</span><span id="GaussianStateDescription-59"><a href="#GaussianStateDescription-59"><span class="linenos"> 59</span></a><span class="sd">        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n</span>
-</span><span id="GaussianStateDescription-60"><a href="#GaussianStateDescription-60"><span class="linenos"> 60</span></a><span class="sd">        $$</span>
-</span><span id="GaussianStateDescription-61"><a href="#GaussianStateDescription-61"><span class="linenos"> 61</span></a>
-</span><span id="GaussianStateDescription-62"><a href="#GaussianStateDescription-62"><span class="linenos"> 62</span></a><span class="sd">        where $d$ is the real displacement vector. In this implementation,</span>
-</span><span id="GaussianStateDescription-63"><a href="#GaussianStateDescription-63"><span class="linenos"> 63</span></a><span class="sd">        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping</span>
-</span><span id="GaussianStateDescription-64"><a href="#GaussianStateDescription-64"><span class="linenos"> 64</span></a><span class="sd">        $\hat{d}(\alpha)$ described in Section 2.3.</span>
-</span><span id="GaussianStateDescription-65"><a href="#GaussianStateDescription-65"><span class="linenos"> 65</span></a>
-</span><span id="GaussianStateDescription-66"><a href="#GaussianStateDescription-66"><span class="linenos"> 66</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription-67"><a href="#GaussianStateDescription-67"><span class="linenos"> 67</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription-68"><a href="#GaussianStateDescription-68"><span class="linenos"> 68</span></a><span class="sd">        np.float64</span>
-</span><span id="GaussianStateDescription-69"><a href="#GaussianStateDescription-69"><span class="linenos"> 69</span></a><span class="sd">            The energy of the state.</span>
-</span><span id="GaussianStateDescription-70"><a href="#GaussianStateDescription-70"><span class="linenos"> 70</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-71"><a href="#GaussianStateDescription-71"><span class="linenos"> 71</span></a>        <span class="n">tr_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">)</span>
-</span><span id="GaussianStateDescription-72"><a href="#GaussianStateDescription-72"><span class="linenos"> 72</span></a>        <span class="n">d_norm_squared</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="GaussianStateDescription-73"><a href="#GaussianStateDescription-73"><span class="linenos"> 73</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_modes</span>
-</span><span id="GaussianStateDescription-74"><a href="#GaussianStateDescription-74"><span class="linenos"> 74</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">tr_gamma</span> <span class="o">+</span> <span class="n">d_norm_squared</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
-</span><span id="GaussianStateDescription-75"><a href="#GaussianStateDescription-75"><span class="linenos"> 75</span></a>
-</span><span id="GaussianStateDescription-76"><a href="#GaussianStateDescription-76"><span class="linenos"> 76</span></a>    <span class="nd">@classmethod</span>
-</span><span id="GaussianStateDescription-77"><a href="#GaussianStateDescription-77"><span class="linenos"> 77</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">coherent_state</span><span class="p">(</span>
-</span><span id="GaussianStateDescription-78"><a href="#GaussianStateDescription-78"><span class="linenos"> 78</span></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span>
-</span><span id="GaussianStateDescription-79"><a href="#GaussianStateDescription-79"><span class="linenos"> 79</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
-</span><span id="GaussianStateDescription-80"><a href="#GaussianStateDescription-80"><span class="linenos"> 80</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-81"><a href="#GaussianStateDescription-81"><span class="linenos"> 81</span></a><span class="sd">        Creates a description for a coherent state $|\alpha\rangle$.</span>
-</span><span id="GaussianStateDescription-82"><a href="#GaussianStateDescription-82"><span class="linenos"> 82</span></a>
-</span><span id="GaussianStateDescription-83"><a href="#GaussianStateDescription-83"><span class="linenos"> 83</span></a><span class="sd">        According to Section 2.3, a coherent state is described by:</span>
+</span><span id="GaussianStateDescription-55"><a href="#GaussianStateDescription-55"><span class="linenos"> 55</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="GaussianStateDescription-56"><a href="#GaussianStateDescription-56"><span class="linenos"> 56</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="GaussianStateDescription-57"><a href="#GaussianStateDescription-57"><span class="linenos"> 57</span></a>        <span class="n">covariance_matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+</span><span id="GaussianStateDescription-58"><a href="#GaussianStateDescription-58"><span class="linenos"> 58</span></a>        <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">],</span>
+</span><span id="GaussianStateDescription-59"><a href="#GaussianStateDescription-59"><span class="linenos"> 59</span></a>        <span class="n">overlap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span>
+</span><span id="GaussianStateDescription-60"><a href="#GaussianStateDescription-60"><span class="linenos"> 60</span></a>    <span class="p">):</span>
+</span><span id="GaussianStateDescription-61"><a href="#GaussianStateDescription-61"><span class="linenos"> 61</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">covariance_matrix</span>
+</span><span id="GaussianStateDescription-62"><a href="#GaussianStateDescription-62"><span class="linenos"> 62</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
+</span><span id="GaussianStateDescription-63"><a href="#GaussianStateDescription-63"><span class="linenos"> 63</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="n">overlap</span>
+</span><span id="GaussianStateDescription-64"><a href="#GaussianStateDescription-64"><span class="linenos"> 64</span></a>
+</span><span id="GaussianStateDescription-65"><a href="#GaussianStateDescription-65"><span class="linenos"> 65</span></a>    <span class="nd">@classmethod</span>
+</span><span id="GaussianStateDescription-66"><a href="#GaussianStateDescription-66"><span class="linenos"> 66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">coherent_state</span><span class="p">(</span>
+</span><span id="GaussianStateDescription-67"><a href="#GaussianStateDescription-67"><span class="linenos"> 67</span></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span>
+</span><span id="GaussianStateDescription-68"><a href="#GaussianStateDescription-68"><span class="linenos"> 68</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
+</span><span id="GaussianStateDescription-69"><a href="#GaussianStateDescription-69"><span class="linenos"> 69</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-70"><a href="#GaussianStateDescription-70"><span class="linenos"> 70</span></a><span class="sd">        Creates a description for a coherent state $|\alpha\rangle$.</span>
+</span><span id="GaussianStateDescription-71"><a href="#GaussianStateDescription-71"><span class="linenos"> 71</span></a>
+</span><span id="GaussianStateDescription-72"><a href="#GaussianStateDescription-72"><span class="linenos"> 72</span></a><span class="sd">        According to Section 2.3, a coherent state is described by:</span>
+</span><span id="GaussianStateDescription-73"><a href="#GaussianStateDescription-73"><span class="linenos"> 73</span></a>
+</span><span id="GaussianStateDescription-74"><a href="#GaussianStateDescription-74"><span class="linenos"> 74</span></a><span class="sd">        * Covariance matrix $\Gamma = I$.</span>
+</span><span id="GaussianStateDescription-75"><a href="#GaussianStateDescription-75"><span class="linenos"> 75</span></a><span class="sd">        * Displacement described by $\alpha$.</span>
+</span><span id="GaussianStateDescription-76"><a href="#GaussianStateDescription-76"><span class="linenos"> 76</span></a>
+</span><span id="GaussianStateDescription-77"><a href="#GaussianStateDescription-77"><span class="linenos"> 77</span></a><span class="sd">        For the extended description, the reference state is chosen to be the state itself,</span>
+</span><span id="GaussianStateDescription-78"><a href="#GaussianStateDescription-78"><span class="linenos"> 78</span></a><span class="sd">        so the overlap is $r = \langle \alpha | \alpha \rangle = 1$.</span>
+</span><span id="GaussianStateDescription-79"><a href="#GaussianStateDescription-79"><span class="linenos"> 79</span></a>
+</span><span id="GaussianStateDescription-80"><a href="#GaussianStateDescription-80"><span class="linenos"> 80</span></a><span class="sd">        Parameters</span>
+</span><span id="GaussianStateDescription-81"><a href="#GaussianStateDescription-81"><span class="linenos"> 81</span></a><span class="sd">        ----------</span>
+</span><span id="GaussianStateDescription-82"><a href="#GaussianStateDescription-82"><span class="linenos"> 82</span></a><span class="sd">        amplitude : NDArray[np.complex128]</span>
+</span><span id="GaussianStateDescription-83"><a href="#GaussianStateDescription-83"><span class="linenos"> 83</span></a><span class="sd">            The complex amplitude vector $\alpha$.</span>
 </span><span id="GaussianStateDescription-84"><a href="#GaussianStateDescription-84"><span class="linenos"> 84</span></a>
-</span><span id="GaussianStateDescription-85"><a href="#GaussianStateDescription-85"><span class="linenos"> 85</span></a><span class="sd">        * Covariance matrix $\Gamma = I$.</span>
-</span><span id="GaussianStateDescription-86"><a href="#GaussianStateDescription-86"><span class="linenos"> 86</span></a><span class="sd">        * Displacement described by $\alpha$.</span>
-</span><span id="GaussianStateDescription-87"><a href="#GaussianStateDescription-87"><span class="linenos"> 87</span></a>
-</span><span id="GaussianStateDescription-88"><a href="#GaussianStateDescription-88"><span class="linenos"> 88</span></a><span class="sd">        For the extended description, the reference state is chosen to be the state itself,</span>
-</span><span id="GaussianStateDescription-89"><a href="#GaussianStateDescription-89"><span class="linenos"> 89</span></a><span class="sd">        so the overlap is $r = \langle \alpha | \alpha \rangle = 1$.</span>
-</span><span id="GaussianStateDescription-90"><a href="#GaussianStateDescription-90"><span class="linenos"> 90</span></a>
-</span><span id="GaussianStateDescription-91"><a href="#GaussianStateDescription-91"><span class="linenos"> 91</span></a><span class="sd">        Parameters</span>
-</span><span id="GaussianStateDescription-92"><a href="#GaussianStateDescription-92"><span class="linenos"> 92</span></a><span class="sd">        ----------</span>
-</span><span id="GaussianStateDescription-93"><a href="#GaussianStateDescription-93"><span class="linenos"> 93</span></a><span class="sd">        amplitude : NDArray[np.complex128]</span>
-</span><span id="GaussianStateDescription-94"><a href="#GaussianStateDescription-94"><span class="linenos"> 94</span></a><span class="sd">            The complex amplitude vector $\alpha$.</span>
+</span><span id="GaussianStateDescription-85"><a href="#GaussianStateDescription-85"><span class="linenos"> 85</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription-86"><a href="#GaussianStateDescription-86"><span class="linenos"> 86</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription-87"><a href="#GaussianStateDescription-87"><span class="linenos"> 87</span></a><span class="sd">        GaussianStateDescription</span>
+</span><span id="GaussianStateDescription-88"><a href="#GaussianStateDescription-88"><span class="linenos"> 88</span></a><span class="sd">            The description $(I, \alpha, 1)$.</span>
+</span><span id="GaussianStateDescription-89"><a href="#GaussianStateDescription-89"><span class="linenos"> 89</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-90"><a href="#GaussianStateDescription-90"><span class="linenos"> 90</span></a>        <span class="n">alpha</span> <span class="o">=</span> <span class="n">amplitude</span>
+</span><span id="GaussianStateDescription-91"><a href="#GaussianStateDescription-91"><span class="linenos"> 91</span></a>        <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
+</span><span id="GaussianStateDescription-92"><a href="#GaussianStateDescription-92"><span class="linenos"> 92</span></a>            <span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+</span><span id="GaussianStateDescription-93"><a href="#GaussianStateDescription-93"><span class="linenos"> 93</span></a>        <span class="p">)</span>  <span class="c1"># I matrix of needed shape &amp; type</span>
+</span><span id="GaussianStateDescription-94"><a href="#GaussianStateDescription-94"><span class="linenos"> 94</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 </span><span id="GaussianStateDescription-95"><a href="#GaussianStateDescription-95"><span class="linenos"> 95</span></a>
-</span><span id="GaussianStateDescription-96"><a href="#GaussianStateDescription-96"><span class="linenos"> 96</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription-97"><a href="#GaussianStateDescription-97"><span class="linenos"> 97</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription-98"><a href="#GaussianStateDescription-98"><span class="linenos"> 98</span></a><span class="sd">        GaussianStateDescription</span>
-</span><span id="GaussianStateDescription-99"><a href="#GaussianStateDescription-99"><span class="linenos"> 99</span></a><span class="sd">            The description $(I, \alpha, 1)$.</span>
-</span><span id="GaussianStateDescription-100"><a href="#GaussianStateDescription-100"><span class="linenos">100</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-101"><a href="#GaussianStateDescription-101"><span class="linenos">101</span></a>        <span class="n">alpha</span> <span class="o">=</span> <span class="n">amplitude</span>
-</span><span id="GaussianStateDescription-102"><a href="#GaussianStateDescription-102"><span class="linenos">102</span></a>        <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
-</span><span id="GaussianStateDescription-103"><a href="#GaussianStateDescription-103"><span class="linenos">103</span></a>            <span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
-</span><span id="GaussianStateDescription-104"><a href="#GaussianStateDescription-104"><span class="linenos">104</span></a>        <span class="p">)</span>  <span class="c1"># I matrix of needed shape &amp; type</span>
-</span><span id="GaussianStateDescription-105"><a href="#GaussianStateDescription-105"><span class="linenos">105</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</span><span id="GaussianStateDescription-106"><a href="#GaussianStateDescription-106"><span class="linenos">106</span></a>
-</span><span id="GaussianStateDescription-107"><a href="#GaussianStateDescription-107"><span class="linenos">107</span></a>    <span class="nd">@classmethod</span>
-</span><span id="GaussianStateDescription-108"><a href="#GaussianStateDescription-108"><span class="linenos">108</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vacuum_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">complex_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
-</span><span id="GaussianStateDescription-109"><a href="#GaussianStateDescription-109"><span class="linenos">109</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-110"><a href="#GaussianStateDescription-110"><span class="linenos">110</span></a><span class="sd">        Creates a description for the vacuum state $|0\rangle$.</span>
-</span><span id="GaussianStateDescription-111"><a href="#GaussianStateDescription-111"><span class="linenos">111</span></a>
-</span><span id="GaussianStateDescription-112"><a href="#GaussianStateDescription-112"><span class="linenos">112</span></a><span class="sd">        The vacuum state is a coherent state with $\alpha = 0$.</span>
-</span><span id="GaussianStateDescription-113"><a href="#GaussianStateDescription-113"><span class="linenos">113</span></a>
-</span><span id="GaussianStateDescription-114"><a href="#GaussianStateDescription-114"><span class="linenos">114</span></a><span class="sd">        Parameters</span>
-</span><span id="GaussianStateDescription-115"><a href="#GaussianStateDescription-115"><span class="linenos">115</span></a><span class="sd">        ----------</span>
-</span><span id="GaussianStateDescription-116"><a href="#GaussianStateDescription-116"><span class="linenos">116</span></a><span class="sd">        complex_dimension : int</span>
-</span><span id="GaussianStateDescription-117"><a href="#GaussianStateDescription-117"><span class="linenos">117</span></a><span class="sd">            The number of modes $n$.</span>
+</span><span id="GaussianStateDescription-96"><a href="#GaussianStateDescription-96"><span class="linenos"> 96</span></a>    <span class="nd">@classmethod</span>
+</span><span id="GaussianStateDescription-97"><a href="#GaussianStateDescription-97"><span class="linenos"> 97</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vacuum_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">complex_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
+</span><span id="GaussianStateDescription-98"><a href="#GaussianStateDescription-98"><span class="linenos"> 98</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-99"><a href="#GaussianStateDescription-99"><span class="linenos"> 99</span></a><span class="sd">        Creates a description for the vacuum state $|0\rangle$.</span>
+</span><span id="GaussianStateDescription-100"><a href="#GaussianStateDescription-100"><span class="linenos">100</span></a>
+</span><span id="GaussianStateDescription-101"><a href="#GaussianStateDescription-101"><span class="linenos">101</span></a><span class="sd">        The vacuum state is a coherent state with $\alpha = 0$.</span>
+</span><span id="GaussianStateDescription-102"><a href="#GaussianStateDescription-102"><span class="linenos">102</span></a>
+</span><span id="GaussianStateDescription-103"><a href="#GaussianStateDescription-103"><span class="linenos">103</span></a><span class="sd">        Parameters</span>
+</span><span id="GaussianStateDescription-104"><a href="#GaussianStateDescription-104"><span class="linenos">104</span></a><span class="sd">        ----------</span>
+</span><span id="GaussianStateDescription-105"><a href="#GaussianStateDescription-105"><span class="linenos">105</span></a><span class="sd">        complex_dimension : int</span>
+</span><span id="GaussianStateDescription-106"><a href="#GaussianStateDescription-106"><span class="linenos">106</span></a><span class="sd">            The number of modes $n$.</span>
+</span><span id="GaussianStateDescription-107"><a href="#GaussianStateDescription-107"><span class="linenos">107</span></a>
+</span><span id="GaussianStateDescription-108"><a href="#GaussianStateDescription-108"><span class="linenos">108</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription-109"><a href="#GaussianStateDescription-109"><span class="linenos">109</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription-110"><a href="#GaussianStateDescription-110"><span class="linenos">110</span></a><span class="sd">        GaussianStateDescription</span>
+</span><span id="GaussianStateDescription-111"><a href="#GaussianStateDescription-111"><span class="linenos">111</span></a><span class="sd">            The description of the n-mode vacuum.</span>
+</span><span id="GaussianStateDescription-112"><a href="#GaussianStateDescription-112"><span class="linenos">112</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-113"><a href="#GaussianStateDescription-113"><span class="linenos">113</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coherent_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">complex_dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+</span><span id="GaussianStateDescription-114"><a href="#GaussianStateDescription-114"><span class="linenos">114</span></a>
+</span><span id="GaussianStateDescription-115"><a href="#GaussianStateDescription-115"><span class="linenos">115</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
+</span><span id="GaussianStateDescription-116"><a href="#GaussianStateDescription-116"><span class="linenos">116</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-117"><a href="#GaussianStateDescription-117"><span class="linenos">117</span></a><span class="sd">        Computes the energy (mean photon number) of the Gaussian state.</span>
 </span><span id="GaussianStateDescription-118"><a href="#GaussianStateDescription-118"><span class="linenos">118</span></a>
-</span><span id="GaussianStateDescription-119"><a href="#GaussianStateDescription-119"><span class="linenos">119</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription-120"><a href="#GaussianStateDescription-120"><span class="linenos">120</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription-121"><a href="#GaussianStateDescription-121"><span class="linenos">121</span></a><span class="sd">        GaussianStateDescription</span>
-</span><span id="GaussianStateDescription-122"><a href="#GaussianStateDescription-122"><span class="linenos">122</span></a><span class="sd">            The description of the n-mode vacuum.</span>
-</span><span id="GaussianStateDescription-123"><a href="#GaussianStateDescription-123"><span class="linenos">123</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-124"><a href="#GaussianStateDescription-124"><span class="linenos">124</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coherent_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">complex_dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+</span><span id="GaussianStateDescription-119"><a href="#GaussianStateDescription-119"><span class="linenos">119</span></a><span class="sd">        This implements the energy formula given in Section 2.1 of the reference paper.</span>
+</span><span id="GaussianStateDescription-120"><a href="#GaussianStateDescription-120"><span class="linenos">120</span></a><span class="sd">        The energy is given by:</span>
+</span><span id="GaussianStateDescription-121"><a href="#GaussianStateDescription-121"><span class="linenos">121</span></a>
+</span><span id="GaussianStateDescription-122"><a href="#GaussianStateDescription-122"><span class="linenos">122</span></a><span class="sd">        $$</span>
+</span><span id="GaussianStateDescription-123"><a href="#GaussianStateDescription-123"><span class="linenos">123</span></a><span class="sd">        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n</span>
+</span><span id="GaussianStateDescription-124"><a href="#GaussianStateDescription-124"><span class="linenos">124</span></a><span class="sd">        $$</span>
 </span><span id="GaussianStateDescription-125"><a href="#GaussianStateDescription-125"><span class="linenos">125</span></a>
-</span><span id="GaussianStateDescription-126"><a href="#GaussianStateDescription-126"><span class="linenos">126</span></a>    <span class="nd">@property</span>
-</span><span id="GaussianStateDescription-127"><a href="#GaussianStateDescription-127"><span class="linenos">127</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="GaussianStateDescription-128"><a href="#GaussianStateDescription-128"><span class="linenos">128</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-129"><a href="#GaussianStateDescription-129"><span class="linenos">129</span></a><span class="sd">        Returns the number of modes $n$ of the system.</span>
-</span><span id="GaussianStateDescription-130"><a href="#GaussianStateDescription-130"><span class="linenos">130</span></a>
-</span><span id="GaussianStateDescription-131"><a href="#GaussianStateDescription-131"><span class="linenos">131</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription-132"><a href="#GaussianStateDescription-132"><span class="linenos">132</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription-133"><a href="#GaussianStateDescription-133"><span class="linenos">133</span></a><span class="sd">        int</span>
-</span><span id="GaussianStateDescription-134"><a href="#GaussianStateDescription-134"><span class="linenos">134</span></a><span class="sd">            The number of modes.</span>
-</span><span id="GaussianStateDescription-135"><a href="#GaussianStateDescription-135"><span class="linenos">135</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription-136"><a href="#GaussianStateDescription-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">size</span>
+</span><span id="GaussianStateDescription-126"><a href="#GaussianStateDescription-126"><span class="linenos">126</span></a><span class="sd">        where $d$ is the real displacement vector. In this implementation,</span>
+</span><span id="GaussianStateDescription-127"><a href="#GaussianStateDescription-127"><span class="linenos">127</span></a><span class="sd">        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping</span>
+</span><span id="GaussianStateDescription-128"><a href="#GaussianStateDescription-128"><span class="linenos">128</span></a><span class="sd">        $\hat{d}(\alpha)$ described in Section 2.3.</span>
+</span><span id="GaussianStateDescription-129"><a href="#GaussianStateDescription-129"><span class="linenos">129</span></a>
+</span><span id="GaussianStateDescription-130"><a href="#GaussianStateDescription-130"><span class="linenos">130</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription-131"><a href="#GaussianStateDescription-131"><span class="linenos">131</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription-132"><a href="#GaussianStateDescription-132"><span class="linenos">132</span></a><span class="sd">        np.float64</span>
+</span><span id="GaussianStateDescription-133"><a href="#GaussianStateDescription-133"><span class="linenos">133</span></a><span class="sd">            The energy of the state.</span>
+</span><span id="GaussianStateDescription-134"><a href="#GaussianStateDescription-134"><span class="linenos">134</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-135"><a href="#GaussianStateDescription-135"><span class="linenos">135</span></a>        <span class="n">tr_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">)</span>
+</span><span id="GaussianStateDescription-136"><a href="#GaussianStateDescription-136"><span class="linenos">136</span></a>        <span class="n">d_norm_squared</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="GaussianStateDescription-137"><a href="#GaussianStateDescription-137"><span class="linenos">137</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_modes</span>
+</span><span id="GaussianStateDescription-138"><a href="#GaussianStateDescription-138"><span class="linenos">138</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">tr_gamma</span> <span class="o">+</span> <span class="n">d_norm_squared</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+</span><span id="GaussianStateDescription-139"><a href="#GaussianStateDescription-139"><span class="linenos">139</span></a>
+</span><span id="GaussianStateDescription-140"><a href="#GaussianStateDescription-140"><span class="linenos">140</span></a>    <span class="nd">@property</span>
+</span><span id="GaussianStateDescription-141"><a href="#GaussianStateDescription-141"><span class="linenos">141</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="GaussianStateDescription-142"><a href="#GaussianStateDescription-142"><span class="linenos">142</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-143"><a href="#GaussianStateDescription-143"><span class="linenos">143</span></a><span class="sd">        Returns the number of modes $n$ of the system.</span>
+</span><span id="GaussianStateDescription-144"><a href="#GaussianStateDescription-144"><span class="linenos">144</span></a>
+</span><span id="GaussianStateDescription-145"><a href="#GaussianStateDescription-145"><span class="linenos">145</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription-146"><a href="#GaussianStateDescription-146"><span class="linenos">146</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription-147"><a href="#GaussianStateDescription-147"><span class="linenos">147</span></a><span class="sd">        int</span>
+</span><span id="GaussianStateDescription-148"><a href="#GaussianStateDescription-148"><span class="linenos">148</span></a><span class="sd">            The number of modes.</span>
+</span><span id="GaussianStateDescription-149"><a href="#GaussianStateDescription-149"><span class="linenos">149</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription-150"><a href="#GaussianStateDescription-150"><span class="linenos">150</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">size</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>A classical description of a pure Gaussian state including its global phase information.</p>
+            <div class="docstring"><p>A description of a pure Gaussian state including its global phase information.</p>
 
 <p>This class implements the "Extended description of a Gaussian state" as defined in
-Definition 3.1 of the reference paper. It characterizes a state $|\psi\rangle$
-using a triple $\Delta = (\Gamma, \alpha, r)$, where:</p>
+Definition 3.1 of the reference paper. It characterizes a pure Gaussian state $|\psi\rangle$
+using a triple
+$$\Delta = (\Gamma, \alpha, r) \in \mathsf{Mat}_{2n\times 2n}(\mathbb{R}) \times \mathbb{C}^{n} \times \mathbb{C}, $$
+where:</p>
 
 <ul>
 <li>$\Gamma$ is the covariance matrix.</li>
@@ -470,9 +500,7 @@ which is not possible using the standard covariance matrix formalism alone.</p>
 <li><strong>covariance_matrix</strong> (NDArray[np.float64]):
 The $2n \times 2n$ real symmetric covariance matrix $\Gamma$.</li>
 <li><strong>amplitude</strong> (NDArray[np.complex128]):
-The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.
-Note that the real displacement vector $d$ is determined by $\alpha$
-via the mapping $d = \hat{d}(\alpha)$ defined in Section 2.1.</li>
+The complex vector $\alpha \in \mathbb{C}^n$ representing the displacement.</li>
 <li><strong>overlap</strong> (np.complex128):
 The scalar overlap $r = \langle \alpha, \psi \rangle$.</li>
 </ul>
@@ -482,6 +510,20 @@ The scalar overlap $r = \langle \alpha, \psi \rangle$.</li>
 <p><strong>Indexing Convention:</strong>
 While the reference paper uses 1-based indexing for modes (e.g., $j \in {1, \dots, n}$),
 this implementation uses standard Python 0-based indexing (e.g., indices <code>0</code> to <code>n-1</code>).</p>
+
+<p><strong>Real Displacement Vector:</strong>
+The corresponding real displacement vector $d$ in phase space is determined by the mapping
+$d = \hat{d}(\alpha)$ described in Section 2.1. Explicitly:</p>
+
+<p>$$
+\hat{d}(\alpha) = \sqrt{2} (\text{Re}(\alpha_1), \text{Im}(\alpha_1), \dots, \text{Re}(\alpha_n), \text{Im}(\alpha_n))^T
+$$</p>
+
+<p><strong>Bijective Mapping:</strong>
+The set of these descriptions, denoted $\text{Desc}_n$, maps bijectively to the set
+of $n$-mode pure Gaussian states $\text{Gauss}_n$. This means every description uniquely
+fixes a Gaussian state $|\psi(\Delta)\rangle$, and conversely, every pure Gaussian state
+admits a unique description.</p>
 </div>
 
 
@@ -495,15 +537,15 @@ this implementation uses standard Python 0-based indexing (e.g., indices <code>0
 
     </div>
     <a class="headerlink" href="#GaussianStateDescription.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.__init__-41"><a href="#GaussianStateDescription.__init__-41"><span class="linenos">41</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="GaussianStateDescription.__init__-42"><a href="#GaussianStateDescription.__init__-42"><span class="linenos">42</span></a>        <span class="bp">self</span><span class="p">,</span>
-</span><span id="GaussianStateDescription.__init__-43"><a href="#GaussianStateDescription.__init__-43"><span class="linenos">43</span></a>        <span class="n">covariance_matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-</span><span id="GaussianStateDescription.__init__-44"><a href="#GaussianStateDescription.__init__-44"><span class="linenos">44</span></a>        <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">],</span>
-</span><span id="GaussianStateDescription.__init__-45"><a href="#GaussianStateDescription.__init__-45"><span class="linenos">45</span></a>        <span class="n">overlap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span>
-</span><span id="GaussianStateDescription.__init__-46"><a href="#GaussianStateDescription.__init__-46"><span class="linenos">46</span></a>    <span class="p">):</span>
-</span><span id="GaussianStateDescription.__init__-47"><a href="#GaussianStateDescription.__init__-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">covariance_matrix</span>
-</span><span id="GaussianStateDescription.__init__-48"><a href="#GaussianStateDescription.__init__-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
-</span><span id="GaussianStateDescription.__init__-49"><a href="#GaussianStateDescription.__init__-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="n">overlap</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.__init__-55"><a href="#GaussianStateDescription.__init__-55"><span class="linenos">55</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="GaussianStateDescription.__init__-56"><a href="#GaussianStateDescription.__init__-56"><span class="linenos">56</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="GaussianStateDescription.__init__-57"><a href="#GaussianStateDescription.__init__-57"><span class="linenos">57</span></a>        <span class="n">covariance_matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+</span><span id="GaussianStateDescription.__init__-58"><a href="#GaussianStateDescription.__init__-58"><span class="linenos">58</span></a>        <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">],</span>
+</span><span id="GaussianStateDescription.__init__-59"><a href="#GaussianStateDescription.__init__-59"><span class="linenos">59</span></a>        <span class="n">overlap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">,</span>
+</span><span id="GaussianStateDescription.__init__-60"><a href="#GaussianStateDescription.__init__-60"><span class="linenos">60</span></a>    <span class="p">):</span>
+</span><span id="GaussianStateDescription.__init__-61"><a href="#GaussianStateDescription.__init__-61"><span class="linenos">61</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">covariance_matrix</span>
+</span><span id="GaussianStateDescription.__init__-62"><a href="#GaussianStateDescription.__init__-62"><span class="linenos">62</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
+</span><span id="GaussianStateDescription.__init__-63"><a href="#GaussianStateDescription.__init__-63"><span class="linenos">63</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="n">overlap</span>
 </span></pre></div>
 
 
@@ -543,66 +585,6 @@ this implementation uses standard Python 0-based indexing (e.g., indices <code>0
     
 
                             </div>
-                            <div id="GaussianStateDescription.energy" class="classattr">
-                                        <input id="GaussianStateDescription.energy-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">energy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>:</span></span>
-
-                <label class="view-source-button" for="GaussianStateDescription.energy-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#GaussianStateDescription.energy"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.energy-51"><a href="#GaussianStateDescription.energy-51"><span class="linenos">51</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
-</span><span id="GaussianStateDescription.energy-52"><a href="#GaussianStateDescription.energy-52"><span class="linenos">52</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.energy-53"><a href="#GaussianStateDescription.energy-53"><span class="linenos">53</span></a><span class="sd">        Computes the energy (mean photon number) of the Gaussian state.</span>
-</span><span id="GaussianStateDescription.energy-54"><a href="#GaussianStateDescription.energy-54"><span class="linenos">54</span></a>
-</span><span id="GaussianStateDescription.energy-55"><a href="#GaussianStateDescription.energy-55"><span class="linenos">55</span></a><span class="sd">        This implements the energy formula given in Section 2.1 of the reference paper.</span>
-</span><span id="GaussianStateDescription.energy-56"><a href="#GaussianStateDescription.energy-56"><span class="linenos">56</span></a><span class="sd">        The energy is given by:</span>
-</span><span id="GaussianStateDescription.energy-57"><a href="#GaussianStateDescription.energy-57"><span class="linenos">57</span></a>
-</span><span id="GaussianStateDescription.energy-58"><a href="#GaussianStateDescription.energy-58"><span class="linenos">58</span></a><span class="sd">        $$</span>
-</span><span id="GaussianStateDescription.energy-59"><a href="#GaussianStateDescription.energy-59"><span class="linenos">59</span></a><span class="sd">        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n</span>
-</span><span id="GaussianStateDescription.energy-60"><a href="#GaussianStateDescription.energy-60"><span class="linenos">60</span></a><span class="sd">        $$</span>
-</span><span id="GaussianStateDescription.energy-61"><a href="#GaussianStateDescription.energy-61"><span class="linenos">61</span></a>
-</span><span id="GaussianStateDescription.energy-62"><a href="#GaussianStateDescription.energy-62"><span class="linenos">62</span></a><span class="sd">        where $d$ is the real displacement vector. In this implementation,</span>
-</span><span id="GaussianStateDescription.energy-63"><a href="#GaussianStateDescription.energy-63"><span class="linenos">63</span></a><span class="sd">        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping</span>
-</span><span id="GaussianStateDescription.energy-64"><a href="#GaussianStateDescription.energy-64"><span class="linenos">64</span></a><span class="sd">        $\hat{d}(\alpha)$ described in Section 2.3.</span>
-</span><span id="GaussianStateDescription.energy-65"><a href="#GaussianStateDescription.energy-65"><span class="linenos">65</span></a>
-</span><span id="GaussianStateDescription.energy-66"><a href="#GaussianStateDescription.energy-66"><span class="linenos">66</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription.energy-67"><a href="#GaussianStateDescription.energy-67"><span class="linenos">67</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription.energy-68"><a href="#GaussianStateDescription.energy-68"><span class="linenos">68</span></a><span class="sd">        np.float64</span>
-</span><span id="GaussianStateDescription.energy-69"><a href="#GaussianStateDescription.energy-69"><span class="linenos">69</span></a><span class="sd">            The energy of the state.</span>
-</span><span id="GaussianStateDescription.energy-70"><a href="#GaussianStateDescription.energy-70"><span class="linenos">70</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.energy-71"><a href="#GaussianStateDescription.energy-71"><span class="linenos">71</span></a>        <span class="n">tr_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">)</span>
-</span><span id="GaussianStateDescription.energy-72"><a href="#GaussianStateDescription.energy-72"><span class="linenos">72</span></a>        <span class="n">d_norm_squared</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="GaussianStateDescription.energy-73"><a href="#GaussianStateDescription.energy-73"><span class="linenos">73</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_modes</span>
-</span><span id="GaussianStateDescription.energy-74"><a href="#GaussianStateDescription.energy-74"><span class="linenos">74</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">tr_gamma</span> <span class="o">+</span> <span class="n">d_norm_squared</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Computes the energy (mean photon number) of the Gaussian state.</p>
-
-<p>This implements the energy formula given in Section 2.1 of the reference paper.
-The energy is given by:</p>
-
-<p>$$
-\text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n
-$$</p>
-
-<p>where $d$ is the real displacement vector. In this implementation,
-$d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping
-$\hat{d}(\alpha)$ described in Section 2.3.</p>
-
-<h6 id="returns">Returns</h6>
-
-<ul>
-<li><strong>np.float64</strong>: The energy of the state.</li>
-</ul>
-</div>
-
-
-                            </div>
                             <div id="GaussianStateDescription.coherent_state" class="classattr">
                                         <input id="GaussianStateDescription.coherent_state-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -615,36 +597,36 @@ $\hat{d}(\alpha)$ described in Section 2.3.</p>
 
     </div>
     <a class="headerlink" href="#GaussianStateDescription.coherent_state"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.coherent_state-76"><a href="#GaussianStateDescription.coherent_state-76"><span class="linenos"> 76</span></a>    <span class="nd">@classmethod</span>
-</span><span id="GaussianStateDescription.coherent_state-77"><a href="#GaussianStateDescription.coherent_state-77"><span class="linenos"> 77</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">coherent_state</span><span class="p">(</span>
-</span><span id="GaussianStateDescription.coherent_state-78"><a href="#GaussianStateDescription.coherent_state-78"><span class="linenos"> 78</span></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span>
-</span><span id="GaussianStateDescription.coherent_state-79"><a href="#GaussianStateDescription.coherent_state-79"><span class="linenos"> 79</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
-</span><span id="GaussianStateDescription.coherent_state-80"><a href="#GaussianStateDescription.coherent_state-80"><span class="linenos"> 80</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.coherent_state-81"><a href="#GaussianStateDescription.coherent_state-81"><span class="linenos"> 81</span></a><span class="sd">        Creates a description for a coherent state $|\alpha\rangle$.</span>
-</span><span id="GaussianStateDescription.coherent_state-82"><a href="#GaussianStateDescription.coherent_state-82"><span class="linenos"> 82</span></a>
-</span><span id="GaussianStateDescription.coherent_state-83"><a href="#GaussianStateDescription.coherent_state-83"><span class="linenos"> 83</span></a><span class="sd">        According to Section 2.3, a coherent state is described by:</span>
-</span><span id="GaussianStateDescription.coherent_state-84"><a href="#GaussianStateDescription.coherent_state-84"><span class="linenos"> 84</span></a>
-</span><span id="GaussianStateDescription.coherent_state-85"><a href="#GaussianStateDescription.coherent_state-85"><span class="linenos"> 85</span></a><span class="sd">        * Covariance matrix $\Gamma = I$.</span>
-</span><span id="GaussianStateDescription.coherent_state-86"><a href="#GaussianStateDescription.coherent_state-86"><span class="linenos"> 86</span></a><span class="sd">        * Displacement described by $\alpha$.</span>
-</span><span id="GaussianStateDescription.coherent_state-87"><a href="#GaussianStateDescription.coherent_state-87"><span class="linenos"> 87</span></a>
-</span><span id="GaussianStateDescription.coherent_state-88"><a href="#GaussianStateDescription.coherent_state-88"><span class="linenos"> 88</span></a><span class="sd">        For the extended description, the reference state is chosen to be the state itself,</span>
-</span><span id="GaussianStateDescription.coherent_state-89"><a href="#GaussianStateDescription.coherent_state-89"><span class="linenos"> 89</span></a><span class="sd">        so the overlap is $r = \langle \alpha | \alpha \rangle = 1$.</span>
-</span><span id="GaussianStateDescription.coherent_state-90"><a href="#GaussianStateDescription.coherent_state-90"><span class="linenos"> 90</span></a>
-</span><span id="GaussianStateDescription.coherent_state-91"><a href="#GaussianStateDescription.coherent_state-91"><span class="linenos"> 91</span></a><span class="sd">        Parameters</span>
-</span><span id="GaussianStateDescription.coherent_state-92"><a href="#GaussianStateDescription.coherent_state-92"><span class="linenos"> 92</span></a><span class="sd">        ----------</span>
-</span><span id="GaussianStateDescription.coherent_state-93"><a href="#GaussianStateDescription.coherent_state-93"><span class="linenos"> 93</span></a><span class="sd">        amplitude : NDArray[np.complex128]</span>
-</span><span id="GaussianStateDescription.coherent_state-94"><a href="#GaussianStateDescription.coherent_state-94"><span class="linenos"> 94</span></a><span class="sd">            The complex amplitude vector $\alpha$.</span>
-</span><span id="GaussianStateDescription.coherent_state-95"><a href="#GaussianStateDescription.coherent_state-95"><span class="linenos"> 95</span></a>
-</span><span id="GaussianStateDescription.coherent_state-96"><a href="#GaussianStateDescription.coherent_state-96"><span class="linenos"> 96</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription.coherent_state-97"><a href="#GaussianStateDescription.coherent_state-97"><span class="linenos"> 97</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription.coherent_state-98"><a href="#GaussianStateDescription.coherent_state-98"><span class="linenos"> 98</span></a><span class="sd">        GaussianStateDescription</span>
-</span><span id="GaussianStateDescription.coherent_state-99"><a href="#GaussianStateDescription.coherent_state-99"><span class="linenos"> 99</span></a><span class="sd">            The description $(I, \alpha, 1)$.</span>
-</span><span id="GaussianStateDescription.coherent_state-100"><a href="#GaussianStateDescription.coherent_state-100"><span class="linenos">100</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.coherent_state-101"><a href="#GaussianStateDescription.coherent_state-101"><span class="linenos">101</span></a>        <span class="n">alpha</span> <span class="o">=</span> <span class="n">amplitude</span>
-</span><span id="GaussianStateDescription.coherent_state-102"><a href="#GaussianStateDescription.coherent_state-102"><span class="linenos">102</span></a>        <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
-</span><span id="GaussianStateDescription.coherent_state-103"><a href="#GaussianStateDescription.coherent_state-103"><span class="linenos">103</span></a>            <span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
-</span><span id="GaussianStateDescription.coherent_state-104"><a href="#GaussianStateDescription.coherent_state-104"><span class="linenos">104</span></a>        <span class="p">)</span>  <span class="c1"># I matrix of needed shape &amp; type</span>
-</span><span id="GaussianStateDescription.coherent_state-105"><a href="#GaussianStateDescription.coherent_state-105"><span class="linenos">105</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.coherent_state-65"><a href="#GaussianStateDescription.coherent_state-65"><span class="linenos">65</span></a>    <span class="nd">@classmethod</span>
+</span><span id="GaussianStateDescription.coherent_state-66"><a href="#GaussianStateDescription.coherent_state-66"><span class="linenos">66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">coherent_state</span><span class="p">(</span>
+</span><span id="GaussianStateDescription.coherent_state-67"><a href="#GaussianStateDescription.coherent_state-67"><span class="linenos">67</span></a>        <span class="bp">cls</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">]</span>
+</span><span id="GaussianStateDescription.coherent_state-68"><a href="#GaussianStateDescription.coherent_state-68"><span class="linenos">68</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
+</span><span id="GaussianStateDescription.coherent_state-69"><a href="#GaussianStateDescription.coherent_state-69"><span class="linenos">69</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.coherent_state-70"><a href="#GaussianStateDescription.coherent_state-70"><span class="linenos">70</span></a><span class="sd">        Creates a description for a coherent state $|\alpha\rangle$.</span>
+</span><span id="GaussianStateDescription.coherent_state-71"><a href="#GaussianStateDescription.coherent_state-71"><span class="linenos">71</span></a>
+</span><span id="GaussianStateDescription.coherent_state-72"><a href="#GaussianStateDescription.coherent_state-72"><span class="linenos">72</span></a><span class="sd">        According to Section 2.3, a coherent state is described by:</span>
+</span><span id="GaussianStateDescription.coherent_state-73"><a href="#GaussianStateDescription.coherent_state-73"><span class="linenos">73</span></a>
+</span><span id="GaussianStateDescription.coherent_state-74"><a href="#GaussianStateDescription.coherent_state-74"><span class="linenos">74</span></a><span class="sd">        * Covariance matrix $\Gamma = I$.</span>
+</span><span id="GaussianStateDescription.coherent_state-75"><a href="#GaussianStateDescription.coherent_state-75"><span class="linenos">75</span></a><span class="sd">        * Displacement described by $\alpha$.</span>
+</span><span id="GaussianStateDescription.coherent_state-76"><a href="#GaussianStateDescription.coherent_state-76"><span class="linenos">76</span></a>
+</span><span id="GaussianStateDescription.coherent_state-77"><a href="#GaussianStateDescription.coherent_state-77"><span class="linenos">77</span></a><span class="sd">        For the extended description, the reference state is chosen to be the state itself,</span>
+</span><span id="GaussianStateDescription.coherent_state-78"><a href="#GaussianStateDescription.coherent_state-78"><span class="linenos">78</span></a><span class="sd">        so the overlap is $r = \langle \alpha | \alpha \rangle = 1$.</span>
+</span><span id="GaussianStateDescription.coherent_state-79"><a href="#GaussianStateDescription.coherent_state-79"><span class="linenos">79</span></a>
+</span><span id="GaussianStateDescription.coherent_state-80"><a href="#GaussianStateDescription.coherent_state-80"><span class="linenos">80</span></a><span class="sd">        Parameters</span>
+</span><span id="GaussianStateDescription.coherent_state-81"><a href="#GaussianStateDescription.coherent_state-81"><span class="linenos">81</span></a><span class="sd">        ----------</span>
+</span><span id="GaussianStateDescription.coherent_state-82"><a href="#GaussianStateDescription.coherent_state-82"><span class="linenos">82</span></a><span class="sd">        amplitude : NDArray[np.complex128]</span>
+</span><span id="GaussianStateDescription.coherent_state-83"><a href="#GaussianStateDescription.coherent_state-83"><span class="linenos">83</span></a><span class="sd">            The complex amplitude vector $\alpha$.</span>
+</span><span id="GaussianStateDescription.coherent_state-84"><a href="#GaussianStateDescription.coherent_state-84"><span class="linenos">84</span></a>
+</span><span id="GaussianStateDescription.coherent_state-85"><a href="#GaussianStateDescription.coherent_state-85"><span class="linenos">85</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription.coherent_state-86"><a href="#GaussianStateDescription.coherent_state-86"><span class="linenos">86</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription.coherent_state-87"><a href="#GaussianStateDescription.coherent_state-87"><span class="linenos">87</span></a><span class="sd">        GaussianStateDescription</span>
+</span><span id="GaussianStateDescription.coherent_state-88"><a href="#GaussianStateDescription.coherent_state-88"><span class="linenos">88</span></a><span class="sd">            The description $(I, \alpha, 1)$.</span>
+</span><span id="GaussianStateDescription.coherent_state-89"><a href="#GaussianStateDescription.coherent_state-89"><span class="linenos">89</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.coherent_state-90"><a href="#GaussianStateDescription.coherent_state-90"><span class="linenos">90</span></a>        <span class="n">alpha</span> <span class="o">=</span> <span class="n">amplitude</span>
+</span><span id="GaussianStateDescription.coherent_state-91"><a href="#GaussianStateDescription.coherent_state-91"><span class="linenos">91</span></a>        <span class="n">identity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
+</span><span id="GaussianStateDescription.coherent_state-92"><a href="#GaussianStateDescription.coherent_state-92"><span class="linenos">92</span></a>            <span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+</span><span id="GaussianStateDescription.coherent_state-93"><a href="#GaussianStateDescription.coherent_state-93"><span class="linenos">93</span></a>        <span class="p">)</span>  <span class="c1"># I matrix of needed shape &amp; type</span>
+</span><span id="GaussianStateDescription.coherent_state-94"><a href="#GaussianStateDescription.coherent_state-94"><span class="linenos">94</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -688,24 +670,24 @@ The complex amplitude vector $\alpha$.</li>
 
     </div>
     <a class="headerlink" href="#GaussianStateDescription.vacuum_state"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.vacuum_state-107"><a href="#GaussianStateDescription.vacuum_state-107"><span class="linenos">107</span></a>    <span class="nd">@classmethod</span>
-</span><span id="GaussianStateDescription.vacuum_state-108"><a href="#GaussianStateDescription.vacuum_state-108"><span class="linenos">108</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vacuum_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">complex_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
-</span><span id="GaussianStateDescription.vacuum_state-109"><a href="#GaussianStateDescription.vacuum_state-109"><span class="linenos">109</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.vacuum_state-110"><a href="#GaussianStateDescription.vacuum_state-110"><span class="linenos">110</span></a><span class="sd">        Creates a description for the vacuum state $|0\rangle$.</span>
-</span><span id="GaussianStateDescription.vacuum_state-111"><a href="#GaussianStateDescription.vacuum_state-111"><span class="linenos">111</span></a>
-</span><span id="GaussianStateDescription.vacuum_state-112"><a href="#GaussianStateDescription.vacuum_state-112"><span class="linenos">112</span></a><span class="sd">        The vacuum state is a coherent state with $\alpha = 0$.</span>
-</span><span id="GaussianStateDescription.vacuum_state-113"><a href="#GaussianStateDescription.vacuum_state-113"><span class="linenos">113</span></a>
-</span><span id="GaussianStateDescription.vacuum_state-114"><a href="#GaussianStateDescription.vacuum_state-114"><span class="linenos">114</span></a><span class="sd">        Parameters</span>
-</span><span id="GaussianStateDescription.vacuum_state-115"><a href="#GaussianStateDescription.vacuum_state-115"><span class="linenos">115</span></a><span class="sd">        ----------</span>
-</span><span id="GaussianStateDescription.vacuum_state-116"><a href="#GaussianStateDescription.vacuum_state-116"><span class="linenos">116</span></a><span class="sd">        complex_dimension : int</span>
-</span><span id="GaussianStateDescription.vacuum_state-117"><a href="#GaussianStateDescription.vacuum_state-117"><span class="linenos">117</span></a><span class="sd">            The number of modes $n$.</span>
-</span><span id="GaussianStateDescription.vacuum_state-118"><a href="#GaussianStateDescription.vacuum_state-118"><span class="linenos">118</span></a>
-</span><span id="GaussianStateDescription.vacuum_state-119"><a href="#GaussianStateDescription.vacuum_state-119"><span class="linenos">119</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription.vacuum_state-120"><a href="#GaussianStateDescription.vacuum_state-120"><span class="linenos">120</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription.vacuum_state-121"><a href="#GaussianStateDescription.vacuum_state-121"><span class="linenos">121</span></a><span class="sd">        GaussianStateDescription</span>
-</span><span id="GaussianStateDescription.vacuum_state-122"><a href="#GaussianStateDescription.vacuum_state-122"><span class="linenos">122</span></a><span class="sd">            The description of the n-mode vacuum.</span>
-</span><span id="GaussianStateDescription.vacuum_state-123"><a href="#GaussianStateDescription.vacuum_state-123"><span class="linenos">123</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.vacuum_state-124"><a href="#GaussianStateDescription.vacuum_state-124"><span class="linenos">124</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coherent_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">complex_dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.vacuum_state-96"><a href="#GaussianStateDescription.vacuum_state-96"><span class="linenos"> 96</span></a>    <span class="nd">@classmethod</span>
+</span><span id="GaussianStateDescription.vacuum_state-97"><a href="#GaussianStateDescription.vacuum_state-97"><span class="linenos"> 97</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">vacuum_state</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">complex_dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GaussianStateDescription&quot;</span><span class="p">:</span>
+</span><span id="GaussianStateDescription.vacuum_state-98"><a href="#GaussianStateDescription.vacuum_state-98"><span class="linenos"> 98</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.vacuum_state-99"><a href="#GaussianStateDescription.vacuum_state-99"><span class="linenos"> 99</span></a><span class="sd">        Creates a description for the vacuum state $|0\rangle$.</span>
+</span><span id="GaussianStateDescription.vacuum_state-100"><a href="#GaussianStateDescription.vacuum_state-100"><span class="linenos">100</span></a>
+</span><span id="GaussianStateDescription.vacuum_state-101"><a href="#GaussianStateDescription.vacuum_state-101"><span class="linenos">101</span></a><span class="sd">        The vacuum state is a coherent state with $\alpha = 0$.</span>
+</span><span id="GaussianStateDescription.vacuum_state-102"><a href="#GaussianStateDescription.vacuum_state-102"><span class="linenos">102</span></a>
+</span><span id="GaussianStateDescription.vacuum_state-103"><a href="#GaussianStateDescription.vacuum_state-103"><span class="linenos">103</span></a><span class="sd">        Parameters</span>
+</span><span id="GaussianStateDescription.vacuum_state-104"><a href="#GaussianStateDescription.vacuum_state-104"><span class="linenos">104</span></a><span class="sd">        ----------</span>
+</span><span id="GaussianStateDescription.vacuum_state-105"><a href="#GaussianStateDescription.vacuum_state-105"><span class="linenos">105</span></a><span class="sd">        complex_dimension : int</span>
+</span><span id="GaussianStateDescription.vacuum_state-106"><a href="#GaussianStateDescription.vacuum_state-106"><span class="linenos">106</span></a><span class="sd">            The number of modes $n$.</span>
+</span><span id="GaussianStateDescription.vacuum_state-107"><a href="#GaussianStateDescription.vacuum_state-107"><span class="linenos">107</span></a>
+</span><span id="GaussianStateDescription.vacuum_state-108"><a href="#GaussianStateDescription.vacuum_state-108"><span class="linenos">108</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription.vacuum_state-109"><a href="#GaussianStateDescription.vacuum_state-109"><span class="linenos">109</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription.vacuum_state-110"><a href="#GaussianStateDescription.vacuum_state-110"><span class="linenos">110</span></a><span class="sd">        GaussianStateDescription</span>
+</span><span id="GaussianStateDescription.vacuum_state-111"><a href="#GaussianStateDescription.vacuum_state-111"><span class="linenos">111</span></a><span class="sd">            The description of the n-mode vacuum.</span>
+</span><span id="GaussianStateDescription.vacuum_state-112"><a href="#GaussianStateDescription.vacuum_state-112"><span class="linenos">112</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.vacuum_state-113"><a href="#GaussianStateDescription.vacuum_state-113"><span class="linenos">113</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coherent_state</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">complex_dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -729,6 +711,66 @@ The number of modes $n$.</li>
 
 
                             </div>
+                            <div id="GaussianStateDescription.energy" class="classattr">
+                                        <input id="GaussianStateDescription.energy-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">energy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>:</span></span>
+
+                <label class="view-source-button" for="GaussianStateDescription.energy-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#GaussianStateDescription.energy"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.energy-115"><a href="#GaussianStateDescription.energy-115"><span class="linenos">115</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
+</span><span id="GaussianStateDescription.energy-116"><a href="#GaussianStateDescription.energy-116"><span class="linenos">116</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.energy-117"><a href="#GaussianStateDescription.energy-117"><span class="linenos">117</span></a><span class="sd">        Computes the energy (mean photon number) of the Gaussian state.</span>
+</span><span id="GaussianStateDescription.energy-118"><a href="#GaussianStateDescription.energy-118"><span class="linenos">118</span></a>
+</span><span id="GaussianStateDescription.energy-119"><a href="#GaussianStateDescription.energy-119"><span class="linenos">119</span></a><span class="sd">        This implements the energy formula given in Section 2.1 of the reference paper.</span>
+</span><span id="GaussianStateDescription.energy-120"><a href="#GaussianStateDescription.energy-120"><span class="linenos">120</span></a><span class="sd">        The energy is given by:</span>
+</span><span id="GaussianStateDescription.energy-121"><a href="#GaussianStateDescription.energy-121"><span class="linenos">121</span></a>
+</span><span id="GaussianStateDescription.energy-122"><a href="#GaussianStateDescription.energy-122"><span class="linenos">122</span></a><span class="sd">        $$</span>
+</span><span id="GaussianStateDescription.energy-123"><a href="#GaussianStateDescription.energy-123"><span class="linenos">123</span></a><span class="sd">        \text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n</span>
+</span><span id="GaussianStateDescription.energy-124"><a href="#GaussianStateDescription.energy-124"><span class="linenos">124</span></a><span class="sd">        $$</span>
+</span><span id="GaussianStateDescription.energy-125"><a href="#GaussianStateDescription.energy-125"><span class="linenos">125</span></a>
+</span><span id="GaussianStateDescription.energy-126"><a href="#GaussianStateDescription.energy-126"><span class="linenos">126</span></a><span class="sd">        where $d$ is the real displacement vector. In this implementation,</span>
+</span><span id="GaussianStateDescription.energy-127"><a href="#GaussianStateDescription.energy-127"><span class="linenos">127</span></a><span class="sd">        $d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping</span>
+</span><span id="GaussianStateDescription.energy-128"><a href="#GaussianStateDescription.energy-128"><span class="linenos">128</span></a><span class="sd">        $\hat{d}(\alpha)$ described in Section 2.3.</span>
+</span><span id="GaussianStateDescription.energy-129"><a href="#GaussianStateDescription.energy-129"><span class="linenos">129</span></a>
+</span><span id="GaussianStateDescription.energy-130"><a href="#GaussianStateDescription.energy-130"><span class="linenos">130</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription.energy-131"><a href="#GaussianStateDescription.energy-131"><span class="linenos">131</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription.energy-132"><a href="#GaussianStateDescription.energy-132"><span class="linenos">132</span></a><span class="sd">        np.float64</span>
+</span><span id="GaussianStateDescription.energy-133"><a href="#GaussianStateDescription.energy-133"><span class="linenos">133</span></a><span class="sd">            The energy of the state.</span>
+</span><span id="GaussianStateDescription.energy-134"><a href="#GaussianStateDescription.energy-134"><span class="linenos">134</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.energy-135"><a href="#GaussianStateDescription.energy-135"><span class="linenos">135</span></a>        <span class="n">tr_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">)</span>
+</span><span id="GaussianStateDescription.energy-136"><a href="#GaussianStateDescription.energy-136"><span class="linenos">136</span></a>        <span class="n">d_norm_squared</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="GaussianStateDescription.energy-137"><a href="#GaussianStateDescription.energy-137"><span class="linenos">137</span></a>        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_modes</span>
+</span><span id="GaussianStateDescription.energy-138"><a href="#GaussianStateDescription.energy-138"><span class="linenos">138</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">tr_gamma</span> <span class="o">+</span> <span class="n">d_norm_squared</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Computes the energy (mean photon number) of the Gaussian state.</p>
+
+<p>This implements the energy formula given in Section 2.1 of the reference paper.
+The energy is given by:</p>
+
+<p>$$
+\text{tr}(H \rho) = \frac{1}{2}\text{tr}(\Gamma) + d^T d + n
+$$</p>
+
+<p>where $d$ is the real displacement vector. In this implementation,
+$d^T d$ is calculated as $2 |\alpha|^2$ based on the mapping
+$\hat{d}(\alpha)$ described in Section 2.3.</p>
+
+<h6 id="returns">Returns</h6>
+
+<ul>
+<li><strong>np.float64</strong>: The energy of the state.</li>
+</ul>
+</div>
+
+
+                            </div>
                             <div id="GaussianStateDescription.number_of_modes" class="classattr">
                                         <input id="GaussianStateDescription.number_of_modes-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr variable">
@@ -738,17 +780,17 @@ The number of modes $n$.</li>
 
     </div>
     <a class="headerlink" href="#GaussianStateDescription.number_of_modes"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.number_of_modes-126"><a href="#GaussianStateDescription.number_of_modes-126"><span class="linenos">126</span></a>    <span class="nd">@property</span>
-</span><span id="GaussianStateDescription.number_of_modes-127"><a href="#GaussianStateDescription.number_of_modes-127"><span class="linenos">127</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="GaussianStateDescription.number_of_modes-128"><a href="#GaussianStateDescription.number_of_modes-128"><span class="linenos">128</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.number_of_modes-129"><a href="#GaussianStateDescription.number_of_modes-129"><span class="linenos">129</span></a><span class="sd">        Returns the number of modes $n$ of the system.</span>
-</span><span id="GaussianStateDescription.number_of_modes-130"><a href="#GaussianStateDescription.number_of_modes-130"><span class="linenos">130</span></a>
-</span><span id="GaussianStateDescription.number_of_modes-131"><a href="#GaussianStateDescription.number_of_modes-131"><span class="linenos">131</span></a><span class="sd">        Returns</span>
-</span><span id="GaussianStateDescription.number_of_modes-132"><a href="#GaussianStateDescription.number_of_modes-132"><span class="linenos">132</span></a><span class="sd">        -------</span>
-</span><span id="GaussianStateDescription.number_of_modes-133"><a href="#GaussianStateDescription.number_of_modes-133"><span class="linenos">133</span></a><span class="sd">        int</span>
-</span><span id="GaussianStateDescription.number_of_modes-134"><a href="#GaussianStateDescription.number_of_modes-134"><span class="linenos">134</span></a><span class="sd">            The number of modes.</span>
-</span><span id="GaussianStateDescription.number_of_modes-135"><a href="#GaussianStateDescription.number_of_modes-135"><span class="linenos">135</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="GaussianStateDescription.number_of_modes-136"><a href="#GaussianStateDescription.number_of_modes-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">size</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GaussianStateDescription.number_of_modes-140"><a href="#GaussianStateDescription.number_of_modes-140"><span class="linenos">140</span></a>    <span class="nd">@property</span>
+</span><span id="GaussianStateDescription.number_of_modes-141"><a href="#GaussianStateDescription.number_of_modes-141"><span class="linenos">141</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="GaussianStateDescription.number_of_modes-142"><a href="#GaussianStateDescription.number_of_modes-142"><span class="linenos">142</span></a><span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.number_of_modes-143"><a href="#GaussianStateDescription.number_of_modes-143"><span class="linenos">143</span></a><span class="sd">        Returns the number of modes $n$ of the system.</span>
+</span><span id="GaussianStateDescription.number_of_modes-144"><a href="#GaussianStateDescription.number_of_modes-144"><span class="linenos">144</span></a>
+</span><span id="GaussianStateDescription.number_of_modes-145"><a href="#GaussianStateDescription.number_of_modes-145"><span class="linenos">145</span></a><span class="sd">        Returns</span>
+</span><span id="GaussianStateDescription.number_of_modes-146"><a href="#GaussianStateDescription.number_of_modes-146"><span class="linenos">146</span></a><span class="sd">        -------</span>
+</span><span id="GaussianStateDescription.number_of_modes-147"><a href="#GaussianStateDescription.number_of_modes-147"><span class="linenos">147</span></a><span class="sd">        int</span>
+</span><span id="GaussianStateDescription.number_of_modes-148"><a href="#GaussianStateDescription.number_of_modes-148"><span class="linenos">148</span></a><span class="sd">            The number of modes.</span>
+</span><span id="GaussianStateDescription.number_of_modes-149"><a href="#GaussianStateDescription.number_of_modes-149"><span class="linenos">149</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="GaussianStateDescription.number_of_modes-150"><a href="#GaussianStateDescription.number_of_modes-150"><span class="linenos">150</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">size</span>
 </span></pre></div>
 
 

@@ -15,7 +15,7 @@ def measureprobapproximate(
     energy_upper_bound: np.float64 | None = None,
 ) -> np.float64:
     r"""
-    Estimates the probability density of observing a specific outcome in a heterodyne measurement.
+    Estimates the probability density of observing a specific outcome in a heterodyne measurement of a normalized superposition of Gaussian states.
 
     This implements the `measureprobapproximate` algorithm described in Section 4.3 (Lemma 4.4) of the
     reference paper.
