@@ -1,8 +1,0 @@
-{% extends "default/module.html.jinja2" %}
-
-{% block nav_members %}
-    {% if module.members %}
-        <h2>Documentation</h2>
-        {{ nav_members(module.members.values()) }}
-    {% endif %}
-{% endblock %}
