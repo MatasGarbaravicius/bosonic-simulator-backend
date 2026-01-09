@@ -12,7 +12,42 @@ def plotprobexact(
     resolution: int = 15,  # Number of grid points per axis
     cmap: str = "Blues",  # Matplotlib colormap
 ) -> None:
+    r"""
+    Plots the exact probability density function for a single-mode measurement on a superposition state.
 
+    This function is not described in the reference paper. It computes the probability
+    density $p(\beta)$ over a grid in the complex plane for a specified mode and generates
+    a phase-space plot.
+
+    If `re_lim` or `im_lim` are not specified (`None`), the algorithm attempts to
+    automatically determine plot limits that encompass the high-probability regions
+    by analyzing the displacement centers and variances of the constituent Gaussian terms.
+
+    **Runtime:**
+    $O(R^2 \chi^2 n^3)$, where $R$ is the resolution (number of grid points per axis),
+    $\chi$ is the number of superposition terms, and $n$ is the number of modes.
+    The function performs `measureprobexact` at each of the $R^2$ grid points.
+
+    Parameters
+    ----------
+    superposition_terms : list[tuple[np.complex128, GaussianStateDescription]]
+        The superposition state to visualize.
+    mode_index : int
+        The index of the mode to plot (0-based indexing).
+    re_lim : tuple[int, int] | None, optional
+        The range of the real axis (x-axis) for the plot. If None, auto-calculated.
+    im_lim : tuple[int, int] | None, optional
+        The range of the imaginary axis (y-axis) for the plot. If None, auto-calculated.
+    resolution : int, optional
+        The number of grid points along each axis. Defaults to 15.
+    cmap : str, optional
+        The Matplotlib colormap to use. Defaults to "Blues".
+
+    Returns
+    -------
+    None
+        Displays the plot using `matplotlib.pyplot.show()`.
+    """
     if re_lim is None:
         variances = [
             psi.covariance_matrix[2 * mode_index, 2 * mode_index]

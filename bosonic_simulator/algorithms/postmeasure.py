@@ -12,6 +12,31 @@ def postmeasure(
     amplitude: NDArray[np.complex128],
     wires: list[int],
 ) -> GaussianStateDescription:
+    r"""
+    Computes the description of the post-measurement state after a heterodyne measurement.
+
+    This implements the `postmeasure` algorithm described in Section 3.4 of the
+    reference paper. Given an initial state description $\Delta$ and a measurement
+    outcome vector $\beta \in \mathbb{C}^k$ associated with $k$ specific modes,
+    it computes the description $\Delta'$ of the normalized post-measurement state.
+
+    The algorithm runs in time $O(n^3)$.
+
+    Parameters
+    ----------
+    gaussian_state_description : GaussianStateDescription
+        The description $\Delta$ of the state before measurement.
+    amplitude : NDArray[np.complex128]
+        The vector of measurement outcomes $\beta$. Its length must match the
+        number of wires being measured.
+    wires : list[int]
+        The list of mode indices (0-based) on which the measurement is performed.
+
+    Returns
+    -------
+    GaussianStateDescription
+        The description $\Delta'$ of the post-measurement state.
+    """
     # precompute quantities and introduce shorter notation
 
     gamma = gaussian_state_description.covariance_matrix

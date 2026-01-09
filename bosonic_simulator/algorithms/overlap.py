@@ -8,6 +8,32 @@ def overlap(
     gaussian_state_description1: GaussianStateDescription,
     gaussian_state_description2: GaussianStateDescription,
 ) -> np.complex128:
+    r"""
+    Computes the inner product between two Gaussian states.
+
+    This implements the `overlap` algorithm described in Section 3.2 of the
+    reference paper. Given the extended descriptions $\Delta_1$ and $\Delta_2$ of two
+    Gaussian states $|\psi(\Delta_1)\rangle$ and $|\psi(\Delta_2)\rangle$, it computes
+    the scalar overlap:
+
+    $$
+    w = \langle \psi(\Delta_1), \psi(\Delta_2) \rangle
+    $$
+
+    The algorithm runs in time $O(n^3)$, where $n$ is the number of modes.
+
+    Parameters
+    ----------
+    gaussian_state_description1 : GaussianStateDescription
+        The extended description $\Delta_1$ of the first state.
+    gaussian_state_description2 : GaussianStateDescription
+        The extended description $\Delta_2$ of the second state.
+
+    Returns
+    -------
+    np.complex128
+        The complex inner product $w$.
+    """
     # introducte shorter notation
 
     gamma1 = gaussian_state_description1.covariance_matrix

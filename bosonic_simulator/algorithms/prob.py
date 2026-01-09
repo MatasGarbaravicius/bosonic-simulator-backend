@@ -10,6 +10,31 @@ def prob(
     amplitude: NDArray[np.complex128],
     wires: list[int],
 ) -> np.float64:
+    r"""
+    Computes the probability density of observing a specific outcome in a heterodyne measurement.
+
+    This implements the `prob` subroutine described in Section 3.4 of the reference paper.
+    It takes as input a description $\Delta \in \text{Desc}_n$ of a Gaussian state and an
+    outcome vector $\beta \in \mathbb{C}^k$, and outputs the probability of obtaining
+    measurement outcome $\beta$ when performing a heterodyne measurement on a subset
+    of $k$ modes.
+
+    The algorithm runs in time $O(k^3)$, where $k$ is the number of measured modes (length of `wires`).
+
+    Parameters
+    ----------
+    gaussian_state_description : GaussianStateDescription
+        The description of the state being measured.
+    amplitude : NDArray[np.complex128]
+        The measurement outcome vector $\beta \in \mathbb{C}^k$.
+    wires : list[int]
+        The list of mode indices (0-based) to be measured.
+
+    Returns
+    -------
+    np.float64
+        The probability density $\text{prob}(\Delta, \beta)$.
+    """
     # precompute quantities and introduce shorter notation
 
     gamma = gaussian_state_description.covariance_matrix

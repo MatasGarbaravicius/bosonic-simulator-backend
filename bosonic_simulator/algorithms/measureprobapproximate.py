@@ -14,6 +14,64 @@ def measureprobapproximate(
     max_failure_probability: np.float64,
     energy_upper_bound: np.float64 | None = None,
 ) -> np.float64:
+    r"""
+    Estimates the probability density of observing a specific outcome in a heterodyne measurement.
+
+    This implements the `measureprobapproximate` algorithm described in Section 4.3 (Lemma 4.4) of the
+    reference paper.
+
+    Assume that the normalized post-measurement state $\Psi'_\beta = \Pi_\beta \Psi / \|\Pi_\beta \Psi\|$
+    satisfies the energy bound:
+
+    $$
+    \langle \Psi'_\beta, H \Psi'_\beta \rangle \le E
+    $$
+
+    The output is a value $\overline{Y}$ that satisfies:
+
+    $$
+    \frac{\overline{Y}}{p_{\Psi}(\beta)} \in [1 - \epsilon, 1 + \epsilon]
+    $$
+
+    except with probability $p_f$.
+
+    **Placeholder Energy Bound:**
+    Lemma 4.4 requires an upper bound $E$ on the energy of the *post-measurement*
+    state. If `energy_upper_bound` is not provided (is `None`), this implementation calculates
+    a placeholder bound based on the energy of the *pre-measurement* superposition $\Psi$.
+    This is calculated using the Cauchy-Schwarz inequality:
+
+    $$
+    E_{\Psi} = \langle \Psi | H | \Psi \rangle \le \left( \sum_j |c_j| \sqrt{\langle \psi_j | H | \psi_j \rangle} \right)^2
+    $$
+
+    **Runtime:**
+    $O\left(\frac{\chi n^3 E}{p_f \epsilon^3}\right)$. This scales linearly with the number of terms $\chi$
+    in the superposition, offering a significant speedup over the quadratic `measureprobexact`
+    method for states with many terms.
+
+    Parameters
+    ----------
+    superposition_terms : list[tuple[np.complex128, GaussianStateDescription]]
+        A list of terms defining the superposition, where each term is a tuple
+        $(c_j, \Delta_j)$.
+    amplitude : NDArray[np.complex128]
+        The measurement outcome vector $\beta \in \mathbb{C}^k$.
+    wires : list[int]
+        The list of mode indices (0-based) to be measured.
+    multiplicative_error : np.float64
+        The multiplicative error tolerance $\epsilon > 0$.
+    max_failure_probability : np.float64
+        The maximum allowable failure probability $p_f \in (0, 1)$.
+    energy_upper_bound : np.float64 | None, optional
+        An upper bound $E$ on the energy of the normalized post-measurement state.
+        If None, a placeholder bound based on the pre-measurement state is used.
+
+    Returns
+    -------
+    np.float64
+        The estimated probability density $p(\beta)$.
+    """
     if energy_upper_bound is None:
         energy_upper_bound = np.float64(
             np.square(

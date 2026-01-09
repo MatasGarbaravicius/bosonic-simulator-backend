@@ -9,11 +9,35 @@ def applyunitary_inplace(
     gaussian_state_description: GaussianStateDescription,
     gaussian_unitary_description: gu_description.GaussianUnitaryDescription,
 ) -> None:
+    r"""
+    Overwrites in-place the description of a Gaussian state to reflect the application of a Gaussian unitary.
+
+    This implements the `applyunitary` algorithm described in Section 3.3 of the
+    reference paper. It updates the state description $\Delta$ to correspond to
+    the evolved state $U |\psi(\Delta)\rangle$.
+
+    The behavior depends on the type of `gaussian_unitary_description`:
+
+    * **Squeezing:** Delegates to the `squeezing` routine.
+    * **Displacement, Phase Shift, Beam Splitter:** Updates the covariance matrix
+      and displacement vector directly using the symplectic transformations described
+      in Table 1 of the reference paper.
+
+    **Runtime:**
+
+    * **Squeezing:** $O(n^3)$ due to the `squeezing` subroutine.
+    * **Others:** $O(n)$.
+
+    Parameters
+    ----------
+    gaussian_state_description : GaussianStateDescription
+        The description of the state to be updated in-place.
+    gaussian_unitary_description : GaussianUnitaryDescription
+        The description of the Gaussian unitary operation to apply.
+    """
     gsd = gaussian_state_description  # alias for convenience
     match gaussian_unitary_description:
         case gu_description.SqueezingDescription(z, j):
-            # Squeezing is actually not implemented in-place, since an in-place
-            # implementation would not improve runtime complexity.
             new_description = squeezing(gsd, z, j)
             gsd.__dict__.update(new_description.__dict__)
 
@@ -67,6 +91,31 @@ def applyunitary(
     gaussian_state_description: GaussianStateDescription,
     gaussian_unitary_description: gu_description.GaussianUnitaryDescription,
 ) -> GaussianStateDescription:
+    r"""
+    Returns a new description of a Gaussian state after applying a Gaussian unitary.
+
+    This is a wrapper around `applyunitary_inplace` that preserves the original
+    state description by performing a deep copy before applying the operation.
+
+    **Runtime:**
+
+    * **Squeezing:** $O(n^3)$.
+    * **Others:** $O(n^2)$. While the arithmetic updates for displacements, phase shifts,
+      and beam splitters are $O(n)$, this function requires $O(n^2)$ time to allocate
+      and copy the $2n \times 2n$ covariance matrix.
+
+    Parameters
+    ----------
+    gaussian_state_description : GaussianStateDescription
+        The initial state description.
+    gaussian_unitary_description : GaussianUnitaryDescription
+        The unitary operation to apply.
+
+    Returns
+    -------
+    GaussianStateDescription
+        The new description of the evolved state.
+    """
     gsd_copy = copy.deepcopy(gaussian_state_description)
     applyunitary_inplace(gsd_copy, gaussian_unitary_description)
     return gsd_copy

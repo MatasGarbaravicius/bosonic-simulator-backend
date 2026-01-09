@@ -16,6 +16,49 @@ def overlaptriple(
     v: np.complex128,
     lambda_: NDArray[np.complex128],
 ) -> np.complex128:
+    r"""
+    Given the covariance matrices and displacement vectors of Gaussian states $\psi_1$, $\psi_2$, $\psi_3$ as well as overlaps $u = \langle \psi_3, D(\lambda)\psi_1 \rangle$, $v = \langle \psi_1, \psi_2 \rangle$, computes the overlap $\langle \psi_2, \psi_3 \rangle$.
+
+    This implements the `overlaptriple` algorithm described in Section 3.2 of the reference paper.
+
+    The algorithm runs in time $O(n^3)$, where $n$ is the number of modes.
+
+    **Numerical Stability:**
+    This implementation tackles numerical stability issues by:
+
+    * Using `scipy.linalg.solve` to handle linear systems instead of explicitly computing
+      matrix inverses.
+    * Preferring solving systems of the form $Ax = b$ with a vector right-hand side (RHS)
+      rather than a matrix RHS to maintain precision.
+    * Computing expressions, such as determinants, in log-space (e.g., using `numpy.linalg.slogdet`)
+      to avoid overflow or underflow.
+
+    Parameters
+    ----------
+    gamma1 : NDArray[np.float64]
+        Covariance matrix $\Gamma_1$ of the state $|\psi_1\rangle$.
+    gamma2 : NDArray[np.float64]
+        Covariance matrix $\Gamma_2$ of the state $|\psi_2\rangle$.
+    gamma3 : NDArray[np.float64]
+        Covariance matrix $\Gamma_3$ of the state $|\psi_3\rangle$.
+    d1 : NDArray[np.float64]
+        Displacement vector $d_1$ of the state $|\psi_1\rangle$.
+    d2 : NDArray[np.float64]
+        Displacement vector $d_2$ of the state $|\psi_2\rangle$.
+    d3 : NDArray[np.float64]
+        Displacement vector $d_3$ of the state $|\psi_3\rangle$.
+    u : np.complex128
+        The known non-zero overlap $u = \langle \psi_3, D(\lambda)\psi_1 \rangle$.
+    v : np.complex128
+        The known non-zero overlap $v = \langle \psi_1, \psi_2 \rangle$.
+    lambda_ : NDArray[np.complex128]
+        The complex displacement parameter $\lambda$ such that the overlap $u$ is non-zero.
+
+    Returns
+    -------
+    np.complex128
+        The computed overlap $o = \langle \psi_2, \psi_3 \rangle$.
+    """
     # For numerical stability:
     # - Solve linear systems instead of computing explicit inverses
     # - Prefer Ax = b with vector RHS over matrix RHS

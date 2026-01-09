@@ -10,6 +10,35 @@ def squeezing(
     squeezing_parameter: np.float64,
     mode_index: int,
 ) -> GaussianStateDescription:
+    r"""
+    Updates the description of a Gaussian state after applying a single-mode squeezing operation.
+
+    This implements the `squeezing` algorithm described in Section 3.3 of the
+    reference paper. Given descriptions of a state $\Delta$ and a squeezing operation
+    $S_j(z)$, it returns the description $\Delta'$ of the evolved state:
+
+
+    $$
+    |\psi(\Delta')\rangle = S_j(z) |\psi(\Delta)\rangle
+    $$
+
+    The algorithm runs in time $O(n^3)$, where $n$ is the number of modes.
+
+    Parameters
+    ----------
+    gaussian_state_description : GaussianStateDescription
+        The description $\Delta$ of the initial Gaussian state.
+    squeezing_parameter : np.float64
+        The squeezing parameter $z \in (0, +\infty)$.
+    mode_index : int
+        The index of the mode $j$ to be squeezed.
+        Note that this implementation uses 0-based indexing.
+
+    Returns
+    -------
+    GaussianStateDescription
+        The description $\Delta'$ of the squeezed state.
+    """
     # precompute quantities and introduce shorter notation
 
     gamma = gaussian_state_description.covariance_matrix
